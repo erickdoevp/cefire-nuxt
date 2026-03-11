@@ -49,7 +49,7 @@ const pathRecovery = [
   },
 ];
 
-const patients = [
+const patients = ref([
   {
     user: {
       name: 'Sarah Mitchell',
@@ -86,7 +86,7 @@ const patients = [
     },
     quote: "“En mi último año de secundaria, estaba nervioso por la fisioterapia. El equipo fue muy paciente y amable. Ahora puedo volver a acompañar a mis nietos a la escuela sin dolor.”"
   },
-];
+]);
 
 const team = [
   {
@@ -270,7 +270,7 @@ const faqs = [
           </p>
         </div>
         <div class="grid gap-8 md:grid-cols-1 lg:grid-cols-3">
-          <div v-for="(path, index) in pathRecovery">
+          <div v-for="(path, index) in pathRecovery" :key='index'>
             <div class="flex flex-col gap-4 items-center">
               <div class="w-12 h-12 rounded-full flex items-center justify-center" :class="path.iconBg">
                 <span class="text-white">{{ index }}</span>
@@ -294,14 +294,16 @@ const faqs = [
           </h2>
         </div>
         <div class="grid md:grid-cols-1 lg:grid-cols-3 gap-8">
-          <div v-for="testimonial in patients" class="bg-stone-800 flex flex-col gap-4 p-5 rounded-2xl">
-            <p class="text-white text-sm">{{ testimonial.quote }}</p>
-            <UUser v-bind="testimonial.user" >
-              <template #name>
-                <p class="text-white">{{ testimonial.user.name }}</p>
-              </template>
-            </UUser>
-          </div>
+          <ClientOnly>
+            <div v-for="testimonial in patients" :key='testimonial.user.name' class="bg-stone-800 flex flex-col gap-4 p-5 rounded-2xl">
+              <p class="text-white text-sm">{{ testimonial.quote }}</p>
+              <UUser v-bind="testimonial.user" >
+                <template #name>
+                  <p class="text-white">{{ testimonial.user.name }}</p>
+                </template>
+              </UUser>
+            </div>
+          </ClientOnly>
         </div>
       </UContainer>
     </section>

@@ -9,7 +9,7 @@ const footerServices = [
 
 const footerCompany = [
   { label: 'Sobre nosotros',  href: '/about' },
-  { label: 'Nuestro equipo',  href: '/team' }
+  { label: 'Nuestro equipo',  href: '/about' }
 ]
 
 const footerContact = [
