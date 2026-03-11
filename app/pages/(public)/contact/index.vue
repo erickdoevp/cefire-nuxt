@@ -1,0 +1,253 @@
+<script setup lang="ts">
+
+// Opciones del selector de servicios
+const serviceOptions = [
+  { label: 'Sports Rehabilitation',  value: 'sports'       },
+  { label: 'Post-Surgery Recovery',  value: 'post-surgery' },
+  { label: 'Chronic Pain Relief',    value: 'chronic-pain' },
+  { label: 'Mobility & Wellness',    value: 'mobility'     },
+  { label: 'Other',                  value: 'other'        },
+]
+
+// Estado del formulario
+const form = reactive({
+  firstName: '',
+  lastName:  '',
+  email:     '',
+  phone:     '',
+  service:   '',
+  message:   '',
+})
+
+function handleSubmit() {
+  // TODO: conectar con tu API / endpoint
+  console.log('Form submitted:', form)
+}
+
+// Tarjetas de información de contacto
+const contactCards = [
+  {
+    icon:    'i-lucide-phone',
+    title:   'Llámanos',
+    value:   '(555) 123-4567',
+    sub:     'Lun-Vie: 7am - 10pm\nSab: 8am - 2pm',
+    dark:    false,
+  },
+  {
+    icon:    'i-lucide-mail',
+    title:   'Envíenos un correo electrónico',
+    value:   'eliot_77@live.com.mx',
+    sub:     'Respondemos dentro de las 24 horas en días hábiles.',
+    dark:    false,
+  },
+  {
+    icon:    'i-lucide-map-pin',
+    title:   'Visítanos',
+    value:   'Insurgentes #2, San Esteban Tizatlan Tlaxcala.',
+    sub:     'Estacionamiento gratuito disponible en el lugar. \nEntrada accesible para sillas de ruedas.',
+    dark:    false,
+  },
+]
+</script>
+
+<template>
+  <div class="font-[Outfit] bg-[#F5F4F1]">
+
+    <!-- ─── HERO ─────────────────────────────────────────────────── -->
+    <section class="bg-white flex flex-col items-center gap-6 py-[100px] pb-[60px]">
+      <!-- Badge -->
+      <UBadge
+        icon="i-lucide-heart-pulse"
+        variant="soft"
+        class="mb-6 rounded-2xl px-3" 
+      >
+        CONTÁCTENOS
+      </UBadge>
+
+      <h1 class="max-w-[680px] text-center text-[52px] font-bold text-[#1A1918] leading-[1.1] tracking-[-1px]">
+        Nos Encantaría<br>Saber de Usted.
+      </h1>
+
+      <p class="max-w-[680px] text-center text-[18px] text-[#6D6C6A] leading-[1.6]">
+        Si tiene preguntas sobre nuestros servicios, desea programar una cita o simplemente necesita orientación, nuestro equipo está aquí para ayudarle.
+      </p>
+    </section>
+
+    <!-- ─── FORMULARIO + TARJETAS DE CONTACTO ────────────────────── -->
+    <section class="bg-white py-20">
+      <UContainer class="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <!-- Formulario -->
+        <div class="flex-1 min-w-0 bg-white rounded-[20px] border border-[#E5E4E1] shadow-[0_4px_24px_rgba(26,25,24,0.03)] p-10 flex flex-col gap-6">
+          <div class="flex flex-col gap-1">
+            <h2 class="text-[24px] font-bold text-[#1A1918]">Envíanos un mensaje</h2>
+            <p class="text-[14px] text-[#6D6C6A] leading-[1.5]">
+              Complete el siguiente formulario y nos comunicaremos con usted dentro de 24 horas.
+            </p>
+          </div>
+
+          <UForm :state="form" @submit="handleSubmit" class="flex flex-col gap-5">
+            <!-- Nombre -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <UFormField label="Nombre(s)" name="firstName">
+                <UInput
+                  v-model="form.firstName"
+                  placeholder="Erick"
+                  size="lg"
+                  class="w-full"
+                  :ui="{ base: 'rounded-[10px] bg-[#FAFAF9] border-[#E5E4E1] font-[Outfit]' }"
+                />
+              </UFormField>
+
+              <UFormField label="Apellidos" name="lastName">
+                <UInput
+                  v-model="form.lastName"
+                  placeholder="Cruz Padilla"
+                  size="lg"
+                  class="w-full"
+                  :ui="{ base: 'rounded-[10px] bg-[#FAFAF9] border-[#E5E4E1] font-[Outfit]' }"
+                />
+              </UFormField>
+            </div>
+
+            <!-- Email + Teléfono -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <UFormField label="Correo electrónico" name="email">
+                <UInput
+                  v-model="form.email"
+                  type="email"
+                  placeholder="email@example.com"
+                  size="lg"
+                  class="w-full"
+                  :ui="{ base: 'rounded-[10px] bg-[#FAFAF9] border-[#E5E4E1] font-[Outfit]' }"
+                />
+              </UFormField>
+
+              <UFormField label="Número de teléfono" name="phone">
+                <UInput
+                  v-model="form.phone"
+                  type="tel"
+                  placeholder="(246) 000 0000"
+                  size="lg"
+                  class="w-full"
+                  :ui="{ base: 'rounded-[10px] bg-[#FAFAF9] border-[#E5E4E1] font-[Outfit]' }"
+                />
+              </UFormField>
+            </div>
+
+            <!-- Servicio -->
+            <UFormField label="Servicio de interés" name="service">
+              <USelect
+                v-model="form.service"
+                :items="serviceOptions"
+                placeholder="Selecciona un servicio..."
+                size="lg"
+                class="w-full"
+                :ui="{ base: 'rounded-[10px] bg-[#FAFAF9] border-[#E5E4E1] font-[Outfit]' }"
+              />
+            </UFormField>
+
+            <!-- Mensaje -->
+            <UFormField label="Mensaje" name="message">
+              <UTextarea
+                v-model="form.message"
+                placeholder="Cuéntanos sobre tu condición y lo que te gustaría lograr..."
+                :rows="5"
+                size="lg"
+                class="w-full"
+                :ui="{ base: 'rounded-[10px] bg-[#FAFAF9] border-[#E5E4E1] font-[Outfit]' }"
+              />
+            </UFormField>
+
+            <!-- Botón submit -->
+            <UButton
+              type="submit"
+              size="lg"
+              block
+              class="rounded-xl bg-[#00a6f4] text-white font-semibold text-[16px] py-4 hover:bg-[#0095dc] transition-colors justify-center"
+            >
+             Enviar mensaje
+            </UButton>
+          </UForm>
+        </div>
+
+        <!-- Tarjetas de contacto -->
+        <div class="flex-shrink-0 flex flex-col gap-6">
+          <!-- Call, Email, Visit -->
+          <UCard
+            v-for="card in contactCards"
+            :key="card.title"
+            class="rounded-2xl border border-[#E5E4E1] shadow-none"
+            :ui="{ body: 'p-7' }"
+          >
+            <div class="flex flex-col gap-4">
+              <!-- Ícono + título -->
+              <div class="flex items-center gap-3.5">
+                <div class="size-12 rounded-xl bg-[#c8e9f0] flex items-center justify-center flex-shrink-0">
+                  <UIcon :name="card.icon" class="text-primary size-[22px]" />
+                </div>
+                <span class="text-[18px] font-semibold text-[#1A1918]">{{ card.title }}</span>
+              </div>
+              <!-- Valor -->
+              <p class="text-[16px] font-medium text-primary">{{ card.value }}</p>
+              <!-- Sub-texto -->
+              <p class="text-[14px] text-[#6D6C6A] leading-[1.5] whitespace-pre-line">{{ card.sub }}</p>
+            </div>
+          </UCard>
+
+          <!-- Tarjeta Emergency (dark) -->
+          <div class="rounded-2xl bg-[#1A1918] p-7 flex flex-col gap-4">
+            <div class="flex items-center gap-3.5">
+              <div class="size-12 rounded-xl bg-primary flex items-center justify-center flex-shrink-0">
+                <UIcon name="i-lucide-calendar" class="text-white size-[22px]" />
+              </div>
+              <span class="text-[18px] font-semibold text-white">¿Emergencia?</span>
+            </div>
+            <p class="text-[14px] text-[#9C9B99] leading-[1.6]">
+              Si tiene dolor urgente o tiene inquietudes posoperatorias, llámenos directamente. 
+              Ofrecemos citas el mismo día cuando estén disponibles.
+            </p>
+            <UButton
+              to="tel:+522461370462"
+              size="md"
+              block
+              class="rounded-[10px] bg-primary text-white font-semibold text-[14px] py-3 hover:bg-primary transition-colors justify-center"
+            >
+              <UIcon name="i-lucide-phone" class="size-4" />
+              Llama ahora
+            </UButton>
+          </div>
+        </div>
+      </UContainer>
+    </section>
+
+    <!-- ─── MAPA ──────────────────────────────────────────────────── -->
+    <!-- <section class="bg-white px-20 pb-20 flex flex-col gap-8">
+
+      <div class="flex items-center justify-between">
+        <div class="flex flex-col gap-2">
+          <span class="text-[#3D8A5A] text-[13px] font-semibold tracking-[2px]">OUR LOCATION</span>
+          <h2 class="text-[28px] font-bold text-[#1A1918] tracking-[-0.5px]">Find Us Easily</h2>
+        </div>
+        <p class="text-[14px] text-[#6D6C6A]">
+          123 Wellness Ave, Suite 200 &nbsp;•&nbsp; Ample Free Parking &nbsp;•&nbsp; Wheelchair Accessible
+        </p>
+      </div>
+
+      <div class="relative w-full h-[360px] rounded-[20px] overflow-hidden">
+        <NuxtImg
+          src="/images/map.png"
+          alt="Location map"
+          class="w-full h-full object-cover"
+          width="1280"
+          height="360"
+        />
+
+        <div class="absolute bottom-8 left-8 flex items-center gap-2.5 bg-white/93 backdrop-blur-sm rounded-xl px-5 py-3 shadow-[0_4px_16px_rgba(26,25,24,0.08)]">
+          <UIcon name="i-lucide-map-pin" class="text-[#3D8A5A] size-[18px] flex-shrink-0" />
+          <span class="text-[14px] font-semibold text-[#1A1918]">123 Wellness Ave, Suite 200</span>
+        </div>
+      </div>
+    </section> -->
+
+  </div>
+</template>
