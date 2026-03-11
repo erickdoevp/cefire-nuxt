@@ -6,16 +6,15 @@ const route = useRoute();
 const items = computed<NavigationMenuItem[]>(() => [
   {
     label: 'Home',
-    to: '/home',
-    active: route.path.startsWith('/home')
+    to: '/',
   },
   {
-    label: 'About',
+    label: 'Sobre Nosotros',
     to: '/about',
     active: route.path.startsWith('/about')
   },
   {
-    label: 'Services',
+    label: 'Servicios',
     to: '/services',
     active: route.path.startsWith('/services')
   },
