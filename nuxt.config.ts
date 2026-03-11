@@ -10,6 +10,21 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxt/ui',
     '@pinia/nuxt',
+    '@nuxtjs/sitemap',
   ],
+
+  site: {
+    url: 'https://cefire.com.mx',
+    name: 'Cefire Fisioterapia',
+  },
+
+  sitemap: {
+    strictNuxtContentPaths: false,
+  },
+
+  robots: {
+    disallow: [],
+  },
+
   css: ['~/assets/css/main.css'],
 })

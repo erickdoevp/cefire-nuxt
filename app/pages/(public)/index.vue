@@ -1,5 +1,78 @@
 <script setup lang="ts">
 
+useSeoMeta({
+  title: 'Cefire | Clínica de Fisioterapia en Tlaxcala',
+  description: 'Fisioterapia experta con planes de recuperación personalizados. Rehabilitación deportiva, posoperatoria y alivio del dolor crónico. Más de 1,000 pacientes recuperados.',
+  ogTitle: 'Cefire | Clínica de Fisioterapia en Tlaxcala',
+  ogDescription: 'Recupera el movimiento con fisioterapia personalizada. Agenda tu consulta gratuita hoy.',
+  ogImage: 'https://cefire.com.mx/images/comience-hoy.jpg',
+  ogType: 'website',
+  twitterCard: 'summary_large_image',
+})
+
+useHead({
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: [
+          {
+            '@type': 'Question',
+            name: '¿Necesito una remisión de mi médico?',
+            acceptedAnswer: { '@type': 'Answer', text: 'No se necesita referencia médica. Puede reservar directamente con nosotros. Sin embargo, algunos planes de seguro pueden requerirla; nuestro equipo de recepción puede ayudarle a verificar su cobertura.' },
+          },
+          {
+            '@type': 'Question',
+            name: '¿Qué debo esperar en mi primera visita?',
+            acceptedAnswer: { '@type': 'Answer', text: 'Su primera sesión incluye una evaluación exhaustiva de su condición, patrones de movimiento y objetivos. Elaboraremos su plan de tratamiento y, a menudo, comenzaremos la terapia práctica el mismo día.' },
+          },
+          {
+            '@type': 'Question',
+            name: '¿Aceptan seguro?',
+            acceptedAnswer: { '@type': 'Answer', text: 'Sí, aceptamos la mayoría de los principales planes de seguro. Contáctenos para verificar su cobertura.' },
+          },
+          {
+            '@type': 'Question',
+            name: '¿Cuántas sesiones necesitaré?',
+            acceptedAnswer: { '@type': 'Answer', text: 'Esto varía según la afección. La mayoría de los pacientes observan una mejora significativa en 6 a 12 sesiones. Le daremos un cronograma realista después de su evaluación inicial.' },
+          },
+        ],
+      }),
+    },
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'MedicalBusiness',
+        name: 'Cefire Fisioterapia',
+        description: 'Clínica de fisioterapia especializada en rehabilitación deportiva, recuperación posoperatoria y alivio del dolor crónico.',
+        url: 'https://cefire.com.mx',
+        telephone: '+522461370462',
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: 'Insurgentes 3, San Esteban Tizatlan',
+          addressRegion: 'Tlaxcala',
+          addressCountry: 'MX',
+        },
+        medicalSpecialty: 'PhysicalTherapy',
+        hasOfferCatalog: {
+          '@type': 'OfferCatalog',
+          name: 'Servicios de Fisioterapia',
+          itemListElement: [
+            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Rehabilitación Deportiva' } },
+            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Recuperación Posoperatoria' } },
+            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Alivio del Dolor Crónico' } },
+            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Movilidad y Bienestar' } },
+          ],
+        },
+      }),
+    },
+  ],
+})
+
+
 const services = [
   {
     title: "Rehabilitación Deportiva",
@@ -49,7 +122,7 @@ const pathRecovery = [
   },
 ];
 
-const patients = ref([
+const patients = [
   {
     user: {
       name: 'Sarah Mitchell',
@@ -84,9 +157,9 @@ const patients = ref([
         loading: 'lazy' as const
       }
     },
-    quote: "“En mi último año de secundaria, estaba nervioso por la fisioterapia. El equipo fue muy paciente y amable. Ahora puedo volver a acompañar a mis nietos a la escuela sin dolor.”"
+    quote: “”En mi último año de secundaria, estaba nervioso por la fisioterapia. El equipo fue muy paciente y amable. Ahora puedo volver a acompañar a mis nietos a la escuela sin dolor.””
   },
-]);
+];
 
 const team = [
   {
@@ -207,11 +280,15 @@ const faqs = [
 
         <!-- RIGHT IMAGE -->
         <div>
-          <NuxtImg 
-            src="/images/comience-hoy.jpg" 
-            alt="comience hoy"
+          <NuxtImg
+            src="/images/comience-hoy.jpg"
+            alt="Fisioterapeuta realizando tratamiento manual a paciente en Cefire Fisioterapia"
             class="w-full object-cover rounded-lg"
             format="webp"
+            fetchpriority="high"
+            loading="eager"
+            width="600"
+            height="500"
           />
         </div>
 
@@ -273,9 +350,9 @@ const faqs = [
           <div v-for="(path, index) in pathRecovery" :key='index'>
             <div class="flex flex-col gap-4 items-center">
               <div class="w-12 h-12 rounded-full flex items-center justify-center" :class="path.iconBg">
-                <span class="text-white">{{ index }}</span>
+                <span class="text-white">{{ index + 1 }}</span>
               </div>
-              <p class="font-semibold text-lg text-center">{{ path.title }}</p>
+              <h3 class="font-semibold text-lg text-center">{{ path.title }}</h3>
               <p class="text-gray-500 text-sm text-center">{{ path.description }}</p>
             </div>
           </div>
@@ -294,16 +371,14 @@ const faqs = [
           </h2>
         </div>
         <div class="grid md:grid-cols-1 lg:grid-cols-3 gap-8">
-          <ClientOnly>
-            <div v-for="testimonial in patients" :key='testimonial.user.name' class="bg-stone-800 flex flex-col gap-4 p-5 rounded-2xl">
-              <p class="text-white text-sm">{{ testimonial.quote }}</p>
-              <UUser v-bind="testimonial.user" >
-                <template #name>
-                  <p class="text-white">{{ testimonial.user.name }}</p>
-                </template>
-              </UUser>
-            </div>
-          </ClientOnly>
+          <div v-for="testimonial in patients" :key='testimonial.user.name' class="bg-stone-800 flex flex-col gap-4 p-5 rounded-2xl">
+            <p class="text-white text-sm">{{ testimonial.quote }}</p>
+            <UUser v-bind="testimonial.user">
+              <template #name>
+                <p class="text-white">{{ testimonial.user.name }}</p>
+              </template>
+            </UUser>
+          </div>
         </div>
       </UContainer>
     </section>
@@ -336,6 +411,8 @@ const faqs = [
                 class="w-full h-full object-cover"
                 width="400"
                 height="320"
+                loading="lazy"
+                format="webp"
               />
             </div>
 
@@ -365,7 +442,7 @@ const faqs = [
             content: 'text-[15px] text-[#6D6C6A] leading-[1.6] pt-3 pb-1',
             trailingIcon: 'text-[#9C9B99] size-5',
           }"
-          class="w-full max-w-[800px]"
+          class="w-full"
         />
       </UContainer>
     </section>
