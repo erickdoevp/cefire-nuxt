@@ -13,6 +13,7 @@
         <UButton
           target="_blank"
           to="https://wa.me/522461370462?text=Hola%20quiero%20más%20información"
+          rel="noopener noreferrer"
           size="xl"
           class="rounded-xl bg-white text-primary font-semibold text-[17px] px-9 py-[18px] hover:bg-gray-100 transition-colors"
         >

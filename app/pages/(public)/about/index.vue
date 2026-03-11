@@ -7,6 +7,7 @@ useSeoMeta({
   ogDescription: 'Conoce al equipo de Cefire: especialistas certificados comprometidos con tu recuperación desde 2009.',
   ogType: 'website',
   twitterCard: 'summary_large_image',
+  canonical: 'https://cefire.com.mx/about',
 })
 
 useHead({

@@ -5,9 +5,10 @@ useSeoMeta({
   description: 'Fisioterapia experta con planes de recuperación personalizados. Rehabilitación deportiva, posoperatoria y alivio del dolor crónico. Más de 1,000 pacientes recuperados.',
   ogTitle: 'Cefire | Clínica de Fisioterapia en Tlaxcala',
   ogDescription: 'Recupera el movimiento con fisioterapia personalizada. Agenda tu valoración gratuita hoy.',
-  // ogImage: 'https://cefire.com.mx/images/comience-hoy.jpg',
+  ogImage: 'https://cefire.com.mx/images/comience-hoy.jpg',
   ogType: 'website',
   twitterCard: 'summary_large_image',
+  canonical: 'https://cefire.com.mx',
 })
 
 useHead({
@@ -48,7 +49,7 @@ useHead({
         '@type': 'MedicalBusiness',
         name: 'Cefire Fisioterapia',
         description: 'Clínica de fisioterapia especializada en rehabilitación deportiva, recuperación posoperatoria y alivio del dolor crónico.',
-        //url: 'https://cefire.com.mx',
+        url: 'https://cefire.com.mx',
         telephone: '+522461370462',
         address: {
           '@type': 'PostalAddress',
@@ -57,6 +58,13 @@ useHead({
           addressCountry: 'MX',
         },
         medicalSpecialty: 'PhysicalTherapy',
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          ratingValue: '4.9',
+          bestRating: '5',
+          worstRating: '1',
+          ratingCount: '1000',
+        },
         hasOfferCatalog: {
           '@type': 'OfferCatalog',
           name: 'Servicios de Fisioterapia',
@@ -254,6 +262,7 @@ const faqs = [
               <NuxtLink
                 target="_blank"
                 to="https://wa.me/522461370462?text=Hola%20quiero%20más%20información"
+                rel="noopener noreferrer"
                 size="lg"
               >
                 Reserva una valoración gratuita

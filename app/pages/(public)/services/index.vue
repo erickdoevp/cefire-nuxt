@@ -7,6 +7,7 @@ useSeoMeta({
   ogDescription: 'Atención experta adaptada a tu recuperación: deportiva, posoperatoria, dolor crónico y bienestar.',
   ogType: 'website',
   twitterCard: 'summary_large_image',
+  canonical: 'https://cefire.com.mx/services',
 })
 
 useHead({

@@ -7,6 +7,7 @@ useSeoMeta({
   ogDescription: 'Agenda tu valoración gratuita. Estamos en Insurgentes #2, San Esteban Tizatlan, Tlaxcala.',
   ogType: 'website',
   twitterCard: 'summary_large_image',
+  canonical: 'https://cefire.com.mx/contact',
 })
 
 useHead({
