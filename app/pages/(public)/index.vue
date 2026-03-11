@@ -4,7 +4,7 @@ useSeoMeta({
   title: 'Cefire | Clínica de Fisioterapia en Tlaxcala',
   description: 'Fisioterapia experta con planes de recuperación personalizados. Rehabilitación deportiva, posoperatoria y alivio del dolor crónico. Más de 1,000 pacientes recuperados.',
   ogTitle: 'Cefire | Clínica de Fisioterapia en Tlaxcala',
-  ogDescription: 'Recupera el movimiento con fisioterapia personalizada. Agenda tu consulta gratuita hoy.',
+  ogDescription: 'Recupera el movimiento con fisioterapia personalizada. Agenda tu valoración gratuita hoy.',
   // ogImage: 'https://cefire.com.mx/images/comience-hoy.jpg',
   ogType: 'website',
   twitterCard: 'summary_large_image',
@@ -99,15 +99,29 @@ const services = [
     title: "Movilidad y bienestar",
     description:
       "Atención preventiva y entrenamiento del movimiento funcional para mejorar la flexibilidad, el equilibrio y la calidad de vida.",
-    icon: "i-heroicons-bars-3",
+    icon: "ic:baseline-directions-walk",
     iconBg: "bg-blue-100 text-blue-600"
+  },
+  {
+    title: "Neurorrehabilitación",
+    description:
+      "Tratamientos especializados que favorecen la recuperación de funciones motoras y neurológicas para mejorar la independencia y calidad de vida.",
+    icon: "hugeicons:ai-brain-01",
+    iconBg: "bg-red-100 text-red-600"
+  },
+  {
+    title: "Estimulación temprana",
+    description:
+      "Actividades terapéuticas diseñadas para favorecer el desarrollo motor, cognitivo y sensorial en bebés y niños pequeños, potenciando sus habilidades desde los primeros años de vida.",
+    icon: "tabler:baby-carriage",
+    iconBg: "bg-cyan-100 text-cyan-600"
   }
 ];
 
 const pathRecovery = [
   {
     title: "Valoración gratuita",
-    description: "Reserve una consulta telefónica gratuita de 15 minutos para analizar su condición y sus objetivos con uno de nuestros especialistas.",
+    description: "Reserve una valoración telefónica gratuita de 15 minutos para analizar su condición y sus objetivos con uno de nuestros especialistas.",
     iconBg: "bg-[#3D8A5A]"
   },
     {
@@ -242,7 +256,7 @@ const faqs = [
                 to="https://wa.me/522461370462?text=Hola%20quiero%20más%20información"
                 size="lg"
               >
-                Reserva una consulta gratuita
+                Reserva una valoración gratuita
               </NuxtLink>
             </UButton>
 
@@ -267,7 +281,7 @@ const faqs = [
             </div>
 
             <div>
-              <p class="text-2xl font-bold text-primary">98%</p>
+              <p class="text-2xl font-bold text-primary">99%</p>
               <p class="text-gray-500">Satisfacción del cliente</p>
             </div>
 
@@ -308,7 +322,7 @@ const faqs = [
            Desde la rehabilitación posoperatoria hasta el manejo del dolor crónico, nuestro enfoque basado en evidencia ofrece resultados duraderos.
           </p>
         </div>
-        <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        <div class="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           <UCard
             v-for="service in services"
             :key="service.title"

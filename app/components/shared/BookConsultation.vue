@@ -6,7 +6,7 @@
         ¿Estás listo para comenzar tu recuperación?
       </h2>
       <p class="max-w-[600px] text-center text-[18px] text-white/80 leading-[1.6]">
-        Reserva tu consulta gratuita hoy mismo. No necesitas referencia ni compromiso.
+        Reserva tu valoración gratuita hoy mismo. No necesitas referencia ni compromiso.
         Da el primer paso para vivir sin dolor.
       </p>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -16,7 +16,7 @@
           size="xl"
           class="rounded-xl bg-white text-primary font-semibold text-[17px] px-9 py-[18px] hover:bg-gray-100 transition-colors"
         >
-          Reserva una consulta gratuita
+          Reserva una valoración gratuita
         </UButton>
         <UButton
           to="tel:+522461370462"

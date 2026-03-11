@@ -1,10 +1,10 @@
 <script setup lang="ts">
 
 useSeoMeta({
-  title: 'Contacto | Agenda tu Consulta Gratuita — Cefire Fisioterapia',
-  description: 'Contáctanos para agendar tu consulta gratuita de fisioterapia en Tlaxcala. Atención en Insurgentes #2, San Esteban Tizatlan. Tel: (246) 137 0462.',
+  title: 'Contacto | Agenda tu Valoración Gratuita — Cefire Fisioterapia',
+  description: 'Contáctanos para agendar tu valoración gratuita de fisioterapia en Tlaxcala. Atención en Insurgentes #2, San Esteban Tizatlan. Tel: (246) 137 0462.',
   ogTitle: 'Contacto — Cefire Fisioterapia',
-  ogDescription: 'Agenda tu consulta gratuita. Estamos en Insurgentes #2, San Esteban Tizatlan, Tlaxcala.',
+  ogDescription: 'Agenda tu valoración gratuita. Estamos en Insurgentes #2, San Esteban Tizatlan, Tlaxcala.',
   ogType: 'website',
   twitterCard: 'summary_large_image',
 })
