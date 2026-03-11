@@ -1,12 +1,50 @@
 <script setup lang="ts">
 
+useSeoMeta({
+  title: 'Contacto | Agenda tu Consulta Gratuita — Cefire Fisioterapia',
+  description: 'Contáctanos para agendar tu consulta gratuita de fisioterapia en Tlaxcala. Atención en Insurgentes #2, San Esteban Tizatlan. Tel: (246) 137 0462.',
+  ogTitle: 'Contacto — Cefire Fisioterapia',
+  ogDescription: 'Agenda tu consulta gratuita. Estamos en Insurgentes #2, San Esteban Tizatlan, Tlaxcala.',
+  ogType: 'website',
+  twitterCard: 'summary_large_image',
+})
+
+useHead({
+  script: [{
+    type: 'application/ld+json',
+    innerHTML: JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'ContactPage',
+      name: 'Contacto — Cefire Fisioterapia',
+      url: 'https://cefire.com.mx/contact',
+      isPartOf: {
+        '@type': 'MedicalBusiness',
+        name: 'Cefire Fisioterapia',
+        telephone: '+522461370462',
+        email: 'eliot_77@live.com.mx',
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: 'Insurgentes #2',
+          addressLocality: 'San Esteban Tizatlan',
+          addressRegion: 'Tlaxcala',
+          addressCountry: 'MX',
+        },
+        openingHoursSpecification: [
+          { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday'], opens: '07:00', closes: '22:00' },
+          { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Saturday'], opens: '08:00', closes: '14:00' },
+        ],
+      },
+    }),
+  }],
+})
+
 // Opciones del selector de servicios
 const serviceOptions = [
-  { label: 'Sports Rehabilitation',  value: 'sports'       },
-  { label: 'Post-Surgery Recovery',  value: 'post-surgery' },
-  { label: 'Chronic Pain Relief',    value: 'chronic-pain' },
-  { label: 'Mobility & Wellness',    value: 'mobility'     },
-  { label: 'Other',                  value: 'other'        },
+  { label: 'Rehabilitación Deportiva',  value: 'sports'       },
+  { label: 'Recuperación Post-Cirugía', value: 'post-surgery' },
+  { label: 'Alivio del Dolor Crónico',  value: 'chronic-pain' },
+  { label: 'Movilidad y Bienestar',     value: 'mobility'     },
+  { label: 'Otro',                      value: 'other'        },
 ]
 
 // Estado del formulario
@@ -29,7 +67,7 @@ const contactCards = [
   {
     icon:    'i-lucide-phone',
     title:   'Llámanos',
-    value:   '(555) 123-4567',
+    value:   '(246) 137-0462',
     sub:     'Lun-Vie: 7am - 10pm\nSab: 8am - 2pm',
     dark:    false,
   },

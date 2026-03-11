@@ -1,5 +1,32 @@
 <script setup lang="ts">
 
+useSeoMeta({
+  title: 'Servicios | Fisioterapia Especializada — Cefire Tlaxcala',
+  description: 'Rehabilitación deportiva, recuperación posoperatoria, alivio del dolor crónico y movilidad. Fisioterapia especializada y basada en evidencia en Tlaxcala.',
+  ogTitle: 'Servicios de Fisioterapia — Cefire',
+  ogDescription: 'Atención experta adaptada a tu recuperación: deportiva, posoperatoria, dolor crónico y bienestar.',
+  ogType: 'website',
+  twitterCard: 'summary_large_image',
+})
+
+useHead({
+  script: [{
+    type: 'application/ld+json',
+    innerHTML: JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      name: 'Servicios de Fisioterapia — Cefire',
+      url: 'https://cefire.com.mx/services',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Rehabilitación Deportiva',    url: 'https://cefire.com.mx/services#sports'       },
+        { '@type': 'ListItem', position: 2, name: 'Recuperación Post-Cirugía',   url: 'https://cefire.com.mx/services#post-surgery'  },
+        { '@type': 'ListItem', position: 3, name: 'Alivio del Dolor Crónico',    url: 'https://cefire.com.mx/services#chronic-pain'  },
+        { '@type': 'ListItem', position: 4, name: 'Movilidad y Bienestar',       url: 'https://cefire.com.mx/services#mobility'      },
+      ],
+    }),
+  }],
+})
+
 const services = [
   {
     id: 'sports',
@@ -142,8 +169,10 @@ const whyCards = [
         >
           <NuxtImg
             :src="service.image"
-            :alt="service.label"
+            :alt="`Fisioterapeuta realizando ${service.label.toLowerCase()} en Cefire`"
             class="w-full h-full object-cover"
+            format="webp"
+            :loading="service.id === 'sports' ? 'eager' : 'lazy'"
             width="560"
             height="420"
           />
@@ -191,8 +220,10 @@ const whyCards = [
         >
           <NuxtImg
             :src="service.image"
-            :alt="service.label"
+            :alt="`Fisioterapeuta realizando ${service.label.toLowerCase()} en Cefire`"
             class="w-full h-full object-cover"
+            format="webp"
+            loading="lazy"
             width="560"
             height="420"
           />
