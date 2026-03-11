@@ -14,7 +14,7 @@ export default defineNuxtConfig({
   ],
 
   site: {
-    url: 'https://cefire.com.mx',
+    // url: 'https://cefire.com.mx',
     name: 'Cefire Fisioterapia',
   },
 

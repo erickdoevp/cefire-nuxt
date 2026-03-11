@@ -5,7 +5,7 @@ useSeoMeta({
   description: 'Fisioterapia experta con planes de recuperación personalizados. Rehabilitación deportiva, posoperatoria y alivio del dolor crónico. Más de 1,000 pacientes recuperados.',
   ogTitle: 'Cefire | Clínica de Fisioterapia en Tlaxcala',
   ogDescription: 'Recupera el movimiento con fisioterapia personalizada. Agenda tu consulta gratuita hoy.',
-  ogImage: 'https://cefire.com.mx/images/comience-hoy.jpg',
+  // ogImage: 'https://cefire.com.mx/images/comience-hoy.jpg',
   ogType: 'website',
   twitterCard: 'summary_large_image',
 })
@@ -48,7 +48,7 @@ useHead({
         '@type': 'MedicalBusiness',
         name: 'Cefire Fisioterapia',
         description: 'Clínica de fisioterapia especializada en rehabilitación deportiva, recuperación posoperatoria y alivio del dolor crónico.',
-        url: 'https://cefire.com.mx',
+        //url: 'https://cefire.com.mx',
         telephone: '+522461370462',
         address: {
           '@type': 'PostalAddress',
@@ -157,7 +157,7 @@ const patients = [
         loading: 'lazy' as const
       }
     },
-    quote: “”En mi último año de secundaria, estaba nervioso por la fisioterapia. El equipo fue muy paciente y amable. Ahora puedo volver a acompañar a mis nietos a la escuela sin dolor.””
+    quote: "”En mi último año de secundaria, estaba nervioso por la fisioterapia. El equipo fue muy paciente y amable. Ahora puedo volver a acompañar a mis nietos a la escuela sin dolor.”"
   },
 ];
 

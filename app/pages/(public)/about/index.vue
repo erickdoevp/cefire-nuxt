@@ -1,10 +1,32 @@
 <script setup lang="ts">
 
+useSeoMeta({
+  title: 'Nosotros | Cefire Fisioterapia en Tlaxcala',
+  description: 'Desde 2009, Cefire Fisioterapia se dedica a ayudar a las personas a recuperar su movilidad y calidad de vida con fisioterapia personalizada y basada en evidencia.',
+  ogTitle: 'Nosotros | Cefire Fisioterapia en Tlaxcala',
+  ogDescription: 'Conoce al equipo de Cefire: especialistas certificados comprometidos con tu recuperación desde 2009.',
+  ogType: 'website',
+  twitterCard: 'summary_large_image',
+})
+
 useHead({
-  title: 'About Us — CEFIRE TLAX',
-  meta: [
-    { name: 'description', content: 'Desde 2009, CEFIRE TLAX se ha dedicado a ayudar a las personas a recuperar su movilidad, confianza y calidad de vida.' }
-  ]
+  script: [{
+    type: 'application/ld+json',
+    innerHTML: JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'AboutPage',
+      name: 'Nosotros — Cefire Fisioterapia',
+      description: 'Desde 2009, Cefire Fisioterapia ayuda a las personas a recuperar su movilidad y calidad de vida con fisioterapia personalizada.',
+      url: 'https://cefire.com.mx/about',
+      isPartOf: {
+        '@type': 'MedicalBusiness',
+        name: 'Cefire Fisioterapia',
+        url: 'https://cefire.com.mx',
+        foundingDate: '2009',
+        numberOfEmployees: { '@type': 'QuantitativeValue', value: 2 },
+      },
+    }),
+  }],
 });
 
 const milestones = [
@@ -38,7 +60,7 @@ const values = [
   },
   {
     icon: 'i-lucide-hand-heart',
-    title: 'Compassion Always',
+    title: 'Compasión siempre',
     description: "La sanación no es solo física. Tratamos a cada paciente con empatía, paciencia y un cuidado genuino por su bienestar."
   },
   {
@@ -84,7 +106,7 @@ const stats = [
     <section class="bg-[#F5F4F1] py-20">
        <UContainer class="flex flex-col items-center gap-8">
         <div class="flex flex-col items-center gap-3 text-center">
-            <span class="text-primary text-[13px] font-semibold tracking-[2px]">NUESTRA VIAJE</span>
+            <span class="text-primary text-[13px] font-semibold tracking-[2px]">NUESTRO VIAJE</span>
             <h2 class="text-[#1A1918] text-[40px] font-bold tracking-[-0.5px]">
             Construido con un propósito, impulsado por los resultados
             </h2>
@@ -95,11 +117,15 @@ const stats = [
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-[60px] w-full">
             <div class="rounded-[20px] overflow-hidden shrink-0 bg-[#E8E6E1]">
-            <img
+              <NuxtImg
                 src="/images/comience-hoy.jpg"
-                alt="RestorePT clinic through the years"
+                alt="Instalaciones de Cefire Fisioterapia en Tlaxcala"
                 class="w-full h-full object-cover"
-            />
+                format="webp"
+                loading="lazy"
+                width="600"
+                height="500"
+              />
             </div>
 
             <div class="flex flex-col gap-7 flex-1">
