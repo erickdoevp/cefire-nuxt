@@ -12,7 +12,7 @@ const services = [
     title: "Recuperación posoperatoria",
     description:
       "Programas de rehabilitación estructurados que reconstruyen de forma segura la fuerza y ​​la movilidad después de procedimientos ortopédicos.",
-    icon: "i-heroicons-bone",
+    icon: "material-symbols:hand-bones-outline",
     iconBg: "bg-orange-100 text-orange-600"
   },
   {

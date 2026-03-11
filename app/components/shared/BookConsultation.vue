@@ -24,7 +24,7 @@
           variant="outline"
           class="rounded-xl border border-white/40 text-white font-semibold text-[17px] px-9 py-[18px] bg-transparent hover:bg-white/10 transition-colors"
         >
-          Call (246) 137 0462
+          Llamanos (246) 137 0462
         </UButton>
       </div>
       <p class="text-[14px] font-medium text-white/60">

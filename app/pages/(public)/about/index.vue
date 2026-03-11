@@ -1,9 +1,9 @@
 <script setup lang="ts">
 
 useHead({
-  title: 'About Us — RestorePT',
+  title: 'About Us — CEFIRE TLAX',
   meta: [
-    { name: 'description', content: 'Since 2009, RestorePT has been dedicated to helping people reclaim their mobility, confidence, and quality of life.' }
+    { name: 'description', content: 'Desde 2009, CEFIRE TLAX se ha dedicado a ayudar a las personas a recuperar su movilidad, confianza y calidad de vida.' }
   ]
 });
 
@@ -60,39 +60,26 @@ const stats = [
 <template>
   <UPage>
 
-    <UContainer class="py-20">
-      <div class="grid lg:grid-cols-2 gap-12 items-center">
-        <div>
-          <UBadge
-            icon="i-lucide-heart-pulse"
-            variant="soft"
-            class="mb-6 rounded-2xl px-3" 
-          >
-            NUESTRA HISTORIA
-          </UBadge>
+    <section class="bg-white">
+      <UContainer class="flex flex-col items-center gap-6 py-[100px]">
+        <!-- Badge -->
+        <UBadge
+          icon="i-lucide-heart-pulse"
+          variant="soft"
+          class="mb-6 rounded-2xl px-3" 
+        >
+          NUESTRA HISTORIA
+        </UBadge>
 
-          <h1 class="text-4xl lg:text-5xl font-bold leading-tight mb-6">
-            Curando personas, 
-            <br />
-            no solo síntomas.
-          </h1>
+        <h1 class="max-w-[800px] text-center text-[52px] font-bold text-[#1A1918] leading-[1.1] tracking-[-1px]">
+          Curando personas, <br>no solo síntomas.
+        </h1>
 
-          <p class="text-gray-500 text-lg mb-8 max-w-lg">
-            Desde 2009, CEFIRE Tlax se ha dedicado a ayudar a las personas a recuperar su movilidad, confianza y calidad de vida a través de fisioterapia personalizada y basada en evidencia.
-          </p>
-        </div>
-
-        <div>
-          <NuxtImg 
-            src="/images/comience-hoy.jpg" 
-            alt="comience hoy"
-            class="w-full object-cover rounded-lg"
-            format="webp"
-          />
-        </div>
-
-      </div>
-    </UContainer>
+        <p class="max-w-[680px] text-center text-[18px] text-[#6D6C6A] leading-[1.6]">
+          Desde 2009, CEFIRE Tlax se ha dedicado a ayudar a las personas a recuperar su movilidad, confianza y calidad de vida a través de fisioterapia personalizada y basada en evidencia.
+        </p>
+      </UContainer>
+    </section>
 
     <section class="bg-[#F5F4F1] py-20">
        <UContainer class="flex flex-col items-center gap-8">

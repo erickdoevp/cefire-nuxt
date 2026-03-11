@@ -54,23 +54,25 @@ const contactCards = [
   <div class="font-[Outfit] bg-[#F5F4F1]">
 
     <!-- ─── HERO ─────────────────────────────────────────────────── -->
-    <section class="bg-white flex flex-col items-center gap-6 py-[100px] pb-[60px]">
-      <!-- Badge -->
-      <UBadge
-        icon="i-lucide-heart-pulse"
-        variant="soft"
-        class="mb-6 rounded-2xl px-3" 
-      >
-        CONTÁCTENOS
-      </UBadge>
+    <section class="bg-white">
+      <UContainer class="flex flex-col items-center gap-6 py-[100px]">
+        <!-- Badge -->
+        <UBadge
+          icon="i-lucide-heart-pulse"
+          variant="soft"
+          class="mb-6 rounded-2xl px-3" 
+        >
+          CONTÁCTENOS
+        </UBadge>
 
-      <h1 class="max-w-[680px] text-center text-[52px] font-bold text-[#1A1918] leading-[1.1] tracking-[-1px]">
-        Nos Encantaría<br>Saber de Usted.
-      </h1>
+        <h1 class="max-w-[680px] text-center text-[52px] font-bold text-[#1A1918] leading-[1.1] tracking-[-1px]">
+          Nos Encantaría<br>Saber de Usted.
+        </h1>
 
-      <p class="max-w-[680px] text-center text-[18px] text-[#6D6C6A] leading-[1.6]">
-        Si tiene preguntas sobre nuestros servicios, desea programar una cita o simplemente necesita orientación, nuestro equipo está aquí para ayudarle.
-      </p>
+        <p class="max-w-[680px] text-center text-[18px] text-[#6D6C6A] leading-[1.6]">
+          Si tiene preguntas sobre nuestros servicios, desea programar una cita o simplemente necesita orientación, nuestro equipo está aquí para ayudarle.
+        </p>
+      </UContainer>
     </section>
 
     <!-- ─── FORMULARIO + TARJETAS DE CONTACTO ────────────────────── -->

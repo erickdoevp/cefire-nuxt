@@ -106,24 +106,26 @@ const whyCards = [
   <UPage class="font-[Outfit] bg-[#F5F4F1]">
 
     <!-- ─── HERO ─────────────────────────────────────────────────── -->
-    <section class="bg-white flex flex-col items-center gap-6 py-[100px]">
-      <!-- Badge -->
-      <UBadge
-        icon="i-lucide-stethoscope"
-        variant="soft"
-        class="mb-6 rounded-2xl px-3" 
-      >
-        LO QUE HACEMOS
-      </UBadge>
+    <section class="bg-white">
+      <UContainer class="flex flex-col items-center gap-6 py-[100px]">
+        <!-- Badge -->
+        <UBadge
+          icon="i-lucide-stethoscope"
+          variant="soft"
+          class="mb-6 rounded-2xl px-3" 
+        >
+          LO QUE HACEMOS
+        </UBadge>
 
-      <h1 class="max-w-[800px] text-center text-[52px] font-bold text-[#1A1918] leading-[1.1] tracking-[-1px]">
-      Atención experta, <br/> adaptada a su recuperación.
-      </h1>
+        <h1 class="max-w-[800px] text-center text-[52px] font-bold text-[#1A1918] leading-[1.1] tracking-[-1px]">
+        Atención experta, <br/> adaptada a su recuperación.
+        </h1>
 
-      <p class="max-w-[680px] text-center text-[18px] text-[#6D6C6A] leading-[1.6]">
-        Desde atletas que regresan a la competición hasta pacientes que se recuperan tras una cirugía,
-        ofrecemos fisioterapia especializada y basada en la evidencia para cada etapa de su proceso.
-      </p>
+        <p class="max-w-[680px] text-center text-[18px] text-[#6D6C6A] leading-[1.6]">
+          Desde atletas que regresan a la competición hasta pacientes que se recuperan tras una cirugía,
+          ofrecemos fisioterapia especializada y basada en la evidencia para cada etapa de su proceso.
+        </p>
+      </UContainer>
     </section>
 
     <!-- ─── SERVICE SECTIONS (alternadas) ────────────────────────── -->
