@@ -167,14 +167,13 @@ const whyCards = [
           v-if="service.imagePosition === 'left'"
           class="flex-shrink-0 rounded-[20px] overflow-hidden order-last md:order-first"
         >
-          <NuxtImg
+          <img
             :src="service.image"
             :alt="`Fisioterapeuta realizando ${service.label.toLowerCase()} en Cefire`"
             class="w-full h-full object-cover"
             format="webp"
             :loading="service.id === 'sports' ? 'eager' : 'lazy'"
             width="560"
-            height="420"
           />
         </div>
 
@@ -218,14 +217,13 @@ const whyCards = [
           v-if="service.imagePosition === 'right'"
           class="flex-shrink-0 rounded-[20px] overflow-hidden"
         >
-          <NuxtImg
+          <img
             :src="service.image"
             :alt="`Fisioterapeuta realizando ${service.label.toLowerCase()} en Cefire`"
             class="w-full h-full object-cover"
             format="webp"
             loading="lazy"
             width="560"
-            height="420"
           />
         </div>
 

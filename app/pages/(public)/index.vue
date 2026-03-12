@@ -305,7 +305,7 @@ const faqs = [
 
           <!-- RIGHT IMAGE -->
           <div>
-            <NuxtImg
+            <img
               src="/images/fisio-palomita.png"
               alt="Fisioterapeuta realizando tratamiento manual a paciente en Cefire Fisioterapia"
               class="w-full object-cover rounded-lg"
@@ -313,7 +313,6 @@ const faqs = [
               fetchpriority="high"
               loading="eager"
               width="600"
-              height="600"
             />
           </div>
 
@@ -431,7 +430,7 @@ const faqs = [
           >
             <!-- Foto -->
             <div class="w-full h-[320px] rounded-2xl overflow-hidden">
-              <NuxtImg
+              <img
                 :src="member.image"
                 :alt="member.name"
                 class="w-full h-full object-cover"
