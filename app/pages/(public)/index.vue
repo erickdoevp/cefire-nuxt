@@ -230,7 +230,7 @@ const faqs = [
 
     <section class="pt-8 md:pt-20">
       <UContainer>
-        <div class="grid lg:grid-cols-2 gap-4 md:gap-12 items-end">
+        <div class="grid lg:grid-cols-2 gap-6 md:gap-12 items-end">
 
           <!-- LEFT CONTENT -->
           <div>
@@ -313,7 +313,7 @@ const faqs = [
               fetchpriority="high"
               loading="eager"
               width="600"
-              height="500"
+              height="600"
             />
           </div>
 

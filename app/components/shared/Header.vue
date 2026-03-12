@@ -42,7 +42,7 @@ const items = computed<NavigationMenuItem[]>(() => [
           width="34"
           height="34"
         />
-        <p>Cefire</p>
+        <p>CEFIRE</p>
       </div>
     </template>
 

@@ -79,7 +79,6 @@ const services = [
     bullets: [
       'Terapia manual y movilización articular',
       'Punción seca y liberación de puntos gatillo',
-      'Punción seca y liberación de puntos gatillo.',
       'Educación sobre la ciencia del dolor y estrategias de autogestión',
     ],
     image: '/images/equipo-medico1.jpg',
