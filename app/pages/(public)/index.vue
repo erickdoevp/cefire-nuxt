@@ -111,7 +111,7 @@ const services = [
     iconBg: "bg-blue-100 text-blue-600"
   },
   {
-    title: "Neurorrehabilitación",
+    title: "Neurorehabilitación",
     description:
       "Tratamientos especializados que favorecen la recuperación de funciones motoras y neurológicas para mejorar la independencia y calidad de vida.",
     icon: "hugeicons:ai-brain-01",
@@ -228,7 +228,7 @@ const faqs = [
 <template>
   <UPage>
 
-    <section class="pt-8 md:pt-20">
+    <section class="pt-8 md:pt-10">
       <UContainer>
         <div class="grid lg:grid-cols-2 gap-6 md:gap-12 items-end">
 
@@ -238,7 +238,7 @@ const faqs = [
             <UBadge
               icon="i-lucide-heart"
               variant="soft"
-              class="mb-6 rounded-2xl px-3" 
+              class="mb-6 rounded-2xl px-3 text-sm" 
             >
               Más de 1000 pacientes confían en nosotros
             </UBadge>
@@ -419,7 +419,7 @@ const faqs = [
             Conoce a tus Fisioterapeutas
           </h2>
           <p class="text-gray-500">
-            Especialistas certificados con más de 40 años de experiencia clínica combinada.
+            Especialistas certificados con más de 15 años de experiencia clínica combinada.
           </p>
         </div>
         <!-- Grid de terapeutas -->

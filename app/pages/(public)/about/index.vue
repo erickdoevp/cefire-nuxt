@@ -37,9 +37,9 @@ const milestones = [
     description: 'LTFyR. Elliut Cruz empezó CEFIRE TLAX con una creencia simple: cada paciente merece un plan de recuperación diseñado en torno a su vida, no solo a su diagnóstico.'
   },
   {
-    year: '2015',
+    year: '2017',
     title: 'Ampliamos nuestras especialidades',
-    description: 'Se agregaron programas de rehabilitación deportiva y recuperación posoperatoria, ampliando nuestro equipo a seis especialistas certificados.'
+    description: 'Se instala área de Neurorehabilitación, especialidad terapéutica enfocada en ayudar a las personas a recuperar y adaptar las funciones perdidas o deterioradas a causa de una enfermedad o lesión que afectan al sistema nervioso.'
   },
   {
     year: '2023',
@@ -61,19 +61,19 @@ const values = [
   },
   {
     icon: 'i-lucide-hand-heart',
-    title: 'Compasión siempre',
+    title: 'Trato humanitario',
     description: "La sanación no es solo física. Tratamos a cada paciente con empatía, paciencia y un cuidado genuino por su bienestar."
   },
   {
     icon: 'i-lucide-trophy',
     title: 'Resultados duraderos',
-    description: "No solo aliviamos el dolor: desarrollamos fuerza, movilidad y resiliencia para que usted se mantenga mejor para siempre."
+    description: "No solo aliviamos el dolor: desarrollamos fuerza, movilidad y resiliencia para que pueda reintegrarse a sus actividades diarias, laborales y sociables"
   }
 ];
 
 const stats = [
   { number: '1,000+', label: 'Pacientes tratados' },
-  { number: '97%',    label: 'Satisfacción del paciente' },
+  { number: '99%',    label: 'Satisfacción del paciente' },
   { number: '10+',    label: 'Años de experiencia' },
   { number: '15+',    label: 'Años combinados de experiencia' }
 ];
@@ -89,13 +89,13 @@ const stats = [
         <UBadge
           icon="i-lucide-heart-pulse"
           variant="soft"
-          class="mb-6 rounded-2xl px-3" 
+          class="mb-6 rounded-2xl px-3 text-sm" 
         >
           NUESTRA HISTORIA
         </UBadge>
 
         <h1 class="max-w-[800px] text-center text-[52px] font-bold text-[#1A1918] leading-[1.1] tracking-[-1px]">
-          Curando personas, <br>no solo síntomas.
+          Rehabilitando personas, <br>no solo síntomas.
         </h1>
 
         <p class="max-w-[680px] text-center text-[18px] text-[#6D6C6A] leading-[1.6]">

@@ -139,7 +139,7 @@ const whyCards = [
         <UBadge
           icon="i-lucide-stethoscope"
           variant="soft"
-          class="mb-6 rounded-2xl px-3" 
+          class="mb-6 rounded-2xl px-3 text-sm" 
         >
           LO QUE HACEMOS
         </UBadge>
