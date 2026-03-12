@@ -228,9 +228,9 @@ const faqs = [
 <template>
   <UPage>
 
-    <section class="pt-20">
+    <section class="pt-8 md:pt-20">
       <UContainer>
-        <div class="grid lg:grid-cols-2 gap-12 items-end">
+        <div class="grid lg:grid-cols-2 gap-4 md:gap-12 items-end">
 
           <!-- LEFT CONTENT -->
           <div>
@@ -284,7 +284,7 @@ const faqs = [
             </div>
 
             <!-- Stats -->
-            <div class="flex gap-10 text-sm mb-20">
+            <div class="flex gap-10 text-sm md:mb-20">
               <div>
                 <p class="text-2xl font-bold text-primary">10+</p>
                 <p class="text-gray-500">Años de experiencia</p>
