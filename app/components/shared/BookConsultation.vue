@@ -1,6 +1,6 @@
 <template>
   <!-- ─── CTA ───────────────────────────────────────────────────── -->
-  <section class="bg-[#466bc2] py-20">
+  <section class="bg-[#00396d] py-20">
     <UContainer class="flex flex-col items-center gap-8">
       <h2 class="text-[44px] font-bold text-white text-center tracking-[-0.5px]">
         ¿Estás listo para comenzar tu recuperación?

@@ -5,10 +5,10 @@ useSeoMeta({
   description: 'Fisioterapia experta con planes de recuperación personalizados. Rehabilitación deportiva, posoperatoria y alivio del dolor crónico. Más de 1,000 pacientes recuperados.',
   ogTitle: 'Cefire | Clínica de Fisioterapia en Tlaxcala',
   ogDescription: 'Recupera el movimiento con fisioterapia personalizada. Agenda tu valoración gratuita hoy.',
-  ogImage: 'https://cefire.com.mx/images/comience-hoy.jpg',
+  ogImage: 'https://cefiretlx.com/images/comience-hoy.jpg',
   ogType: 'website',
   twitterCard: 'summary_large_image',
-  canonical: 'https://cefire.com.mx',
+  // canonical: 'https://cefiretlx.com',
 })
 
 useHead({
@@ -49,7 +49,7 @@ useHead({
         '@type': 'MedicalBusiness',
         name: 'Cefire Fisioterapia',
         description: 'Clínica de fisioterapia especializada en rehabilitación deportiva, recuperación posoperatoria y alivio del dolor crónico.',
-        url: 'https://cefire.com.mx',
+        url: 'https://cefiretlx.com',
         telephone: '+522461370462',
         address: {
           '@type': 'PostalAddress',
@@ -196,12 +196,12 @@ const team = [
     bio:   'Enfocada en la rehabilitación pediatrica mediante el juego y ejercicio terapeutico.',
     image: '/images/comience-hoy.jpg',
   },
-  // {
-  //   name:  'Dr. David Okafor',
-  //   role:  'DPT, Geriatric Specialist',
-  //   bio:   'Dedicado a ayudar a los adultos mayores a mantener la movilidad, la independencia y un estilo de vida activo.',
-  //   image: '/images/comience-hoy.jpg',
-  // },
+  {
+    name:  'Luna Yeray Cruz Padilla',
+    role:  'Practicante en Terapia Fisica',
+    bio:   'Dedicada a ayudar a los adultos mayores a mantener la movilidad, la independencia y un estilo de vida activo.',
+    image: '/images/comience-hoy.jpg',
+  },
 ];
 
 const faqs = [
@@ -228,95 +228,98 @@ const faqs = [
 <template>
   <UPage>
 
-    <UContainer class="py-8 md:py-20">
-      <div class="grid lg:grid-cols-2 gap-12 items-center">
+    <section class="pt-20">
+      <UContainer>
+        <div class="grid lg:grid-cols-2 gap-12 items-end">
 
-        <!-- LEFT CONTENT -->
-        <div>
-          <!-- Badge -->
-          <UBadge
-            icon="i-lucide-heart"
-            variant="soft"
-            class="mb-6 rounded-2xl px-3" 
-          >
-            Más de 1000 pacientes confían en nosotros
-          </UBadge>
-
-          <!-- Title -->
-          <h1 class="text-4xl lg:text-5xl font-bold leading-tight mb-6">
-            Restaura el Movimiento.
-            <br />
-            Recupera tu vida.
-          </h1>
-
-          <!-- Description -->
-          <p class="text-gray-500 text-lg mb-8 max-w-lg">
-            Fisioterapia experta que va más allá del tratamiento. 
-            Creamos planes de recuperación personalizados que te permiten
-             volver a hacer lo que amas, sin dolor y con más fuerza que antes.
-          </p>
-
-          <!-- Buttons -->
-          <div class="flex gap-4 mb-10">
-            <UButton>
-              <NuxtLink
-                target="_blank"
-                to="https://wa.me/522461370462?text=Hola%20quiero%20más%20información"
-                rel="noopener noreferrer"
-                size="lg"
-              >
-                Reserva una valoración gratuita
-              </NuxtLink>
-            </UButton>
-
-            <UButton
-              variant="outline"
-              size="lg"
+          <!-- LEFT CONTENT -->
+          <div>
+            <!-- Badge -->
+            <UBadge
+              icon="i-lucide-heart"
+              variant="soft"
+              class="mb-6 rounded-2xl px-3" 
             >
-              <NuxtLink
-                to="/services"
+              Más de 1000 pacientes confían en nosotros
+            </UBadge>
+
+            <!-- Title -->
+            <h1 class="text-4xl lg:text-5xl font-bold leading-tight mb-6">
+              Restaura el Movimiento.
+              <br />
+              Recupera tu vida.
+            </h1>
+
+            <!-- Description -->
+            <p class="text-gray-500 text-lg mb-8 max-w-lg">
+              Fisioterapia experta que va más allá del tratamiento. 
+              Creamos planes de recuperación personalizados que te permiten
+              volver a hacer lo que amas, sin dolor y con más fuerza que antes.
+            </p>
+
+            <!-- Buttons -->
+            <div class="flex gap-4 mb-10">
+              <UButton>
+                <NuxtLink
+                  target="_blank"
+                  to="https://wa.me/522461370462?text=Hola%20quiero%20más%20información"
+                  rel="noopener noreferrer"
+                  size="lg"
+                >
+                  Reserva una valoración gratuita
+                </NuxtLink>
+              </UButton>
+
+              <UButton
+                variant="outline"
                 size="lg"
               >
-                Conoce nuestros servicios
-              </NuxtLink>
-            </UButton>
+                <NuxtLink
+                  to="/services"
+                  size="lg"
+                >
+                  Conoce nuestros servicios
+                </NuxtLink>
+              </UButton>
+            </div>
+
+            <!-- Stats -->
+            <div class="flex gap-10 text-sm mb-20">
+              <div>
+                <p class="text-2xl font-bold text-primary">10+</p>
+                <p class="text-gray-500">Años de experiencia</p>
+              </div>
+
+              <div>
+                <p class="text-2xl font-bold text-primary">99%</p>
+                <p class="text-gray-500">Satisfacción del cliente</p>
+              </div>
+
+              <div>
+                <p class="text-2xl font-bold text-primary">1,000+</p>
+                <p class="text-gray-500">Pacientes Recuperados</p>
+              </div>
+            </div>
+
           </div>
 
-          <!-- Stats -->
-          <div class="flex gap-10 text-sm">
-            <div>
-              <p class="text-2xl font-bold text-primary">10+</p>
-              <p class="text-gray-500">Años de experiencia</p>
-            </div>
-
-            <div>
-              <p class="text-2xl font-bold text-primary">99%</p>
-              <p class="text-gray-500">Satisfacción del cliente</p>
-            </div>
-
-            <div>
-              <p class="text-2xl font-bold text-primary">1,000+</p>
-              <p class="text-gray-500">Pacientes Recuperados</p>
-            </div>
+          <!-- RIGHT IMAGE -->
+          <div>
+            <NuxtImg
+              src="/images/fisio-palomita.png"
+              alt="Fisioterapeuta realizando tratamiento manual a paciente en Cefire Fisioterapia"
+              class="w-full object-cover rounded-lg"
+              format="webp"
+              fetchpriority="high"
+              loading="eager"
+              width="600"
+              height="500"
+            />
           </div>
-        </div>
 
-        <!-- RIGHT IMAGE -->
-        <div>
-          <NuxtImg
-            src="/images/comience-hoy.jpg"
-            alt="Fisioterapeuta realizando tratamiento manual a paciente en Cefire Fisioterapia"
-            class="w-full object-cover rounded-lg"
-            format="webp"
-            fetchpriority="high"
-            loading="eager"
-            width="600"
-            height="500"
-          />
         </div>
-
-      </div>
-    </UContainer>
+      </UContainer>
+    </section>
 
     <section class="bg bg-stone-100 py-20">
       <UContainer>
@@ -420,7 +423,7 @@ const faqs = [
           </p>
         </div>
         <!-- Grid de terapeutas -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
           <div
             v-for="member in team"
             :key="member.name"

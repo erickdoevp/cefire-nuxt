@@ -7,7 +7,7 @@ useSeoMeta({
   ogDescription: 'Atención experta adaptada a tu recuperación: deportiva, posoperatoria, dolor crónico y bienestar.',
   ogType: 'website',
   twitterCard: 'summary_large_image',
-  canonical: 'https://cefire.com.mx/services',
+  // canonical: 'https://cefiretlx.com/services',
 })
 
 useHead({
@@ -17,12 +17,12 @@ useHead({
       '@context': 'https://schema.org',
       '@type': 'ItemList',
       name: 'Servicios de Fisioterapia — Cefire',
-      url: 'https://cefire.com.mx/services',
+      url: 'https://cefiretlx.com/services',
       itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Rehabilitación Deportiva',    url: 'https://cefire.com.mx/services#sports'       },
-        { '@type': 'ListItem', position: 2, name: 'Recuperación Post-Cirugía',   url: 'https://cefire.com.mx/services#post-surgery'  },
-        { '@type': 'ListItem', position: 3, name: 'Alivio del Dolor Crónico',    url: 'https://cefire.com.mx/services#chronic-pain'  },
-        { '@type': 'ListItem', position: 4, name: 'Movilidad y Bienestar',       url: 'https://cefire.com.mx/services#mobility'      },
+        { '@type': 'ListItem', position: 1, name: 'Rehabilitación Deportiva',    url: 'https://cefiretlx.com/services#sports'       },
+        { '@type': 'ListItem', position: 2, name: 'Recuperación Post-Cirugía',   url: 'https://cefiretlx.com/services#post-surgery'  },
+        { '@type': 'ListItem', position: 3, name: 'Alivio del Dolor Crónico',    url: 'https://cefiretlx.com/services#chronic-pain'  },
+        { '@type': 'ListItem', position: 4, name: 'Movilidad y Bienestar',       url: 'https://cefiretlx.com/services#mobility'      },
       ],
     }),
   }],

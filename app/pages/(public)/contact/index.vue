@@ -7,7 +7,7 @@ useSeoMeta({
   ogDescription: 'Agenda tu valoración gratuita. Estamos en Insurgentes #2, San Esteban Tizatlan, Tlaxcala.',
   ogType: 'website',
   twitterCard: 'summary_large_image',
-  canonical: 'https://cefire.com.mx/contact',
+  // canonical: 'https://cefiretlx.com/contact',
 })
 
 useHead({
@@ -17,7 +17,7 @@ useHead({
       '@context': 'https://schema.org',
       '@type': 'ContactPage',
       name: 'Contacto — Cefire Fisioterapia',
-      url: 'https://cefire.com.mx/contact',
+      url: 'https://cefiretlx.com/contact',
       isPartOf: {
         '@type': 'MedicalBusiness',
         name: 'Cefire Fisioterapia',

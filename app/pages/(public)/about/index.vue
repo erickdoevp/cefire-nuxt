@@ -7,7 +7,7 @@ useSeoMeta({
   ogDescription: 'Conoce al equipo de Cefire: especialistas certificados comprometidos con tu recuperación desde 2009.',
   ogType: 'website',
   twitterCard: 'summary_large_image',
-  canonical: 'https://cefire.com.mx/about',
+  // canonical: 'https://cefiretlx.com/about',
 })
 
 useHead({
@@ -18,11 +18,11 @@ useHead({
       '@type': 'AboutPage',
       name: 'Nosotros — Cefire Fisioterapia',
       description: 'Desde 2009, Cefire Fisioterapia ayuda a las personas a recuperar su movilidad y calidad de vida con fisioterapia personalizada.',
-      url: 'https://cefire.com.mx/about',
+      url: 'https://cefiretlx.com/about',
       isPartOf: {
         '@type': 'MedicalBusiness',
         name: 'Cefire Fisioterapia',
-        url: 'https://cefire.com.mx',
+        url: 'https://cefiretlx.com',
         foundingDate: '2009',
         numberOfEmployees: { '@type': 'QuantitativeValue', value: 2 },
       },

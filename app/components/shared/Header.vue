@@ -35,13 +35,15 @@ const items = computed<NavigationMenuItem[]>(() => [
 <template>
   <UHeader>
     <template #title>
-      <img 
-        src="/images/logo.png" 
-        alt="main logo"
-        width="34"
-        height="auto"
-        >
-      <p>Cefire</p>
+      <div class="flex items-center gap-3">
+        <img
+          src="/images/main-logo.png"
+          alt="Cefire Fisioterapia logo"
+          width="34"
+          height="34"
+        />
+        <p>Cefire</p>
+      </div>
     </template>
 
     <UNavigationMenu :items="items"/>
