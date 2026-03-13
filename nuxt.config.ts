@@ -33,10 +33,8 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
-  // nitro: {
-  //   prerender: {
-  //     failOnError: false,
-  //   },
-  // },
+  nitro: {
+    preset: 'cloudflare-pages'  // en lugar de cloudflare-module
+  }
 
 })
