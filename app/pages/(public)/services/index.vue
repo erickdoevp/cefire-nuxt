@@ -1,10 +1,10 @@
 <script setup lang="ts">
 
 useSeoMeta({
-  title: 'Servicios | Fisioterapia Especializada — Cefire Tlaxcala',
-  description: 'Rehabilitación deportiva, recuperación posoperatoria, alivio del dolor crónico y movilidad. Fisioterapia especializada y basada en evidencia en Tlaxcala.',
+  title: 'Servicios | Neurorehabilitación, Terapia Ocupacional y más — Cefire Tlaxcala',
+  description: 'Neurorehabilitación, recuperación post fractura, terapia ocupacional y estimulación temprana. Fisioterapia especializada y basada en evidencia en Tlaxcala.',
   ogTitle: 'Servicios de Fisioterapia — Cefire',
-  ogDescription: 'Atención experta adaptada a tu recuperación: deportiva, posoperatoria, dolor crónico y bienestar.',
+  ogDescription: 'Atención experta adaptada a tu recuperación: neurorehabilitación, post fractura, terapia ocupacional y estimulación temprana.',
   ogType: 'website',
   twitterCard: 'summary_large_image',
   // canonical: 'https://cefiretlx.com/services',
@@ -19,10 +19,10 @@ useHead({
       name: 'Servicios de Fisioterapia — Cefire',
       url: 'https://cefiretlx.com/services',
       itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Rehabilitación Deportiva',    url: 'https://cefiretlx.com/services#sports'       },
-        { '@type': 'ListItem', position: 2, name: 'Recuperación Post-Cirugía',   url: 'https://cefiretlx.com/services#post-surgery'  },
-        { '@type': 'ListItem', position: 3, name: 'Alivio del Dolor Crónico',    url: 'https://cefiretlx.com/services#chronic-pain'  },
-        { '@type': 'ListItem', position: 4, name: 'Movilidad y Bienestar',       url: 'https://cefiretlx.com/services#mobility'      },
+        { '@type': 'ListItem', position: 1, name: 'Neurorehabilitación',          url: 'https://cefiretlx.com/services#neurorehabilitation' },
+        { '@type': 'ListItem', position: 2, name: 'Recuperación Post Fractura',   url: 'https://cefiretlx.com/services#fracture-recovery'   },
+        { '@type': 'ListItem', position: 3, name: 'Terapia Ocupacional',          url: 'https://cefiretlx.com/services#occupational-therapy' },
+        { '@type': 'ListItem', position: 4, name: 'Estimulación Temprana',        url: 'https://cefiretlx.com/services#early-stimulation'   },
       ],
     }),
   }],
