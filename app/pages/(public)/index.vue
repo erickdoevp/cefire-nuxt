@@ -69,10 +69,10 @@ useHead({
           '@type': 'OfferCatalog',
           name: 'Servicios de Fisioterapia',
           itemListElement: [
-            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Rehabilitación Deportiva' } },
-            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Recuperación Posoperatoria' } },
-            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Alivio del Dolor Crónico' } },
-            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Movilidad y Bienestar' } },
+            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Neurorehabilitación' } },
+            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Recuperación post parto' } },
+            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Terapia ocupacional' } },
+            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Estimulación temprana' } },
           ],
         },
       }),
@@ -83,46 +83,32 @@ useHead({
 
 const services = [
   {
-    title: "Rehabilitación Deportiva",
+    title: "Neurorehabilitación",
     description:
-      "Regrese al juego más rápido con programas de recuperación específicos para cada deporte adaptados a su disciplina y objetivos.",
+      "Recuperación de funciones motoras, neurológicas o deterioradas para mejorar la independencia y la calidad de vida ocasionadas por lesiones o enfermedades del sistema nervioso.",
     icon: "i-heroicons-heart",
     iconBg: "bg-green-100 text-green-600"
   },
   {
-    title: "Recuperación posoperatoria",
+    title: "Recuperación post fractura",
     description:
-      "Programas de rehabilitación estructurados que reconstruyen de forma segura la fuerza y ​​la movilidad después de procedimientos ortopédicos.",
+      "Proceso integral para restaurar la funcionalidad y movilidad de la parte afectada, previniendo complicaciones a largo plazo ",
     icon: "material-symbols:hand-bones-outline",
     iconBg: "bg-orange-100 text-orange-600"
   },
   {
-    title: "Alivio del dolor crónico",
+    title: "Terapia ocupacional",
     description:
-      "Aborde el dolor persistente desde su origen con terapia manual y programas de ejercicios específicos.",
+      "Centrado en ayudar a participar de manera satisfactoria en las actividades de la vida diaria mediante la habilitación de sus capacidades o la de adaptación del entorno para facilitar su desempeño",
     icon: "i-heroicons-hand-raised",
     iconBg: "bg-purple-100 text-purple-600"
-  },
-  {
-    title: "Movilidad y bienestar",
-    description:
-      "Atención preventiva y entrenamiento del movimiento funcional para mejorar la flexibilidad, el equilibrio y la calidad de vida.",
-    icon: "ic:baseline-directions-walk",
-    iconBg: "bg-blue-100 text-blue-600"
-  },
-  {
-    title: "Neurorehabilitación",
-    description:
-      "Tratamientos especializados que favorecen la recuperación de funciones motoras y neurológicas para mejorar la independencia y calidad de vida.",
-    icon: "hugeicons:ai-brain-01",
-    iconBg: "bg-red-100 text-red-600"
   },
   {
     title: "Estimulación temprana",
     description:
       "Actividades terapéuticas diseñadas para favorecer el desarrollo motor, cognitivo y sensorial en bebés y niños pequeños, potenciando sus habilidades desde los primeros años de vida.",
-    icon: "tabler:baby-carriage",
-    iconBg: "bg-cyan-100 text-cyan-600"
+    icon: "ic:baseline-directions-walk",
+    iconBg: "bg-blue-100 text-blue-600"
   }
 ];
 
@@ -333,7 +319,7 @@ const faqs = [
            Desde la rehabilitación posoperatoria hasta el manejo del dolor crónico, nuestro enfoque basado en evidencia ofrece resultados duraderos.
           </p>
         </div>
-        <div class="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <div class="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
           <UCard
             v-for="service in services"
             :key="service.title"
