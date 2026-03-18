@@ -171,13 +171,13 @@ const patients = [
 
 const team = [
   {
-    name:  'LTF y R. Elliut Misael Cruz Trinidad',
+    name:  'LTFR. Elliut Misael Cruz Trinidad',
     role:  'Terapeuta fisico',
     bio:   'Experto en el tratamiento del dolor crónico mediante terapia manual y enfoques basados ​​en la neurociencia.',
     image: '/images/comience-hoy.jpg',
   },
   {
-    name:  'LTF y R. Paloma Jatzidi Cruz Padilla',
+    name:  'LTFR. Paloma Jatzidi Cruz Padilla',
     role:  'Terapeuta fisico',
     bio:   'Enfocada en la rehabilitación pediatrica mediante el juego y ejercicio terapeutico.',
     image: '/images/comience-hoy.jpg',
