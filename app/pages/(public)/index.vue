@@ -1,4 +1,65 @@
 <script setup lang="ts">
+// import { ref, onMounted, onUnmounted } from 'vue'
+
+// // Scroll + frame animation
+// const videoSection = ref<HTMLElement | null>(null)
+// const canvasEl = ref<HTMLCanvasElement | null>(null)
+// const videoRadius = ref(24)
+
+// const TOTAL_FRAMES = 121
+// const frames: HTMLImageElement[] = []
+// let rafId: number | null = null
+// let targetProgress = 0
+
+// function preloadFrames() {
+//   for (let i = 30; i <= TOTAL_FRAMES; i++) {
+//     const img = new Image()
+//     img.src = `/frames/frame_${String(i).padStart(4, '0')}.jpg`
+//     img.onload = () => {
+//       if (i === 1) drawFrame(0)
+//     }
+//     frames[i - 1] = img
+//   }
+// }
+
+// function drawFrame(progress: number) {
+//   const canvas = canvasEl.value
+//   if (!canvas) return
+//   const idx = Math.min(Math.round(progress * (TOTAL_FRAMES - 1)), TOTAL_FRAMES - 1)
+//   const img = frames[idx]
+//   if (!img?.complete || !img.naturalWidth) return
+//   const ctx = canvas.getContext('2d')
+//   if (!ctx) return
+//   if (canvas.width !== img.naturalWidth) {
+//     canvas.width = img.naturalWidth
+//     canvas.height = img.naturalHeight
+//   }
+//   ctx.drawImage(img, 0, 0)
+// }
+
+// function onScroll() {
+//   const el = videoSection.value
+//   if (!el) return
+//   const rect = el.getBoundingClientRect()
+//   const scrolled = -rect.top
+//   targetProgress = Math.min(Math.max(scrolled / (el.offsetHeight - window.innerHeight), 0), 1)
+//   videoRadius.value = 24 - targetProgress * 24
+//   if (!rafId) rafId = requestAnimationFrame(onRaf)
+// }
+
+// function onRaf() {
+//   rafId = null
+//   drawFrame(targetProgress)
+// }
+
+// onMounted(() => {
+//   preloadFrames()
+//   window.addEventListener('scroll', onScroll, { passive: true })
+// })
+// onUnmounted(() => {
+//   window.removeEventListener('scroll', onScroll)
+//   if (rafId) cancelAnimationFrame(rafId)
+// })
 
 useSeoMeta({
   title: 'Cefire | Clínica de Fisioterapia en Tlaxcala',
@@ -31,13 +92,13 @@ useHead({
           },
           {
             '@type': 'Question',
-            name: '¿Aceptan seguro?',
-            acceptedAnswer: { '@type': 'Answer', text: 'Sí, aceptamos la mayoría de los principales planes de seguro. Contáctenos para verificar su cobertura.' },
-          },
-          {
-            '@type': 'Question',
             name: '¿Cuántas sesiones necesitaré?',
             acceptedAnswer: { '@type': 'Answer', text: 'Esto varía según la afección. La mayoría de los pacientes observan una mejora significativa en 6 a 12 sesiones. Le daremos un cronograma realista después de su evaluación inicial.' },
+          },
+          { 
+            '@type': 'Question',
+            name: '¿Cuáles son los beneficios de la fisioterapia?',
+            acceptedAnswer: { '@type': 'Answer', text: 'La fisioterapia ofrece múltiples beneficios para la salud física y funcional, destacando el alivio del dolor (agudo o crónico), la recuperación de lesiones y cirugías, y la mejora de la movilidad, fuerza muscular y flexibilidad.' },
           },
         ],
       }),
@@ -133,7 +194,7 @@ const pathRecovery = [
 const patients = [
   {
     user: {
-      name: 'Sarah Mitchell',
+      name: 'Juan Felipe',
       description: 'Marathon Runner',
       avatar: {
         src: 'https://avatars.githubusercontent.com/u/499550?v=4',
@@ -141,11 +202,15 @@ const patients = [
         loading: 'lazy' as const
       }
     },
-    quote: "“Después de mi cirugía de ligamento cruzado anterior (LCA), me aterraba no volver a correr. El equipo de RestorePT me permitió volver a correr en cuatro meses. De verdad se preocupan por tu recuperación.“"
+    quote: `“Me fracturé tercio medio de peroné y en el hospital me dijeron que necesitaba cirugía y
+     tenía que esperar más de 15 días en lo que tenían sala disponible, acudí a CEFIRE y después de 
+     una valoración completa me dijeron que, si se evitaba la cirugía, seguí todas las indicaciones y
+      el tratamiento indicado, después de 8 sesiones ya pude apoyar mi peso con ayuda de bota y
+       muletas y regresé a laborar. “`
   },
     {
     user: {
-      name: 'Sarah Mitchell',
+      name: 'Juan',
       description: 'Marathon Runner',
       avatar: {
         src: 'https://avatars.githubusercontent.com/u/499550?v=4',
@@ -153,7 +218,11 @@ const patients = [
         loading: 'lazy' as const
       }
     },
-    quote: "“Pasé años viviendo con dolor de espalda. Después de 8 semanas con el Dr. Chen, no tengo dolor por primera vez en una década. Este lugar me cambió la vida.“"
+    quote: `“Trabajo como conductor de transporte público y me apareció un dolor muy extremo en 
+    la espalda baja, no podía manejar por el dolor tan fuerte, acudí con especialista en columna 
+    y me diagnostico con hernia discal y me dijo que la única solución que tenía para recuperarme 
+    era con una cirugía, en CEFIRE me dieron tratamiento en mi domicilio, fue larga la recuperación, 
+    ahora puedo decir que regrese a trabajar y evite una cirugía.“`
   },
     {
     user: {
@@ -171,22 +240,22 @@ const patients = [
 
 const team = [
   {
-    name:  'LTFR. Elliut Misael Cruz Trinidad',
+    name:  'Maestrante Elliut Misael Cruz Trinidad',
     role:  'Terapeuta fisico',
     bio:   'Experto en el tratamiento del dolor crónico mediante terapia manual y enfoques basados ​​en la neurociencia.',
-    image: '/images/comience-hoy.jpg',
+    image: '/images/fisio-elliut.jpeg',
   },
   {
     name:  'LTFR. Paloma Jatzidi Cruz Padilla',
     role:  'Terapeuta fisico',
     bio:   'Enfocada en la rehabilitación pediatrica mediante el juego y ejercicio terapeutico.',
-    image: '/images/comience-hoy.jpg',
+    image: '/images/fisio-paloma.jpeg',
   },
   {
     name:  'Luna Yeray Cruz Padilla',
     role:  'Practicante en Terapia Fisica',
     bio:   'Dedicada a ayudar a los adultos mayores a mantener la movilidad, la independencia y un estilo de vida activo.',
-    image: '/images/comience-hoy.jpg',
+    image: '/images/fisio-luna.jpeg',
   },
 ];
 
@@ -200,12 +269,16 @@ const faqs = [
     content: 'Su primera sesión incluye una evaluación exhaustiva de su condición, patrones de movimiento y objetivos. Elaboraremos su plan de tratamiento y, a menudo, comenzaremos la terapia práctica el mismo día.',
   },
   {
-    label:   '¿Aceptan seguro?',
-    content: 'Sí, aceptamos la mayoría de los principales planes de seguro, como Blue Cross, Aetna, United Healthcare y Medicare. Contáctenos para verificar su cobertura.',
-  },
-  {
     label:   '¿Cuántas sesiones necesitaré?',
     content: 'Esto varía según la afección. La mayoría de los pacientes observan una mejora significativa en 6 a 12 sesiones. Le daremos un cronograma realista después de su evaluación inicial.',
+  },
+  {
+    label:   '¿Qué debo llevar en mi primera sesión?',
+    content: 'Ropa cómoda (pants, playera, licra, toalla).',
+  },
+  {
+    label:   '¿Cuáles son los beneficios de la fisioterapia?',
+    content: 'La fisioterapia ofrece múltiples beneficios para la salud física y funcional, destacando el alivio del dolor (agudo o crónico), la recuperación de lesiones y cirugías, y la mejora de la movilidad, fuerza muscular y flexibilidad.',
   },
 ];
 
@@ -306,6 +379,16 @@ const faqs = [
       </UContainer>
     </section>
 
+    <!-- VIDEO SCROLL ANIMATION -->
+    <!-- <section ref="videoSection" class="video-scroll-section">
+      <div class="video-sticky">
+        <canvas
+          ref="canvasEl"
+          class="video-el"
+        />
+      </div>
+    </section> -->
+
     <section class="bg bg-stone-100 py-20">
       <UContainer>
         <div class="text-center max-w-2xl mx-auto mb-16">
@@ -371,6 +454,7 @@ const faqs = [
       </UContainer>
     </section>
 
+
     <section class="bg bg-gray-950 py-20">
       <UContainer>
         <div class="text-center max-w-2xl mx-auto mb-16">
@@ -378,15 +462,15 @@ const faqs = [
             HISTORIAS DE PACIENTES
           </p>
           <h2 class="text-4xl font-bold mb-4 text-white">
-            Escuche a los que sanaron
+            Escuche a nuestros rehabilitados
           </h2>
         </div>
         <div class="grid md:grid-cols-1 lg:grid-cols-3 gap-8">
           <div v-for="testimonial in patients" :key='testimonial.user.name' class="bg-stone-800 flex flex-col gap-4 p-5 rounded-2xl">
             <p class="text-white text-sm">{{ testimonial.quote }}</p>
-            <UUser v-bind="testimonial.user">
+            <UUser v-bind="testimonial.user" class="mt-auto">
               <template #name>
-                <p class="text-white">{{ testimonial.user.name }}</p>
+                <span class="text-white">{{ testimonial.user.name }}</span>
               </template>
             </UUser>
           </div>
@@ -466,5 +550,30 @@ const faqs = [
 .card-healed {
   border-color: transparent !important;
   background-color: #2A2928;
+}
+
+/* Scroll-driven video animation */
+.video-scroll-section {
+  height: 250vh;
+  position: relative;
+}
+
+.video-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #000;
+}
+
+.video-el {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  will-change: border-radius;
 }
 </style>

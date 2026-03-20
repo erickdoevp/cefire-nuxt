@@ -3,6 +3,12 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
 
+  app: {
+    head: {
+      htmlAttrs: { lang: 'es' }
+    }
+  },
+
   modules: [
     '@nuxt/eslint',
     '@nuxt/fonts',
@@ -34,7 +40,9 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
 
   nitro: {
-    preset: 'cloudflare-pages'  // en lugar de cloudflare-module
-  }
+    prerender: {
+      crawlLinks: true,
+    },
+  },
 
 })

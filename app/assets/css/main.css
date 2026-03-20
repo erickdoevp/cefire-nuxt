@@ -1,9 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Meow+Script&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Autour+One&display=swap");
 @import "tailwindcss";
 @import "@nuxt/ui";
 
 @theme {
   --font-roboto: "Roboto", sans-serif; 
   --font-google-sans: "Google Sans", sans-serif;
+  --font-autour-one-regular: "Autour One", system-ui;
 }

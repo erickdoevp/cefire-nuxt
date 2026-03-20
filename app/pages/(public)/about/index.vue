@@ -39,7 +39,7 @@ const milestones = [
   {
     year: '2017',
     title: 'Ampliamos nuestras especialidades',
-    description: 'Se instala área de Neurorehabilitación, especialidad terapéutica enfocada en ayudar a las personas a recuperar y adaptar las funciones perdidas o deterioradas a causa de una enfermedad o lesión que afectan al sistema nervioso.'
+    description: 'Se instala área de neurorehabilitación, especialidad terapéutica enfocada en ayudar a las personas a recuperar y adaptar las funciones perdidas o deterioradas a causa de una enfermedad o lesión que afectan al sistema nervioso.'
   },
   {
     year: '2023',
