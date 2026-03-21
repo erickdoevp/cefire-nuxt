@@ -33,16 +33,15 @@ const items = computed<NavigationMenuItem[]>(() => [
 </script>
 
 <template>
-  <UHeader class="h-[90px]">
+  <UHeader class="h-[80px] border-0">
     <template #title>
       <div class="flex items-center gap-3">
         <img
           src="/images/main-logo.png"
           alt="Cefire Fisioterapia logo"
-          width="80"
-          height="80"
+          width="70"
+          height="70"
         />
-        <p class="font-autour-one-regular font-medium">CEFIRE</p>
       </div>
     </template>
 

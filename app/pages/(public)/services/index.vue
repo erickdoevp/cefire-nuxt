@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import Reveal from '~/components/shared/Reveal.vue';
+
 
 useSeoMeta({
   title: 'Servicios | Neurorehabilitación, Terapia Ocupacional y más — Cefire Tlaxcala',
@@ -48,7 +50,7 @@ const services = [
     ],
     image: '/images/equipo-medico1.jpg',
     imagePosition: 'left',
-    sectionBg: 'bg-[#F5F4F1]',
+    sectionBg: 'bg-[#f6f7f9]',
   },
   {
     id: 'fracture-recovery',
@@ -86,7 +88,7 @@ const services = [
     ],
     image: '/images/equipo-medico1.jpg',
     imagePosition: 'left',
-    sectionBg: 'bg-[#F5F4F1]',
+    sectionBg: 'bg-[#f6f7f9]',
   },
   {
     id: 'early-stimulation',
@@ -124,7 +126,7 @@ const services = [
     ],
     image: '/images/equipo-medico1.jpg',
     imagePosition: 'left',
-    sectionBg: 'bg-[#F5F4F1]',
+    sectionBg: 'bg-[#f6f7f9]',
   },
   {
     id: 'electrolipolysis',
@@ -173,26 +175,35 @@ const whyCards = [
 <template>
   <UPage class="font-[Outfit] bg-[#F5F4F1]">
 
-    <!-- ─── HERO ─────────────────────────────────────────────────── -->
-    <section class="bg-white h-auto md:h-[400px]">
-      <UContainer class="flex flex-col items-center gap-6 py-8 md:py-10">
-        <!-- Badge -->
-        <UBadge
-          icon="i-lucide-stethoscope"
-          variant="soft"
-          class="mb-6 rounded-2xl px-3 text-sm" 
+    <section class="bg-white h-auto md:h-100 py-8 md:py-10">
+      <UContainer>
+
+        <div class="flex justify-center">
+          <UBadge
+            icon="i-lucide-stethoscope"
+            variant="soft"
+            class="mb-6 rounded-2xl px-3 text-sm" 
+          >
+            LO QUE HACEMOS
+          </UBadge>
+        </div>
+
+        <Reveal
+          :scale="0.8"  
+          :duration="800"
+          class="flex flex-col items-center gap-6"
         >
-          LO QUE HACEMOS
-        </UBadge>
 
-        <h1 class="max-w-[800px] text-center text-[52px] font-bold text-[#1A1918] leading-[1.1] tracking-[-1px]">
-        Atención experta, <br/> adaptada a su recuperación.
-        </h1>
+          <h1 class="max-w-200 text-center text-[52px] font-bold text-[#1A1918] leading-[1.1] tracking-[-1px]">
+            Atención experta, <br> adaptada a su recuperación.
+          </h1>
 
-        <p class="max-w-[680px] text-center text-[18px] text-[#6D6C6A] leading-[1.6]">
-          Desde atletas que regresan a la competición hasta pacientes que se recuperan tras una cirugía,
-          ofrecemos fisioterapia especializada y basada en la evidencia para cada etapa de su proceso.
-        </p>
+          <p class="max-w-170 text-center text-[18px] text-[#6D6C6A] leading-[1.6]">
+            Desde atletas que regresan a la competición hasta pacientes que se recuperan tras una cirugía,
+            ofrecemos fisioterapia especializada y basada en la evidencia para cada etapa de su proceso.
+          </p>
+        </Reveal>
+
       </UContainer>
     </section>
 
@@ -202,11 +213,11 @@ const whyCards = [
       :key="service.id"
       :class="[service.sectionBg, 'py-20']"
     >
-      <UContainer class="grid grid-cols-1 md:grid-cols-2 gap-[60px]">
+      <UContainer class="grid grid-cols-1 md:grid-cols-2 gap-15">
         <!-- Imagen a la izquierda -->
         <div
           v-if="service.imagePosition === 'left'"
-          class="flex-shrink-0 rounded-[20px] overflow-hidden order-last md:order-first"
+          class="shrink-0 rounded-[20px] overflow-hidden order-last md:order-first"
         >
           <img
             :src="service.image"
@@ -215,7 +226,7 @@ const whyCards = [
             format="webp"
             :loading="service.id === 'sports' ? 'eager' : 'lazy'"
             width="560"
-          />
+          >
         </div>
 
         <!-- Contenido de texto -->
@@ -223,10 +234,10 @@ const whyCards = [
           <!-- Ícono + etiqueta -->
           <div class="flex items-center gap-3">
             <div
-              class="size-11 rounded-xl flex items-center justify-center flex-shrink-0"
+              class="size-11 rounded-xl flex items-center justify-center shrink-0"
               :style="{ backgroundColor: service.accentBg }"
             >
-              <UIcon :name="service.icon" class="size-[22px]" :style="{ color: service.accentColor }" />
+              <UIcon :name="service.icon" class="size-5.5" :style="{ color: service.accentColor }" />
             </div>
             <span class="text-[13px] font-semibold tracking-[2px]" :style="{ color: service.accentColor }">
               {{ service.label }}
@@ -245,10 +256,10 @@ const whyCards = [
             <li v-for="bullet in service.bullets" :key="bullet" class="flex items-start gap-2.5">
               <UIcon
                 name="i-lucide-circle-check"
-                class="size-[18px] mt-0.5 flex-shrink-0"
+                class="size-4.5 mt-0.5 shrink-0"
                 :style="{ color: service.accentColor }"
               />
-              <span class="text-[14px] text-[#6D6C6A] leading-[1.5]">{{ bullet }}</span>
+              <span class="text-[14px] text-[#6D6C6A] leading-normal">{{ bullet }}</span>
             </li>
           </ul>
         </div>
@@ -256,7 +267,7 @@ const whyCards = [
         <!-- Imagen a la derecha -->
         <div
           v-if="service.imagePosition === 'right'"
-          class="flex-shrink-0 rounded-[20px] overflow-hidden"
+          class="shrink-0 rounded-[20px] overflow-hidden"
         >
           <img
             :src="service.image"
@@ -265,7 +276,7 @@ const whyCards = [
             format="webp"
             loading="lazy"
             width="560"
-          />
+          >
         </div>
 
       </UContainer>
@@ -278,7 +289,7 @@ const whyCards = [
         <div class="flex flex-col items-center gap-3 text-center">
           <span class="text-[#c8e4f0] text-[13px] font-semibold tracking-[2px]">PORQUÉ CEFIRE TLAX</span>
           <h2 class="text-[40px] font-bold text-white tracking-[-0.5px]">Lo que nos distingue</h2>
-          <p class="max-w-[600px] text-[17px] text-[#9C9B99] leading-[1.5]">
+          <p class="max-w-150 text-[17px] text-[#9C9B99] leading-normal">
             Combinamos la excelencia clínica con la compasión genuina para ofrecer resultados duraderos.
           </p>
         </div>

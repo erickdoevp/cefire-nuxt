@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import Reveal from '~/components/shared/Reveal.vue'
+
 
 useSeoMeta({
   title: 'Contacto | Agenda tu Valoración Gratuita — Cefire Fisioterapia',
@@ -92,25 +94,34 @@ const contactCards = [
 <template>
   <div class="font-[Outfit] bg-[#F5F4F1]">
 
-    <!-- ─── HERO ─────────────────────────────────────────────────── -->
-    <section class="bg-white h-auto md:h-[400px]">
-      <UContainer class="flex flex-col items-center gap-6 py-8 md:py-10">
-        <!-- Badge -->
-        <UBadge
-          icon="i-lucide-heart-pulse"
-          variant="soft"
-          class="mb-6 rounded-2xl px-3 text-sm" 
+
+    <section class="bg-white h-auto md:h-100 py-8 md:py-10">
+      <UContainer>
+
+        <div class="flex justify-center">
+          <UBadge
+            icon="i-lucide-heart-pulse"
+            variant="soft"
+            class="mb-6 rounded-2xl px-3 text-sm" 
+          >
+            CONTÁCTENOS
+          </UBadge>
+        </div>
+
+        <Reveal
+          :scale="0.8"  
+          :duration="800"
+          class="flex flex-col items-center gap-6"
         >
-          CONTÁCTENOS
-        </UBadge>
+          <h1 class="max-w-170 text-center text-[52px] font-bold text-[#1A1918] leading-[1.1] tracking-[-1px]">
+            Nos Encantaría, <br>saber más de usted.
+          </h1>
 
-        <h1 class="max-w-[680px] text-center text-[52px] font-bold text-[#1A1918] leading-[1.1] tracking-[-1px]">
-          Nos Encantaría<br>Saber de Usted.
-        </h1>
+          <p class="max-w-170 text-center text-[18px] text-[#6D6C6A] leading-[1.6]">
+            Si tiene preguntas sobre nuestros servicios, desea programar una cita o simplemente necesita orientación, nuestro equipo está aquí para ayudarle.
+          </p>
+        </Reveal>
 
-        <p class="max-w-[680px] text-center text-[18px] text-[#6D6C6A] leading-[1.6]">
-          Si tiene preguntas sobre nuestros servicios, desea programar una cita o simplemente necesita orientación, nuestro equipo está aquí para ayudarle.
-        </p>
       </UContainer>
     </section>
 
@@ -121,12 +132,15 @@ const contactCards = [
         <div class="flex-1 min-w-0 bg-white rounded-[20px] border border-[#E5E4E1] shadow-[0_4px_24px_rgba(26,25,24,0.03)] p-10 flex flex-col gap-6">
           <div class="flex flex-col gap-1">
             <h2 class="text-[24px] font-bold text-[#1A1918]">Envíanos un mensaje</h2>
-            <p class="text-[14px] text-[#6D6C6A] leading-[1.5]">
+            <p class="text-[14px] text-[#6D6C6A] leading-normal">
               Complete el siguiente formulario y nos comunicaremos con usted dentro de 24 horas.
             </p>
           </div>
 
-          <UForm :state="form" @submit="handleSubmit" class="flex flex-col gap-5">
+          <UForm 
+            class="flex flex-col gap-5" 
+            :state="form" 
+            @submit="handleSubmit" >
             <!-- Nombre -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <UFormField label="Nombre(s)" name="firstName">
@@ -212,7 +226,7 @@ const contactCards = [
         </div>
 
         <!-- Tarjetas de contacto -->
-        <div class="flex-shrink-0 flex flex-col gap-6">
+        <div class="shrink-0 flex flex-col gap-6">
           <!-- Call, Email, Visit -->
           <UCard
             v-for="card in contactCards"
@@ -223,23 +237,23 @@ const contactCards = [
             <div class="flex flex-col gap-4">
               <!-- Ícono + título -->
               <div class="flex items-center gap-3.5">
-                <div class="size-12 rounded-xl bg-[#c8e9f0] flex items-center justify-center flex-shrink-0">
-                  <UIcon :name="card.icon" class="text-primary size-[22px]" />
+                <div class="size-12 rounded-xl bg-[#c8e9f0] flex items-center justify-center shrink-0">
+                  <UIcon :name="card.icon" class="text-primary size-5.5" />
                 </div>
                 <span class="text-[18px] font-semibold text-[#1A1918]">{{ card.title }}</span>
               </div>
               <!-- Valor -->
               <p class="text-[16px] font-medium text-primary">{{ card.value }}</p>
               <!-- Sub-texto -->
-              <p class="text-[14px] text-[#6D6C6A] leading-[1.5] whitespace-pre-line">{{ card.sub }}</p>
+              <p class="text-[14px] text-[#6D6C6A] leading-normal whitespace-pre-line">{{ card.sub }}</p>
             </div>
           </UCard>
 
           <!-- Tarjeta Emergency (dark) -->
           <div class="rounded-2xl bg-[#1A1918] p-7 flex flex-col gap-4">
             <div class="flex items-center gap-3.5">
-              <div class="size-12 rounded-xl bg-primary flex items-center justify-center flex-shrink-0">
-                <UIcon name="i-lucide-calendar" class="text-white size-[22px]" />
+              <div class="size-12 rounded-xl bg-primary flex items-center justify-center shrink-0">
+                <UIcon name="i-lucide-calendar" class="text-white size-5.5" />
               </div>
               <span class="text-[18px] font-semibold text-white">¿Emergencia?</span>
             </div>

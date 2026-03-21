@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import CountUp from '~/components/shared/CountUp.vue';
+import Reveal from '~/components/shared/Reveal.vue';
+
 
 useSeoMeta({
   title: 'Nosotros | Cefire Fisioterapia en Tlaxcala',
@@ -72,84 +75,96 @@ const values = [
 ];
 
 const stats = [
-  { number: '1,000+', label: 'Pacientes tratados' },
-  { number: '99%',    label: 'Satisfacción del paciente' },
-  { number: '10+',    label: 'Años de experiencia' },
-  { number: '15+',    label: 'Años combinados de experiencia' }
+  { number: 1000, suffix: '+', label: 'Pacientes tratados' },
+  { number: 99,   suffix: '%', label: 'Satisfacción del paciente' },
+  { number: 10,   suffix: '+', label: 'Años de experiencia' },
+  { number: 15,   suffix: '+', label: 'Años combinados de experiencia' }
 ];
 
 </script>
 
 <template>
   <UPage>
+    <section class="bg-white h-auto md:h-100 py-8 md:py-10">
+      <UContainer>
 
-    <section class="bg-white h-auto md:h-[400px] ">
-      <UContainer class="flex flex-col items-center gap-6 py-8 md:py-10">
-        <!-- Badge -->
-        <UBadge
-          icon="i-lucide-heart-pulse"
-          variant="soft"
-          class="mb-6 rounded-2xl px-3 text-sm" 
-        >
-          NUESTRA HISTORIA
-        </UBadge>
+        <div class="flex justify-center">
+          <UBadge
+            icon="i-lucide-heart-pulse"
+            variant="soft"
+            class="mb-6 rounded-2xl px-3 text-sm" 
+          >
+            NUESTRA HISTORIA
+          </UBadge>
+        </div>
 
-        <h1 class="max-w-[800px] text-center text-[52px] font-bold text-[#1A1918] leading-[1.1] tracking-[-1px]">
-          Rehabilitando personas, <br>no solo síntomas.
-        </h1>
+        <Reveal 
+          :scale="0.8"  
+          :duration="800"
+          class="flex flex-col items-center gap-6"
+          >
 
-        <p class="max-w-[680px] text-center text-[18px] text-[#6D6C6A] leading-[1.6]">
-          Desde 2009, CEFIRE Tlax se ha dedicado a ayudar a las personas a recuperar su movilidad, confianza y calidad de vida a través de fisioterapia personalizada y basada en evidencia.
-        </p>
+          <h1 class="max-w-200 text-center text-[52px] font-bold text-[#1A1918] leading-[1.1] tracking-[-1px]">
+            Rehabilitando personas, <br>no solo síntomas.
+          </h1>
+
+          <p class="max-w-170 text-center text-[18px] text-[#6D6C6A] leading-[1.6]">
+            Desde 2009, CEFIRE Tlax se ha dedicado a ayudar a las personas a recuperar su movilidad, confianza y calidad de vida a través de fisioterapia personalizada y basada en evidencia.
+          </p>
+
+        </Reveal>
       </UContainer>
     </section>
 
-    <section class="bg-[#F5F4F1] py-20">
-       <UContainer class="flex flex-col items-center gap-8">
+    <section class="bg-[#f6f7f9] py-20">
+      <UContainer class="flex flex-col items-center gap-8">
+
         <div class="flex flex-col items-center gap-3 text-center">
-            <span class="text-primary text-[13px] font-semibold tracking-[2px]">NUESTRO VIAJE</span>
-            <h2 class="text-[#1A1918] text-[40px] font-bold tracking-[-0.5px]">
-            Construido con un propósito, impulsado por los resultados
-            </h2>
-            <p class="text-[#6D6C6A] text-[17px] leading-[1.5] max-w-[600px] text-center">
-              Construido con un propósito, impulsado por los resultados
-            </p>
+          <span class="text-primary text-[13px] font-semibold tracking-[2px]">NUESTRO VIAJE</span>
+          <h2 class="text-[#1A1918] text-[40px] font-bold tracking-[-0.5px]">
+          Construido con un propósito, impulsado por los resultados
+          </h2>
+          <p class="text-[#6D6C6A] text-[17px] leading-normal max-w-150 text-center">
+            Lo que comenzó como una consulta de una sola habitación se ha convertido en un centro de rehabilitación de confianza, pero nuestra misión nunca ha cambiado.
+          </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-[60px] w-full">
-            <div class="rounded-[20px] overflow-hidden shrink-0 bg-[#E8E6E1]">
-              <img
-                src="/images/comience-hoy.jpg"
-                alt="Instalaciones de Cefire Fisioterapia en Tlaxcala"
-                class="w-full h-full object-cover"
-                format="webp"
-                loading="lazy"
-                width="600"
-              />
-            </div>
-
-            <div class="flex flex-col gap-7 flex-1">
-            <div
-                v-for="milestone in milestones"
-                :key="milestone.year"
-                class="flex gap-5"
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-15 w-full">
+          <div class="rounded-[20px] overflow-hidden shrink-0 bg-[#f6f7f9]">
+            <img
+              src="/images/comience-hoy.jpg"
+              alt="Instalaciones de Cefire Fisioterapia en Tlaxcala"
+              class="w-full h-full object-cover"
+              format="webp"
+              loading="lazy"
+              width="600"
             >
-                <div
+          </div>
+
+          <div class="flex flex-col gap-7 flex-1">
+            <Reveal
+              v-for="milestone in milestones"
+              :key="milestone.year"
+              class="flex gap-5"
+              :once="false"
+              :scale="0.80"
+            >
+              <div
                 class="flex items-center justify-center rounded-lg px-3.5 py-1.5 shrink-0 h-fit"
                 :class="milestone.year === '2009' ? 'bg-primary' : 'bg-[#c8e9f0]'"
-                >
+              >
                 <span
-                    class="text-sm font-bold"
-                    :class="milestone.year === '2009' ? 'text-white' : 'text-primary'"
+                  class="text-sm font-bold"
+                  :class="milestone.year === '2009' ? 'text-white' : 'text-primary'"
                 >
-                    {{ milestone.year }}
+                  {{ milestone.year }}
                 </span>
-                </div>
-                <div class="flex flex-col gap-1.5">
+              </div>
+              <div class="flex flex-col gap-1.5">
                 <h3 class="text-[#1A1918] text-lg font-semibold">{{ milestone.title }}</h3>
                 <p class="text-[#6D6C6A] text-sm leading-[1.6]">{{ milestone.description }}</p>
-                </div>
-            </div>
+              </div>
+            </Reveal>
             </div>
         </div>
        </UContainer>
@@ -157,29 +172,33 @@ const stats = [
 
 
     <section class="bg-white py-20">
-        <UContainer class="flex flex-col items-center gap-12">
-            <div class="flex flex-col items-center gap-3 text-center">
-                <span class="text-primary text-[13px] font-semibold tracking-[2px]">NUESTROS VALORES</span>
-                <h2 class="text-[#1A1918] text-[40px] font-bold tracking-[-0.5px]">Lo que representamos</h2>
-                <p class="text-[#6D6C6A] text-[17px] leading-[1.5] max-w-[600px] text-center">
-                  Estos principios guían cada plan de tratamiento, cada interacción y cada resultado que buscamos.
-                </p>
-            </div>
+      <UContainer class="flex flex-col items-center gap-12">
 
-            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 w-full">
-              <div
-                v-for="value in values"
-                :key="value.title"
-                class="bg-[#F5F4F1] rounded-2xl p-7 flex flex-col gap-4"
-                >
-                <div class="w-[52px] h-[52px] bg-[#c8e9f0] rounded-xl flex items-center justify-center shrink-0">
-                  <UIcon :name="value.icon" class="w-6 h-6 text-primary" />
-                </div>
-                <h3 class="text-[#1A1918] text-xl font-semibold">{{ value.title }}</h3>
-                <p class="text-[#6D6C6A] text-sm leading-[1.6]">{{ value.description }}</p>
-              </div>
+        <div class="flex flex-col items-center gap-3 text-center">
+          <span class="text-primary text-[13px] font-semibold tracking-[2px]">NUESTROS VALORES</span>
+          <h2 class="text-[#1A1918] text-[40px] font-bold tracking-[-0.5px]">Lo que representamos</h2>
+          <p class="text-[#6D6C6A] text-[17px] leading-normal max-w-150 text-center">
+            Estos principios guían cada plan de tratamiento, cada interacción y cada resultado que buscamos.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 w-full">
+          <Reveal
+            v-for="(value, index) in values"
+            :key="value.title"
+            class="bg-[#f6f7f9] rounded-2xl p-7 flex flex-col gap-4"
+            :delay="index * 120"
+            :scale="0.95"
+            :once="false"
+          >
+            <div class="w-13 h-13 bg-[#c8e9f0] rounded-xl flex items-center justify-center shrink-0">
+              <UIcon :name="value.icon" class="w-6 h-6 text-primary" />
             </div>
-        </UContainer>
+            <h3 class="text-[#1A1918] text-xl font-semibold">{{ value.title }}</h3>
+            <p class="text-[#6D6C6A] text-sm leading-[1.6]">{{ value.description }}</p>
+          </Reveal>
+        </div>
+      </UContainer>
 
     </section>
 
@@ -198,7 +217,9 @@ const stats = [
             :key="stat.label"
             class="bg-[#2A2928] rounded-2xl px-6 py-8 flex flex-col items-center gap-2"
           >
-            <span class="text-primary text-[44px] font-bold tracking-[-1px]">{{ stat.number }}</span>
+            <span class="text-primary text-[44px] font-bold tracking-[-1px]">
+              <Reveal :once="false"><CountUp :end="stat.number" :suffix="stat.suffix" :once="false"/></Reveal>
+            </span>
             <span class="text-[#9C9B99] text-[15px] font-medium text-center">{{ stat.label }}</span>
           </div>
         </div>

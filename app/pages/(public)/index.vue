@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import CountUp from '~/components/shared/CountUp.vue';
 import Reveal from '~/components/shared/Reveal.vue';
 
 // import { ref, onMounted, onUnmounted } from 'vue'
 
-// // Scroll + frame animation
+// Scroll + frame animation
 // const videoSection = ref<HTMLElement | null>(null)
 // const canvasEl = ref<HTMLCanvasElement | null>(null)
 // const videoRadius = ref(24)
@@ -296,35 +297,42 @@ const faqs = [
 <template>
   <UPage>
 
-    <section class="pt-8 md:pt-10">
-      <UContainer>
-        <div class="grid lg:grid-cols-2 gap-6 md:gap-12 items-end">
+    <section class="relative min-h-auto md:min-h-[85vh] flex items-center overflow-hidden md:mx-4 md:mb-4 rounded-2xl">
+      <!-- Imagen de fondo -->
+      <img
+        src="/images/instalaciones-1.jpeg"
+        alt="Instalaciones Cefire"
+        class="absolute inset-0 w-full h-full object-cover"
+      >
+      <!-- Overlay oscuro difuminado -->
+      <div class="absolute inset-0 bg-black/40 backdrop-blur-xs" />
 
-          <!-- LEFT CONTENT -->
+      <UContainer class="relative z-10 py-6 md:py-20">
+        <div>
           <div>
             <!-- Badge -->
               <UBadge
                 icon="i-lucide-heart"
                 variant="soft"
-                class="mb-6 rounded-2xl px-3 text-sm" 
+                class="mb-6 rounded-2xl px-3 text-sm"
               >
                 Más de 1000 pacientes confían en nosotros
               </UBadge>
 
             <!-- Title -->
-              <h1 class="text-4xl lg:text-5xl font-bold leading-tight mb-6">
+              <h1 class="text-4xl lg:text-5xl font-bold leading-tight mb-6 text-white">
                 Restaura el Movimiento,
-                <br />
+                <br>
                 Recupera tu vida.
               </h1>
 
               <!-- Description -->
-              <p class="text-gray-500 text-lg mb-8 max-w-lg">
-                Fisioterapia experta que va más allá del tratamiento. 
+              <p class="text-gray-200 text-lg mb-8 w-175">
+                Fisioterapia experta que va más allá del tratamiento. <br>
                 Creamos planes de recuperación personalizados que te permiten
                 volver a hacer lo que amas, sin dolor y con más fuerza que antes.
               </p>
-            
+
             <!-- Buttons -->
             <div class="flex gap-4 mb-10">
               <UButton>
@@ -341,6 +349,7 @@ const faqs = [
               <UButton
                 variant="outline"
                 size="lg"
+                class="text-white border-white hover:bg-white/10"
               >
                 <NuxtLink
                   to="/services"
@@ -352,36 +361,29 @@ const faqs = [
             </div>
 
             <!-- Stats -->
-            <div class="flex gap-10 text-sm md:mb-20">
+            <div class="flex gap-10 text-sm">
               <div>
-                <p class="text-2xl font-bold text-primary">10+</p>
-                <p class="text-gray-500">Años de experiencia</p>
+                <p class="text-2xl font-bold text-white">
+                  <CountUp :end="10" suffix="+" :once="false"/>
+                </p>
+                <p class="text-gray-300">Años de experiencia</p>
               </div>
 
               <div>
-                <p class="text-2xl font-bold text-primary">99%</p>
-                <p class="text-gray-500">Satisfacción del cliente</p>
+                <p class="text-2xl font-bold text-white">
+                  <CountUp :end="99" suffix="%" :once="false"/>
+                </p>
+                <p class="text-gray-300">Satisfacción del cliente</p>
               </div>
 
               <div>
-                <p class="text-2xl font-bold text-primary">1,000+</p>
-                <p class="text-gray-500">Pacientes Recuperados</p>
+                <p class="text-2xl font-bold text-white">
+                  <CountUp :end="1000" suffix="+" :once="false"/>
+                </p>
+                <p class="text-gray-300">Pacientes Recuperados</p>
               </div>
             </div>
 
-          </div>
-
-          <!-- RIGHT IMAGE -->
-          <div>
-            <img
-              src="/images/fisio-palomita.png"
-              alt="Fisioterapeuta realizando tratamiento manual a paciente en Cefire Fisioterapia"
-              class="w-full object-cover rounded-lg"
-              format="webp"
-              fetchpriority="high"
-              loading="eager"
-              width="600"
-            />
           </div>
 
         </div>
@@ -398,7 +400,7 @@ const faqs = [
       </div>
     </section> -->
 
-    <section class="bg bg-stone-100 py-20">
+    <section class="  py-20">
       <UContainer>
         <div class="text-center max-w-2xl mx-auto mb-16">
           <p class="text-sm font-semibold text-primary tracking-widest uppercase mb-3">
@@ -442,24 +444,27 @@ const faqs = [
        </UContainer>
     </section>
 
-    <section class="py-20">
+    <section class="bg-[#f6f7f9] py-20">
       <UContainer>
         <div class="text-center max-w-2xl mx-auto">
-          <Reveal :scale="0.98" :once="false">
-            <p class="text-sm font-semibold text-primary tracking-widest uppercase mb-3">
-              CÓMO FUNCIONA
-            </p>
-            <h2 class="text-4xl font-bold mb-4">
-              Tu camino hacia la recuperación
-            </h2>
-            <p class="text-gray-500 mb-12">
-              Tres pasos sencillos para que vuelvas a moverte, sin necesidad de recomendación.
-            </p>
-          </Reveal>
+
+          <p class="text-sm font-semibold text-primary tracking-widest uppercase mb-3">
+            CÓMO FUNCIONA
+          </p>
+          <h2 class="text-4xl font-bold mb-4">
+            Tu camino hacia la recuperación
+          </h2>
+          <p class="text-gray-500 mb-12">
+            Tres pasos sencillos para que vuelvas a moverte, sin necesidad de recomendación.
+          </p>
+
           
         </div>
         <div class="grid gap-8 md:grid-cols-1 lg:grid-cols-3">
-          <div v-for="(path, index) in pathRecovery" :key='index'>
+          <div 
+            v-for="(path, index) in pathRecovery" 
+            :key='index'
+            >
             <div class="flex flex-col gap-4 items-center">
               <div class="w-12 h-12 rounded-full flex items-center justify-center" :class="path.iconBg">
                 <span class="text-white">{{ index + 1 }}</span>
@@ -473,7 +478,7 @@ const faqs = [
     </section>
 
 
-    <section class="bg bg-[#1A1918] py-20">
+    <section class="bg-[#1A1918] py-20">
       <UContainer>
         <div class="text-center max-w-2xl mx-auto mb-16">
           <p class="text-sm font-semibold text-[#c8e4f0] tracking-widest uppercase mb-3">
@@ -502,13 +507,12 @@ const faqs = [
       </UContainer>
     </section>
 
-    <section class="py-20 bg-stone-100">
+    <section class="py-20 bg-[#f6f7f9]">
       <UContainer>
         <div class="text-center max-w-2xl mx-auto mb-16">
-          <Reveal 
-            :scale="0.7"
-            :once="false"
-            >
+          <!-- <Reveal 
+            :duration="800"
+            > -->
             <p class="text-sm font-semibold text-primary tracking-widest uppercase mb-3">
               NUESTRO EQUIPO
             </p>
@@ -519,17 +523,20 @@ const faqs = [
             <p class="text-gray-500">
               Especialistas certificados con más de 15 años de experiencia clínica combinada.
             </p>
-          </Reveal>
+          <!-- </Reveal> -->
         </div>
-        <!-- Grid de terapeutas -->
+ 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
-          <div
-            v-for="member in team"
+          <Reveal
+            v-for="(member, i) in team"
             :key="member.name"
             class="flex flex-col items-center gap-4"
+            :once="false"
+            :scale="0.95"
+            :delay="i * 120"
           >
-            <!-- Foto -->
-            <div class="w-full h-[320px] rounded-2xl overflow-hidden">
+            
+            <div class="w-full h-80 rounded-2xl overflow-hidden">
               <img
                 :src="member.image"
                 :alt="member.name"
@@ -538,14 +545,14 @@ const faqs = [
                 height="320"
                 loading="lazy"
                 format="webp"
-              />
+              >
             </div>
 
             <!-- Info -->
             <h3 class="text-[20px] font-semibold text-[#1A1918] text-center">{{ member.name }}</h3>
             <p class="text-[14px] font-medium text-primary text-center -mt-2">{{ member.role }}</p>
             <p class="text-[14px] text-[#6D6C6A] leading-[1.6] text-center">{{ member.bio }}</p>
-          </div>
+          </Reveal>
         </div>
       </UContainer>
     </section>
@@ -553,10 +560,14 @@ const faqs = [
     <section class="bg-white py-20">
       <UContainer class="flex flex-col items-center gap-12">
         <!-- Encabezado -->
-        <div class="flex flex-col items-center gap-3 text-center">
-          <span class="text-sm font-semibold text-primary tracking-widest uppercase mb-3">FAQ</span>
-          <h2 class="text-[40px] font-bold text-[#1A1918] tracking-[-0.5px]">Preguntas frecuentes</h2>
-        </div>
+         <!-- <Reveal 
+          :scale="0.98" 
+          :once="false"> -->
+          <div class="flex flex-col items-center text-center">
+            <span class="text-sm font-semibold text-primary tracking-widest uppercase mb-3">FAQ</span>
+            <h2 class="text-4xl font-bold mb-4">Preguntas frecuentes</h2>
+          </div>
+        <!-- </Reveal> -->
 
         <!-- Acordeón -->
         <UAccordion
