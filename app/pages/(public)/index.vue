@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import Reveal from '~/components/shared/Reveal.vue';
+
 // import { ref, onMounted, onUnmounted } from 'vue'
 
 // // Scroll + frame animation
@@ -191,7 +193,7 @@ const pathRecovery = [
   },
 ];
 
-const patients = [
+const testimonials = [
   {
     user: {
       name: 'Juan Felipe',
@@ -226,7 +228,7 @@ const patients = [
   },
     {
     user: {
-      name: 'Linda Thompson',
+      name: 'Angélica Ruiz',
       description: 'Retired Teacher',
       avatar: {
         src: 'https://avatars.githubusercontent.com/u/499550?v=4',
@@ -234,7 +236,14 @@ const patients = [
         loading: 'lazy' as const
       }
     },
-    quote: "”En mi último año de secundaria, estaba nervioso por la fisioterapia. El equipo fue muy paciente y amable. Ahora puedo volver a acompañar a mis nietos a la escuela sin dolor.”"
+    quote: `
+    ”Me fracture el codo Izquierdo en una caída y tuvieron que operarme retirándome el olecranon, 
+      el dr. me indico reposo por 2 meses, al acudir a revisión quedé con el movimiento limitado, 
+      no podía flexionar el codo para tomar agua, peinarme, ni tocarme la cara, 
+      acudí a CEFIRE donde revisaron mis placas y me explicaron detalladamente el tratamiento que llevaría,
+       al finalizar el tratamiento puedo doblar mi codo no completamente pero ya puedo peinarme, 
+       tocar mi cara y hacer todas mis actividades sin ninguna restricción.”
+    `
   },
 ];
 
@@ -294,28 +303,28 @@ const faqs = [
           <!-- LEFT CONTENT -->
           <div>
             <!-- Badge -->
-            <UBadge
-              icon="i-lucide-heart"
-              variant="soft"
-              class="mb-6 rounded-2xl px-3 text-sm" 
-            >
-              Más de 1000 pacientes confían en nosotros
-            </UBadge>
+              <UBadge
+                icon="i-lucide-heart"
+                variant="soft"
+                class="mb-6 rounded-2xl px-3 text-sm" 
+              >
+                Más de 1000 pacientes confían en nosotros
+              </UBadge>
 
             <!-- Title -->
-            <h1 class="text-4xl lg:text-5xl font-bold leading-tight mb-6">
-              Restaura el Movimiento.
-              <br />
-              Recupera tu vida.
-            </h1>
+              <h1 class="text-4xl lg:text-5xl font-bold leading-tight mb-6">
+                Restaura el Movimiento,
+                <br />
+                Recupera tu vida.
+              </h1>
 
-            <!-- Description -->
-            <p class="text-gray-500 text-lg mb-8 max-w-lg">
-              Fisioterapia experta que va más allá del tratamiento. 
-              Creamos planes de recuperación personalizados que te permiten
-              volver a hacer lo que amas, sin dolor y con más fuerza que antes.
-            </p>
-
+              <!-- Description -->
+              <p class="text-gray-500 text-lg mb-8 max-w-lg">
+                Fisioterapia experta que va más allá del tratamiento. 
+                Creamos planes de recuperación personalizados que te permiten
+                volver a hacer lo que amas, sin dolor y con más fuerza que antes.
+              </p>
+            
             <!-- Buttons -->
             <div class="flex gap-4 mb-10">
               <UButton>
@@ -395,34 +404,40 @@ const faqs = [
           <p class="text-sm font-semibold text-primary tracking-widest uppercase mb-3">
             NUESTROS SERVICIOS
           </p>
+
           <h2 class="text-4xl font-bold mb-4">
             Atención especializada para cada necesidad
           </h2>
+
           <p class="text-gray-500">
            Desde la rehabilitación posoperatoria hasta el manejo del dolor crónico, nuestro enfoque basado en evidencia ofrece resultados duraderos.
           </p>
         </div>
         <div class="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-          <UCard
-            v-for="service in services"
+          <Reveal 
+            v-for="(service, index) in services"
             :key="service.title"
-            class="rounded-2xl"
-          >
-            <div class="flex flex-col gap-4">
-              <div
-                class="w-12 h-12 rounded-xl flex items-center justify-center"
-                :class="service.iconBg"
-              >
-                <UIcon :name="service.icon" class="text-xl"/>
+            :once="false"
+            :delay="index * 120"
+            :scale="0.95"
+            >
+            <UCard class="rounded-2xl h-full">
+              <div class="flex flex-col gap-4">
+                <div
+                  class="w-12 h-12 rounded-xl flex items-center justify-center"
+                  :class="service.iconBg"
+                >
+                  <UIcon :name="service.icon" class="text-xl"/>
+                </div>
+                <h3 class="font-semibold text-lg">
+                  {{ service.title }}
+                </h3>
+                <p class="text-gray-500 text-sm">
+                  {{ service.description }}
+                </p>
               </div>
-              <h3 class="font-semibold text-lg">
-                {{ service.title }}
-              </h3>
-              <p class="text-gray-500 text-sm">
-                {{ service.description }}
-              </p>
-             </div>
-           </UCard>
+            </UCard>
+          </Reveal>
          </div>
        </UContainer>
     </section>
@@ -430,15 +445,18 @@ const faqs = [
     <section class="py-20">
       <UContainer>
         <div class="text-center max-w-2xl mx-auto">
-          <p class="text-sm font-semibold text-primary tracking-widest uppercase mb-3">
-            CÓMO FUNCIONA
-          </p>
-          <h2 class="text-4xl font-bold mb-4">
-            Tu camino hacia la recuperación
-          </h2>
-          <p class="text-gray-500 mb-12">
-            Tres pasos sencillos para que vuelvas a moverte, sin necesidad de recomendación.
-          </p>
+          <Reveal :scale="0.98" :once="false">
+            <p class="text-sm font-semibold text-primary tracking-widest uppercase mb-3">
+              CÓMO FUNCIONA
+            </p>
+            <h2 class="text-4xl font-bold mb-4">
+              Tu camino hacia la recuperación
+            </h2>
+            <p class="text-gray-500 mb-12">
+              Tres pasos sencillos para que vuelvas a moverte, sin necesidad de recomendación.
+            </p>
+          </Reveal>
+          
         </div>
         <div class="grid gap-8 md:grid-cols-1 lg:grid-cols-3">
           <div v-for="(path, index) in pathRecovery" :key='index'>
@@ -455,7 +473,7 @@ const faqs = [
     </section>
 
 
-    <section class="bg bg-gray-950 py-20">
+    <section class="bg bg-[#1A1918] py-20">
       <UContainer>
         <div class="text-center max-w-2xl mx-auto mb-16">
           <p class="text-sm font-semibold text-[#c8e4f0] tracking-widest uppercase mb-3">
@@ -466,14 +484,20 @@ const faqs = [
           </h2>
         </div>
         <div class="grid md:grid-cols-1 lg:grid-cols-3 gap-8">
-          <div v-for="testimonial in patients" :key='testimonial.user.name' class="bg-stone-800 flex flex-col gap-4 p-5 rounded-2xl">
+          <Reveal 
+            v-for="(testimonial, i) in testimonials" 
+            :key='testimonial.user.name' 
+            class="bg-[#2A2928] flex flex-col gap-4 p-5 rounded-2xl h-fit"
+            :once="false"
+            :delay="i * 120"
+            >
             <p class="text-white text-sm">{{ testimonial.quote }}</p>
-            <UUser v-bind="testimonial.user" class="mt-auto">
+            <UUser v-bind="testimonial.user">
               <template #name>
                 <span class="text-white">{{ testimonial.user.name }}</span>
               </template>
             </UUser>
-          </div>
+          </Reveal>
         </div>
       </UContainer>
     </section>
@@ -481,15 +505,21 @@ const faqs = [
     <section class="py-20 bg-stone-100">
       <UContainer>
         <div class="text-center max-w-2xl mx-auto mb-16">
-          <p class="text-sm font-semibold text-primary tracking-widest uppercase mb-3">
-            NUESTRO EQUIPO
-          </p>
-          <h2 class="text-4xl font-bold mb-4">
-            Conoce a tus Fisioterapeutas
-          </h2>
-          <p class="text-gray-500">
-            Especialistas certificados con más de 15 años de experiencia clínica combinada.
-          </p>
+          <Reveal 
+            :scale="0.7"
+            :once="false"
+            >
+            <p class="text-sm font-semibold text-primary tracking-widest uppercase mb-3">
+              NUESTRO EQUIPO
+            </p>
+            
+            <h2 class="text-4xl font-bold mb-4">
+              Conoce a tus Fisioterapeutas
+            </h2>
+            <p class="text-gray-500">
+              Especialistas certificados con más de 15 años de experiencia clínica combinada.
+            </p>
+          </Reveal>
         </div>
         <!-- Grid de terapeutas -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">

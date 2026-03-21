@@ -23,24 +23,24 @@ const items = computed<NavigationMenuItem[]>(() => [
     to: '/contact',
     active: route.path.startsWith('/contact')
   },
-  // {
-  //   label: 'Todo',
-  //   to: '/todo',
-  //   active: route.path.startsWith('/todo')
-  // },
+  {
+    label: 'Blog',
+    to: '/blog',
+    active: route.path.startsWith('/blog')
+  },
 ]);
 
 </script>
 
 <template>
-  <UHeader class="h-[100px]">
+  <UHeader class="h-[90px]">
     <template #title>
       <div class="flex items-center gap-3">
         <img
           src="/images/main-logo.png"
           alt="Cefire Fisioterapia logo"
-          width="85"
-          height="85"
+          width="80"
+          height="80"
         />
         <p class="font-autour-one-regular font-medium">CEFIRE</p>
       </div>

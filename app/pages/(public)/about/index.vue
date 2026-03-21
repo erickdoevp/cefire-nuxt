@@ -83,7 +83,7 @@ const stats = [
 <template>
   <UPage>
 
-    <section class="bg-white">
+    <section class="bg-white h-auto md:h-[400px] ">
       <UContainer class="flex flex-col items-center gap-6 py-8 md:py-10">
         <!-- Badge -->
         <UBadge
