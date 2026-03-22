@@ -42,7 +42,25 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       crawlLinks: true,
+      ignore: ['/admin/**'],
     },
   },
+
+  routeRules: {
+    // 🟢 Landing (SSG)
+    '/': { static: true },
+    '/about': { static: true },
+    '/services': { static: true },
+    '/contact': { static: true },
+
+    // 🟡 Blog listado (puede ser SSG)
+    '/blog': { static: true },
+
+    // 🟡 Blog dinámico (ISR recomendado)
+    // '/blog/**': { isr: 60 * 60 }, // revalida cada hora
+
+    // 🔴 Admin (SPA)
+    '/admin/**': { ssr: false },
+  }
 
 })
