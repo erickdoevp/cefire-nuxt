@@ -54,7 +54,7 @@ export default defineNuxtConfig({
     '/contact': { static: true },
 
     // 🟡 Blog listado (puede ser SSG)
-    '/blog': { static: true },
+    '/blogs': { static: true },
 
     // 🟡 Blog dinámico (ISR recomendado)
     // '/blog/**': { isr: 60 * 60 }, // revalida cada hora

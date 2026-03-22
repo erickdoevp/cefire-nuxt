@@ -25,7 +25,7 @@ const items = computed<NavigationMenuItem[]>(() => [
   },
   {
     label: 'Blog',
-    to: '/blog',
+    to: '/blogs',
     active: route.path.startsWith('/blog')
   },
 ]);
@@ -33,7 +33,7 @@ const items = computed<NavigationMenuItem[]>(() => [
 </script>
 
 <template>
-  <UHeader class="h-[80px] border-0">
+  <UHeader class="h-20 border-0">
     <template #title>
       <div class="flex items-center gap-3">
         <img

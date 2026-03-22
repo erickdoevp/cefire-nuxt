@@ -2,7 +2,6 @@
 
 const email = ref('');
 const password = ref('');
-const rememberMe = ref(false);
 const showPassword = ref(false);
 
 async function handleSubmit() {
@@ -58,14 +57,15 @@ async function handleSubmit() {
 
           <!-- Remember me + Forgot password -->
           <div class="flex items-center justify-between">
-            <label class="flex cursor-pointer items-center gap-2">
+            <NuxtLink to="/" class="text-[13px] font-medium text-[#2563EB] hover:underline">Regresar al inicio</NuxtLink>
+            <!-- <label class="flex cursor-pointer items-center gap-2">
               <input
                 v-model="rememberMe"
                 type="checkbox"
                 class="h-[18px] w-[18px] rounded border border-[#E5E4E1] bg-[#FAFAF9] accent-[#2563EB]"
               >
               <span class="text-[13px] text-[#6D6C6A]">Remember me</span>
-            </label>
+            </label> -->
             <!-- <NuxtLink
               to="/admin/forgot-password"
               class="text-[13px] font-medium text-[#2563EB] hover:underline"
