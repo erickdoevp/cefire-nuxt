@@ -41,7 +41,7 @@ const items = computed<NavigationMenuItem[]>(() => [
           alt="Cefire Fisioterapia logo"
           width="70"
           height="70"
-        />
+        >
       </div>
     </template>
 

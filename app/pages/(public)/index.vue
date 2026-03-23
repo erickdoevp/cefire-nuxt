@@ -179,7 +179,7 @@ const services = [
 const pathRecovery = [
   {
     title: "Valoración gratuita",
-    description: "Reserve una valoración telefónica gratuita de 15 minutos para analizar su condición y sus objetivos con uno de nuestros especialistas.",
+    description: "Reserve una valoración telefónica gratuita, para analizar su condición y sus objetivos con uno de nuestros especialistas.",
     iconBg: "bg-[#3D8A5A]"
   },
     {
@@ -198,7 +198,7 @@ const testimonials = [
   {
     user: {
       name: 'Juan Felipe',
-      description: 'Marathon Runner',
+      description: 'Chofer',
       avatar: {
         src: 'https://avatars.githubusercontent.com/u/499550?v=4',
         alt: 'Evan You',
@@ -214,7 +214,7 @@ const testimonials = [
     {
     user: {
       name: 'Juan',
-      description: 'Marathon Runner',
+      description: 'Conductor de transporte público',
       avatar: {
         src: 'https://avatars.githubusercontent.com/u/499550?v=4',
         alt: 'Evan You',
@@ -230,7 +230,7 @@ const testimonials = [
     {
     user: {
       name: 'Angélica Ruiz',
-      description: 'Retired Teacher',
+      description: 'Auxiliar administrativo',
       avatar: {
         src: 'https://avatars.githubusercontent.com/u/499550?v=4',
         alt: 'Evan You',
@@ -265,7 +265,7 @@ const team = [
     name:  'Luna Yeray Cruz Padilla',
     role:  'Practicante en Terapia Fisica',
     bio:   'Dedicada a ayudar a los adultos mayores a mantener la movilidad, la independencia y un estilo de vida activo.',
-    image: '/images/fisio-luna.jpeg',
+    image: '/images/fisio-yeray.jpeg',
   },
 ];
 
@@ -537,7 +537,7 @@ const faqs = [
           >
             
             <div class="w-full h-80 rounded-2xl overflow-hidden">
-              <img
+              <NuxtImg
                 :src="member.image"
                 :alt="member.name"
                 class="w-full h-full object-cover"
@@ -545,7 +545,7 @@ const faqs = [
                 height="320"
                 loading="lazy"
                 format="webp"
-              >
+              />
             </div>
 
             <!-- Info -->

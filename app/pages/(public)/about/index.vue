@@ -131,14 +131,15 @@ const stats = [
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-15 w-full">
           <div class="rounded-[20px] overflow-hidden shrink-0 bg-[#f6f7f9]">
-            <img
-              src="/images/comience-hoy.jpg"
+            <NuxtImg
+              src="/images/about-1.jpeg"
               alt="Instalaciones de Cefire Fisioterapia en Tlaxcala"
               class="w-full h-full object-cover"
               format="webp"
               loading="lazy"
               width="600"
-            >
+              height="450"
+            />
           </div>
 
           <div class="flex flex-col gap-7 flex-1">

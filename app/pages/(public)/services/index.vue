@@ -67,7 +67,7 @@ const services = [
       'Rehabilitación de fracturas de cadera, muñeca, tobillo y columna',
       'Planes progresivos adaptados a cada fase de consolidación ósea',
     ],
-    image: '/images/equipo-medico1.jpg',
+    image: '/images/post-fractura.jpeg',
     imagePosition: 'right',
     sectionBg: 'bg-white',
   },
@@ -105,7 +105,7 @@ const services = [
       'Trabajo coordinado con padres y cuidadores',
       'Detección temprana de alteraciones del neurodesarrollo',
     ],
-    image: '/images/equipo-medico1.jpg',
+    image: '/images/estimulacion-temprana.jpeg',
     imagePosition: 'right',
     sectionBg: 'bg-white',
   },
@@ -124,7 +124,7 @@ const services = [
       'Ejercicio terapéutico para estabilización de columna',
       'Manejo conservador de escoliosis y estenosis espinal',
     ],
-    image: '/images/equipo-medico1.jpg',
+    image: '/images/columna.jpeg',
     imagePosition: 'left',
     sectionBg: 'bg-[#f6f7f9]',
   },
@@ -219,14 +219,15 @@ const whyCards = [
           v-if="service.imagePosition === 'left'"
           class="shrink-0 rounded-[20px] overflow-hidden order-last md:order-first"
         >
-          <img
+          <NuxtImg
             :src="service.image"
             :alt="`Fisioterapeuta realizando ${service.label.toLowerCase()} en Cefire`"
             class="w-full h-full object-cover"
             format="webp"
             :loading="service.id === 'sports' ? 'eager' : 'lazy'"
-            width="560"
-          >
+            width="500"
+            height="400"
+          />
         </div>
 
         <!-- Contenido de texto -->
@@ -269,14 +270,15 @@ const whyCards = [
           v-if="service.imagePosition === 'right'"
           class="shrink-0 rounded-[20px] overflow-hidden"
         >
-          <img
+          <NuxtImg
             :src="service.image"
             :alt="`Fisioterapeuta realizando ${service.label.toLowerCase()} en Cefire`"
             class="w-full h-full object-cover"
             format="webp"
             loading="lazy"
-            width="560"
-          >
+            width="500"
+            height="400"
+          />
         </div>
 
       </UContainer>
