@@ -537,7 +537,7 @@ const faqs = [
           >
             
             <div class="w-full h-80 rounded-2xl overflow-hidden">
-              <NuxtImg
+              <img
                 :src="member.image"
                 :alt="member.name"
                 class="w-full h-full object-cover"
@@ -545,7 +545,7 @@ const faqs = [
                 height="320"
                 loading="lazy"
                 format="webp"
-              />
+              >
             </div>
 
             <!-- Info -->

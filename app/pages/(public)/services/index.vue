@@ -219,7 +219,7 @@ const whyCards = [
           v-if="service.imagePosition === 'left'"
           class="shrink-0 rounded-[20px] overflow-hidden order-last md:order-first"
         >
-          <NuxtImg
+          <img
             :src="service.image"
             :alt="`Fisioterapeuta realizando ${service.label.toLowerCase()} en Cefire`"
             class="w-full h-full object-cover"
@@ -270,7 +270,7 @@ const whyCards = [
           v-if="service.imagePosition === 'right'"
           class="shrink-0 rounded-[20px] overflow-hidden"
         >
-          <NuxtImg
+          <img
             :src="service.image"
             :alt="`Fisioterapeuta realizando ${service.label.toLowerCase()} en Cefire`"
             class="w-full h-full object-cover"
