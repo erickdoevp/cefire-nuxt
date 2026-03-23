@@ -250,14 +250,14 @@ const testimonials = [
 
 const team = [
   {
-    name:  'Maestrante Elliut Misael Cruz Trinidad',
-    role:  'Terapeuta fisico',
+    name:  'LTFR. Elliut Misael Cruz Trinidad',
+    role:  'Maestrante en Terapia Fisica',
     bio:   'Experto en el tratamiento del dolor crónico mediante terapia manual y enfoques basados ​​en la neurociencia.',
     image: '/images/fisio-elliut.jpeg',
   },
   {
     name:  'LTFR. Paloma Jatzidi Cruz Padilla',
-    role:  'Terapeuta fisico',
+    role:  'Terapeuta Fisico',
     bio:   'Enfocada en la rehabilitación pediatrica mediante el juego y ejercicio terapeutico.',
     image: '/images/fisio-paloma.jpeg',
   },
@@ -327,10 +327,10 @@ const faqs = [
               </h1>
 
               <!-- Description -->
-              <p class="text-gray-200 text-lg mb-8 w-175">
+              <p class="text-gray-200 text-lg mb-8">
                 Fisioterapia experta que va más allá del tratamiento. <br>
                 Creamos planes de recuperación personalizados que te permiten
-                volver a hacer lo que amas, sin dolor y con más fuerza que antes.
+                volver a hacer lo que amas, <br> sin dolor y con más fuerza que antes.
               </p>
 
             <!-- Buttons -->
@@ -537,7 +537,7 @@ const faqs = [
           >
             
             <div class="w-full h-80 rounded-2xl overflow-hidden">
-              <img
+              <NuxtImg
                 :src="member.image"
                 :alt="member.name"
                 class="w-full h-full object-cover"
@@ -545,7 +545,7 @@ const faqs = [
                 height="320"
                 loading="lazy"
                 format="webp"
-              >
+              />
             </div>
 
             <!-- Info -->

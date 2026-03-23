@@ -134,11 +134,10 @@ const stats = [
             <img
               src="/images/about-1.jpeg"
               alt="Instalaciones de Cefire Fisioterapia en Tlaxcala"
-              class="w-full h-full object-cover"
+              class="w-full h-[450px] object-cover"
               format="webp"
               loading="lazy"
-              width="600"
-              height="450"
+  
             />
           </div>
 

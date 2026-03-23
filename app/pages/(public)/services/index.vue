@@ -27,6 +27,8 @@ useHead({
         { '@type': 'ListItem', position: 4, name: 'Estimulación Temprana',        url: 'https://cefiretlx.com/services#early-stimulation'   },
         { '@type': 'ListItem', position: 5, name: 'Columna Vertebral',            url: 'https://cefiretlx.com/services#spine-recovery'       },
         { '@type': 'ListItem', position: 6, name: 'Electrolipólisis',             url: 'https://cefiretlx.com/services#electrolipolysis'     },
+        { '@type': 'ListItem', position: 7, name: 'Terapia del Deporte',          url: 'https://cefiretlx.com/services#sports-therapy'        },
+        { '@type': 'ListItem', position: 8, name: 'Fisioterapia Ortopédica',      url: 'https://cefiretlx.com/services#orthopedic-therapy'     },
       ],
     }),
   }],
@@ -147,6 +149,44 @@ const services = [
     imagePosition: 'right',
     sectionBg: 'bg-white',
   },
+  {
+    id: 'sports-therapy',
+    icon: 'i-lucide-dumbbell',
+    accentColor: '#1E7A4A',
+    accentBg: '#C6EDD8',
+    label: 'TERAPIA DEL DEPORTE',
+    title: 'Regresa a tu deporte en tu mejor nivel',
+    description:
+      'La terapia del deporte está orientada a la prevención, evaluación y rehabilitación de lesiones deportivas. Trabajamos contigo para que recuperes el rendimiento óptimo de forma segura, minimizando el riesgo de recaída y potenciando tus capacidades físicas.',
+    bullets: [
+      'Rehabilitación de esguinces, desgarros y lesiones musculares',
+      'Recuperación post-quirúrgica de ligamentos (LCA, manguito rotador)',
+      'Programas de retorno al deporte progresivo y seguro',
+      'Prevención de lesiones y acondicionamiento físico terapéutico',
+    ],
+    image: '/images/terapia-deporte.jpeg',
+    imagePosition: 'left',
+    sectionBg: 'bg-[#f6f7f9]',
+  },
+  {
+    id: 'orthopedic-therapy',
+    icon: 'i-lucide-activity',
+    accentColor: '#A04030',
+    accentBg: '#F5DDD8',
+    label: 'FISIOTERAPIA ORTOPÉDICA',
+    title: 'Muévete sin dolor, vive sin límites',
+    description:
+      'La fisioterapia ortopédica se enfoca en el diagnóstico y tratamiento de lesiones del sistema musculoesquelético: huesos, articulaciones, músculos, tendones y ligamentos. Nuestro equipo aplica técnicas manuales y ejercicio terapéutico para restaurar la función y aliviar el dolor de forma duradera.',
+    bullets: [
+      'Tratamiento de tendinitis, bursitis y síndromes de sobreuso',
+      'Rehabilitación pre y post operatoria de rodilla, cadera y hombro',
+      'Terapia manual articular y de tejidos blandos',
+      'Fortalecimiento y estabilización articular progresiva',
+    ],
+    image: '/images/fisioterapia-ortopedica.jpeg',
+    imagePosition: 'right',
+    sectionBg: 'bg-white',
+  },
 ];
 
 const whyCards = [
@@ -217,12 +257,12 @@ const whyCards = [
         <!-- Imagen a la izquierda -->
         <div
           v-if="service.imagePosition === 'left'"
-          class="shrink-0 rounded-[20px] overflow-hidden order-last md:order-first"
+          class="shrink-0 overflow-hidden order-last md:order-first"
         >
           <img
             :src="service.image"
             :alt="`Fisioterapeuta realizando ${service.label.toLowerCase()} en Cefire`"
-            class="w-full h-full object-cover"
+            class="w-full h-[450px] object-cover rounded-[20px]"
             format="webp"
             :loading="service.id === 'sports' ? 'eager' : 'lazy'"
             width="500"
@@ -268,12 +308,12 @@ const whyCards = [
         <!-- Imagen a la derecha -->
         <div
           v-if="service.imagePosition === 'right'"
-          class="shrink-0 rounded-[20px] overflow-hidden"
+          class="shrink-0 overflow-hidden"
         >
           <img
             :src="service.image"
             :alt="`Fisioterapeuta realizando ${service.label.toLowerCase()} en Cefire`"
-            class="w-full h-full object-cover"
+            class="w-full h-[450px] object-cover rounded-[20px]"
             format="webp"
             loading="lazy"
             width="500"
