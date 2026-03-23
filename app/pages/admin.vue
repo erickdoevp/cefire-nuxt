@@ -1,16 +1,11 @@
-
 <script setup lang="ts">
 definePageMeta({
-  layout: 'auth-layout'
+  layout: 'admin',
 });
 </script>
 
 <template>
-  <div>
+  <div class="bg-white">
     <NuxtPage />
   </div>
 </template>
-
-<style scoped>
-
-</style>
