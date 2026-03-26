@@ -64,9 +64,10 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
+
     public: {
-      supabaseUrl: 'https://kwfqyjtqpmrdamjsazps.supabase.co',
-      supabaseKey: 'sb_publishable_JoLgb_kf1Mveq4rHxe4BZA_iSIE3Jct',
+      supabaseUrl: process.env.NUXT_PUBLIC_SUPABASE_URL,
+      supabaseAnonKey: process.env.NUXT_PUBLIC_SUPABASE_ANON_KEY
     },
   },
 
