@@ -2,6 +2,16 @@
 import type { NavigationMenuItem } from '@nuxt/ui';
 
 const route = useRoute();
+const isHome = computed(() => route.path === '/');
+const scrolled = ref(false);
+
+onMounted(() => {
+  const onScroll = () => {
+    scrolled.value = window.scrollY > 60;
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onUnmounted(() => window.removeEventListener('scroll', onScroll));
+});
 
 const items = computed<NavigationMenuItem[]>(() => [
   {
@@ -33,7 +43,10 @@ const items = computed<NavigationMenuItem[]>(() => [
 </script>
 
 <template>
-  <UHeader class="h-20 border-0">
+  <UHeader
+    class="h-20 border-0 transition-[background-color,backdrop-filter] duration-300"
+    :class="isHome && !scrolled ? '!bg-transparent backdrop-blur-none shadow-none' : ''"
+  >
     
     <template #title>
       <div class="flex items-center gap-3">

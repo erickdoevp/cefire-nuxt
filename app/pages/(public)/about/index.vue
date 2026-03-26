@@ -182,7 +182,7 @@ const stats = [
           </p>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 w-full">
+        <div class="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
           <Reveal
             v-for="(value, index) in values"
             :key="value.title"

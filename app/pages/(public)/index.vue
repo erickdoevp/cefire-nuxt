@@ -239,7 +239,7 @@ const faqs = [
 <template>
   <UPage>
 
-    <section class="relative min-h-auto md:min-h-[85vh] flex items-center overflow-hidden md:mx-4 md:mb-4 rounded-2xl">
+    <section class="relative min-h-auto md:min-h-[100vh] flex items-center overflow-hidden -mt-20 pt-20">
       <!-- Imagen de fondo -->
       <img
         src="/images/instalaciones-1.jpeg"
@@ -247,7 +247,7 @@ const faqs = [
         class="absolute inset-0 w-full h-full object-cover"
       >
       <!-- Overlay oscuro difuminado -->
-      <div class="absolute inset-0 bg-black/40 backdrop-blur-xs" />
+      <div class="absolute inset-0 bg-black/60 backdrop-blur-xs" />
 
       <UContainer class="relative z-10 py-6 md:py-20">
         <div>
@@ -262,65 +262,69 @@ const faqs = [
               </UBadge>
 
             <!-- Title -->
-              <h1 class="text-4xl lg:text-5xl font-bold leading-tight mb-6 text-white">
+              <h1 class="text-center md:text-start text-4xl lg:text-5xl font-bold leading-tight mb-6 text-white">
                 Restaura el Movimiento,
                 <br>
                 Recupera tu vida.
               </h1>
 
               <!-- Description -->
-              <p class="text-gray-200 text-lg mb-8">
-                Fisioterapia experta que va más allá del tratamiento. <br>
-                Creamos planes de recuperación personalizados que te permiten
-                volver a hacer lo que amas, <br> sin dolor y con más fuerza que antes.
-              </p>
+              <Reveal :duration="300">
+                <p class="text-gray-200 text-lg mb-8 text-center md:text-start">
+                  Fisioterapia experta que va más allá del tratamiento. <br>
+                  Creamos planes de recuperación personalizados que te permiten
+                  volver a hacer lo que amas, <br> sin dolor y con más fuerza que antes.
+                </p>
+              </Reveal>
 
             <!-- Buttons -->
-            <div class="flex gap-4 mb-10">
-              <UButton>
-                <NuxtLink
-                  target="_blank"
-                  to="https://wa.me/522461370462?text=Hola%20quiero%20más%20información"
-                  rel="noopener noreferrer"
-                  size="lg"
-                >
-                  Reserva una valoración gratuita
-                </NuxtLink>
-              </UButton>
+            <Reveal :delay="70" :duration="300">
+              <div class="flex gap-4 mb-10">
+                <UButton>
+                  <NuxtLink
+                    target="_blank"
+                    to="https://wa.me/522461370462?text=Hola%20quiero%20más%20información"
+                    rel="noopener noreferrer"
+                    size="lg"
+                  >
+                    Reserva una valoración gratuita
+                  </NuxtLink>
+                </UButton>
 
-              <UButton
-                variant="outline"
-                size="lg"
-                class="text-white border-white hover:bg-white/10"
-              >
-                <NuxtLink
-                  to="/services"
+                <UButton
+                  variant="outline"
                   size="lg"
+                  class="text-white border-white hover:bg-white/10"
                 >
-                  Conoce nuestros servicios
-                </NuxtLink>
-              </UButton>
-            </div>
+                  <NuxtLink
+                    to="/services"
+                    size="lg"
+                  >
+                    Conoce nuestros servicios
+                  </NuxtLink>
+                </UButton>
+              </div>
+            </Reveal>
 
             <!-- Stats -->
             <div class="flex gap-10 text-sm">
               <div>
                 <p class="text-2xl font-bold text-white">
-                  <CountUp :end="10" suffix="+" :once="false"/>
+                  <CountUp class="text-primary" :end="10" suffix="+" :once="true"/>
                 </p>
                 <p class="text-gray-300">Años de experiencia</p>
               </div>
 
               <div>
                 <p class="text-2xl font-bold text-white">
-                  <CountUp :end="99" suffix="%" :once="false"/>
+                  <CountUp class="text-primary" :end="99" suffix="%" :once="true"/>
                 </p>
                 <p class="text-gray-300">Satisfacción del cliente</p>
               </div>
 
               <div>
                 <p class="text-2xl font-bold text-white">
-                  <CountUp :end="1000" suffix="+" :once="false"/>
+                  <CountUp class="text-primary" :end="1000" suffix="+" :once="true"/>
                 </p>
                 <p class="text-gray-300">Pacientes Recuperados</p>
               </div>
