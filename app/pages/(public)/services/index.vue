@@ -145,7 +145,7 @@ const services = [
       'Técnica no invasiva y sin tiempo de recuperación',
       'Complemento en programas de rehabilitación y estética corporal',
     ],
-    image: '/images/equipo-medico1.jpg',
+    image: '/images/electropiolisis.jpeg',
     imagePosition: 'right',
     sectionBg: 'bg-white',
   },
