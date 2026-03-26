@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { EditorContent, useEditor } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
 import Image from '@tiptap/extension-image'
@@ -6,6 +6,8 @@ import Link from '@tiptap/extension-link'
 import Placeholder from '@tiptap/extension-placeholder'
 // import Underline from '@tiptap/extension-underline' // yarn add @tiptap/extension-underline
 import { ref, computed, onBeforeUnmount } from 'vue'
+import { useCreatePost } from '~/composables/admin/posts/useCreatePost'
+type Level = 1 | 2 | 3 | 4 | 5 | 6;
 
 const emit = defineEmits(['save-draft', 'publish'])
 
@@ -14,12 +16,12 @@ const title = ref('')
 const excerpt = ref('')
 const conclusion = ref('')
 const category = ref('')
-const tags = ref([])
+const tags = ref<string[]>([])
 const tagInput = ref('')
 const status = ref('Draft')
 const metaDescription = ref('')
-const featuredImage = ref(null)
-const featuredImagePreview = ref(null)
+const featuredImage = ref<File | null>(null)
+const featuredImagePreview = ref<string | null>(null)
 
 const categories = [
   'Recovery Tips',
@@ -57,29 +59,31 @@ const addTag = () => {
   if (t && !tags.value.includes(t)) tags.value.push(t)
   tagInput.value = ''
 }
-const removeTag = (tag) => {
+const removeTag = (tag: string) => {
   tags.value = tags.value.filter((t) => t !== tag)
 }
 
 /* ─── Featured image ────────────────────────────────────── */
-const onFeaturedImageChange = (e) => {
-  const file = e.target.files[0]
+const onFeaturedImageChange = (e: Event) => {
+  const target = e.target as HTMLInputElement;
+  if(!target.files) return;
+  const file = target.files[0]
   if (!file) return
   featuredImage.value = file
   featuredImagePreview.value = URL.createObjectURL(file)
 }
 
-const onDrop = (e) => {
+const onDrop = (e: DragEvent) => {
   e.preventDefault()
-  const file = e.dataTransfer.files[0]
+  const file = e.dataTransfer?.files[0]
   if (!file) return
   featuredImage.value = file
   featuredImagePreview.value = URL.createObjectURL(file)
 }
 
 /* ─── Editor image upload ───────────────────────────────── */
-const onEditorImageChange = (e) => {
-  const file = e.target.files[0]
+const onEditorImageChange = (e: Event) => {
+  const file = (e.target as HTMLInputElement).files?.[0]
   if (!file) return
   const url = URL.createObjectURL(file)
   editor.value?.chain().focus().setImage({ src: url }).run()
@@ -126,7 +130,7 @@ onBeforeUnmount(() => editor.value?.destroy())
   <div class="flex flex-col h-full bg-white dark:bg-gray-950">
 
     <!-- ── Header ──────────────────────────────────────────────── -->
-    <div class="flex items-center justify-between px-8 py-4 border-b border-gray-200 dark:border-gray-800">
+    <div class="flex items-center justify-between px-8 py-4 border-b border-gray-200 dark:border-gray-800 sticky top-0 z-10 bg-white">
       <h1 class="text-xl font-semibold text-gray-900 dark:text-white">Crear Nuevo Post</h1>
       <div class="flex items-center gap-2">
         <UButton variant="outline" color="neutral" @click="saveDraft">
@@ -212,7 +216,7 @@ onBeforeUnmount(() => editor.value?.destroy())
               class="toolbar-btn text-xs font-semibold"
               :class="{ 'is-active': editor?.isActive('heading', { level }) }"
               :title="`Heading ${level}`"
-              @click="editor?.chain().focus().toggleHeading({ level }).run()"
+              @click="editor?.chain().focus().toggleHeading({ level: level as Level }).run()"
             >
               H{{ level }}
             </button>

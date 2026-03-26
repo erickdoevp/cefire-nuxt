@@ -1,4 +1,12 @@
 <script setup lang="ts">
+import { useGetPosts } from '~/composables/admin/posts/useGetAllPosts';
+
+  const getPosts = useGetPosts();
+onMounted(() => {
+  console.log('get all posts');
+  
+  getPosts.getAllPosts();
+})
 
 definePageMeta({ 
   middleware:'auth' 
