@@ -34,6 +34,7 @@ const items = computed<NavigationMenuItem[]>(() => [
 
 <template>
   <UHeader class="h-20 border-0">
+    
     <template #title>
       <div class="flex items-center gap-3">
         <img

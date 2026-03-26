@@ -4,12 +4,22 @@ definePageMeta({
   layout: 'auth-layout'
 });
 
-const email = ref('');
-const password = ref('');
+const auth = useAuth();
+
+const email = ref('erick.doev@gmail.com');
+const password = ref('P@lom@lun@1234');
 const showPassword = ref(false);
 
 async function handleSubmit() {
-  // TODO: implement login logic
+
+  await auth.login(email.value, password.value);
+  console.log(auth.error);
+  
+  if(!auth.error.value) {
+    console.log('paso');
+    
+    navigateTo('/admin/blogs')
+  }
 }
 </script>
 

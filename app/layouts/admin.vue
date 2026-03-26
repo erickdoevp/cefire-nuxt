@@ -32,7 +32,7 @@ function isActive(to: string) {
         <div class="w-7 h-7 rounded-lg bg-primary-500 flex items-center justify-center shrink-0">
           <UIcon name="i-lucide-heart-pulse" class="w-4 h-4 text-white" />
         </div>
-        <span class="font-semibold text-white text-base">RestorePT</span>
+        <span class="font-semibold text-white text-base">CEFIRE</span>
         <UBadge color="primary" variant="solid" size="sm" class="ml-0.5">Admin</UBadge>
       </div>
 

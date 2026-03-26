@@ -1,5 +1,8 @@
 <script setup lang="ts">
-definePageMeta({ layout: 'admin' })
+
+definePageMeta({ 
+  middleware:'auth' 
+});
 
 const search = ref('')
 const activeTab = ref('all')
@@ -7,6 +10,7 @@ const categoryFilter = ref('all')
 const dateFilter = ref('all')
 const currentPage = ref(1)
 const pageSize = 6
+
 
 type Post = {
   id: number
@@ -108,7 +112,7 @@ const rowActions = (_post: Post) => [
           icon="i-lucide-search"
           class="w-60"
         />
-        <UButton icon="i-lucide-plus" color="primary">
+        <UButton icon="i-lucide-plus" color="primary" @click="navigateTo('/admin/new-blog')">
           New Post
         </UButton>
       </div>

@@ -61,6 +61,13 @@ export default defineNuxtConfig({
 
     // 🔴 Admin (SPA)
     '/admin/**': { ssr: false },
-  }
+  },
+
+  runtimeConfig: {
+    public: {
+      supabaseUrl: 'https://kwfqyjtqpmrdamjsazps.supabase.co',
+      supabaseKey: 'sb_publishable_JoLgb_kf1Mveq4rHxe4BZA_iSIE3Jct',
+    },
+  },
 
 })

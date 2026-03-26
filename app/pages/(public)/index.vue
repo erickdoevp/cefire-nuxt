@@ -2,68 +2,6 @@
 import CountUp from '~/components/shared/CountUp.vue';
 import Reveal from '~/components/shared/Reveal.vue';
 
-// import { ref, onMounted, onUnmounted } from 'vue'
-
-// Scroll + frame animation
-// const videoSection = ref<HTMLElement | null>(null)
-// const canvasEl = ref<HTMLCanvasElement | null>(null)
-// const videoRadius = ref(24)
-
-// const TOTAL_FRAMES = 121
-// const frames: HTMLImageElement[] = []
-// let rafId: number | null = null
-// let targetProgress = 0
-
-// function preloadFrames() {
-//   for (let i = 30; i <= TOTAL_FRAMES; i++) {
-//     const img = new Image()
-//     img.src = `/frames/frame_${String(i).padStart(4, '0')}.jpg`
-//     img.onload = () => {
-//       if (i === 1) drawFrame(0)
-//     }
-//     frames[i - 1] = img
-//   }
-// }
-
-// function drawFrame(progress: number) {
-//   const canvas = canvasEl.value
-//   if (!canvas) return
-//   const idx = Math.min(Math.round(progress * (TOTAL_FRAMES - 1)), TOTAL_FRAMES - 1)
-//   const img = frames[idx]
-//   if (!img?.complete || !img.naturalWidth) return
-//   const ctx = canvas.getContext('2d')
-//   if (!ctx) return
-//   if (canvas.width !== img.naturalWidth) {
-//     canvas.width = img.naturalWidth
-//     canvas.height = img.naturalHeight
-//   }
-//   ctx.drawImage(img, 0, 0)
-// }
-
-// function onScroll() {
-//   const el = videoSection.value
-//   if (!el) return
-//   const rect = el.getBoundingClientRect()
-//   const scrolled = -rect.top
-//   targetProgress = Math.min(Math.max(scrolled / (el.offsetHeight - window.innerHeight), 0), 1)
-//   videoRadius.value = 24 - targetProgress * 24
-//   if (!rafId) rafId = requestAnimationFrame(onRaf)
-// }
-
-// function onRaf() {
-//   rafId = null
-//   drawFrame(targetProgress)
-// }
-
-// onMounted(() => {
-//   preloadFrames()
-//   window.addEventListener('scroll', onScroll, { passive: true })
-// })
-// onUnmounted(() => {
-//   window.removeEventListener('scroll', onScroll)
-//   if (rafId) cancelAnimationFrame(rafId)
-// })
-
 useSeoMeta({
   title: 'Cefire | Clínica de Fisioterapia en Tlaxcala',
   description: 'Fisioterapia experta con planes de recuperación personalizados. Rehabilitación deportiva, posoperatoria y alivio del dolor crónico. Más de 1,000 pacientes recuperados.',
@@ -197,53 +135,57 @@ const pathRecovery = [
 const testimonials = [
   {
     user: {
-      name: 'Juan Felipe',
-      description: 'Chofer',
-      avatar: {
-        src: 'https://avatars.githubusercontent.com/u/499550?v=4',
-        alt: 'Evan You',
-        loading: 'lazy' as const
-      }
-    },
-    quote: `“Me fracturé tercio medio de peroné y en el hospital me dijeron que necesitaba cirugía y
-     tenía que esperar más de 15 días en lo que tenían sala disponible, acudí a CEFIRE y después de 
-     una valoración completa me dijeron que, si se evitaba la cirugía, seguí todas las indicaciones y
-      el tratamiento indicado, después de 8 sesiones ya pude apoyar mi peso con ayuda de bota y
-       muletas y regresé a laborar. “`
-  },
-    {
-    user: {
-      name: 'Juan',
-      description: 'Conductor de transporte público',
-      avatar: {
-        src: 'https://avatars.githubusercontent.com/u/499550?v=4',
-        alt: 'Evan You',
-        loading: 'lazy' as const
-      }
-    },
-    quote: `“Trabajo como conductor de transporte público y me apareció un dolor muy extremo en 
-    la espalda baja, no podía manejar por el dolor tan fuerte, acudí con especialista en columna 
-    y me diagnostico con hernia discal y me dijo que la única solución que tenía para recuperarme 
-    era con una cirugía, en CEFIRE me dieron tratamiento en mi domicilio, fue larga la recuperación, 
-    ahora puedo decir que regrese a trabajar y evite una cirugía.“`
-  },
-    {
-    user: {
-      name: 'Angélica Ruiz',
+      name: 'Angelica Ruiz',
       description: 'Auxiliar administrativo',
       avatar: {
-        src: 'https://avatars.githubusercontent.com/u/499550?v=4',
+        src: '/images/angelica-ruiz.jpeg',
+        alt: 'Angelica Ruiz',
+        loading: 'lazy' as const
+      }
+    },
+    quote: `“Me fracture el codo Izquierdo en una caída y tuvieron que operarme retirándome 
+      el olecranon, el dr. me indico reposo por 2 meses, al acudir a revisión quedé con el movimiento
+       limitado, no podía flexionar el codo para tomar agua, peinarme, ni tocarme la cara, 
+       acudí a CEFIRE donde revisaron mis placas y me explicaron detalladamente el tratamiento 
+       que llevaría, al finalizar el tratamiento puedo doblar mi codo no completamente pero 
+       ya puedo peinarme, tocar mi cara y hacer todas mis actividades sin ninguna restricción.“`
+  },
+  {
+    user: {
+      name: 'Abigail Castillo',
+      description: 'Licenciada en educación',
+      avatar: {
+        src: '/images/abigail-castillo.jpeg',
         alt: 'Evan You',
+        loading: 'lazy' as const
+      }
+    },
+    quote: `“Me luxe el hombro jalando un objeto pesado, Acudí con médico y me dio tratamiento farmacológico 
+    y que inmovilizara el hombro con un cabestrillo, al pasar los días me dolía más y acudí a cefire, 
+    ellos me dijeron que no es bueno tener inmovilizado la articulación porque se puede presentar fibrosis y
+     disminuir el arco de movilidad que fue lo que me paso por estar sin movimiento, me realizaron un tratamiento
+      dirigido al dolor y  muchos estiramientos y ejercicios terapéuticos que me permitieron recuperar mis arcos 
+      de movilidad y fuerza, ha pasado un año desde mi tratamiento y puedo realizar todas mis actividades
+       sin ningún problema.“`
+  },
+    {
+    user: {
+      name: 'Mariel Ahuatzin',
+      description: 'Chef',
+      avatar: {
+        src: '/images/mariel.jpeg',
+        alt: 'Mariel',
         loading: 'lazy' as const
       }
     },
     quote: `
-    ”Me fracture el codo Izquierdo en una caída y tuvieron que operarme retirándome el olecranon, 
-      el dr. me indico reposo por 2 meses, al acudir a revisión quedé con el movimiento limitado, 
-      no podía flexionar el codo para tomar agua, peinarme, ni tocarme la cara, 
-      acudí a CEFIRE donde revisaron mis placas y me explicaron detalladamente el tratamiento que llevaría,
-       al finalizar el tratamiento puedo doblar mi codo no completamente pero ya puedo peinarme, 
-       tocar mi cara y hacer todas mis actividades sin ninguna restricción.”
+    ”Padezco de dolor crónico en la espalda, 
+    servicio médico solo me trataban con medicamentos y me sentía bien pero 
+    el dolor volvía a presentarse al terminar el efecto, acudí a cefire y después de 
+    una valoración completa me dijeron que tengo escoliosis dorsal, me trataron el dolor con 
+    electroterapia y masoterapia, para la desviación de columna me hicieron una serie de ejercicios 
+    terapéuticos para evitar que siga desviando mi columna, el dolor disminuyo considerablemente y 
+    ahora puedo trabajar sin molestias.”
     `
   },
 ];
