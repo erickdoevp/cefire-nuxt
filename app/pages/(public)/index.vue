@@ -24,7 +24,7 @@ useHead({
           {
             '@type': 'Question',
             name: '¿Necesito una remisión de mi médico?',
-            acceptedAnswer: { '@type': 'Answer', text: 'No se necesita referencia médica. Puede reservar directamente con nosotros. Sin embargo, algunos planes de seguro pueden requerirla; nuestro equipo de recepción puede ayudarle a verificar su cobertura.' },
+            acceptedAnswer: { '@type': 'Answer', text: 'No se necesita referencia médica. Puede reservar directamente con nosotros.' },
           },
           {
             '@type': 'Question',
@@ -55,7 +55,7 @@ useHead({
         telephone: '+522461370462',
         address: {
           '@type': 'PostalAddress',
-          addressLocality: 'Insurgentes 3, San Esteban Tizatlan',
+          addressLocality: 'San Esteban Tizatlan',
           addressRegion: 'Tlaxcala',
           addressCountry: 'MX',
         },
@@ -193,7 +193,7 @@ const testimonials = [
 const team = [
   {
     name:  'LTFR. Elliut Misael Cruz Trinidad',
-    role:  'Maestrante en Terapia Fisica',
+    role:  'Maestrante en Neurorehabilitación',
     bio:   'Experto en el tratamiento del dolor crónico mediante terapia manual y enfoques basados ​​en la neurociencia.',
     image: '/images/fisio-elliut.jpeg',
   },
@@ -214,7 +214,7 @@ const team = [
 const faqs = [
   {
     label:   '¿Necesito una remisión de mi médico?',
-    content: 'No se necesita referencia médica. Puede reservar directamente con nosotros. Sin embargo, algunos planes de seguro pueden requerirla; nuestro equipo de recepción puede ayudarle a verificar su cobertura.',
+    content: 'No se necesita referencia médica. Puede reservar directamente con nosotros.',
   },
   {
     label:   '¿Qué debo esperar en mi primera visita?',
@@ -365,7 +365,6 @@ const faqs = [
           <Reveal 
             v-for="(service, index) in services"
             :key="service.title"
-            :once="false"
             :delay="index * 120"
             :scale="0.95"
             >
@@ -439,7 +438,6 @@ const faqs = [
             v-for="(testimonial, i) in testimonials" 
             :key='testimonial.user.name' 
             class="bg-[#2A2928] flex flex-col gap-4 p-5 rounded-2xl h-fit"
-            :once="false"
             :delay="i * 120"
             >
             <p class="text-white text-sm">{{ testimonial.quote }}</p>
@@ -477,7 +475,6 @@ const faqs = [
             v-for="(member, i) in team"
             :key="member.name"
             class="flex flex-col items-center gap-4"
-            :once="false"
             :scale="0.95"
             :delay="i * 120"
           >

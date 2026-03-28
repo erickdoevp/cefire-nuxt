@@ -12,7 +12,7 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <UButton
           target="_blank"
-          to="https://wa.me/522461370462?text=Hola%20quiero%20más%20información"
+          to="https://wa.me/522461370462?text=Gracias%20por%20comunicarte%20con%20CEFIRE%20(Centro%20Especializado%20en%20Fisioterapia%20y%20Rehabilitación).%20¿Cómo%20podemos%20ayudarte?"
           rel="noopener noreferrer"
           size="xl"
           class="rounded-xl bg-white text-primary font-semibold text-[17px] px-9 py-[18px] hover:bg-gray-100 transition-colors"
@@ -23,13 +23,13 @@
           to="tel:+522461370462"
           size="xl"
           variant="outline"
-          class="rounded-xl border border-white/40 text-white font-semibold text-[17px] px-9 py-[18px] bg-transparent hover:bg-white/10 transition-colors"
+          class="rounded-xl border border-white/40 text-white font-semibold text-[17px] px-9 py-4.5 bg-transparent hover:bg-white/10 transition-colors"
         >
           Llamanos (246) 137 0462
         </UButton>
       </div>
       <p class="text-[14px] font-medium text-white/60">
-       Consulta telefónica gratuita de 15 minutos &nbsp;•&nbsp; Citas en la misma semana &nbsp;•&nbsp; Se aceptan la mayoría de los seguros
+       Consulta telefónica gratuita &nbsp;•&nbsp; Terapias a domicilio &nbsp;•&nbsp; Se aceptan pagos por transferencia
       </p>
     </UContainer>
   </section>

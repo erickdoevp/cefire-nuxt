@@ -4,9 +4,9 @@ import Reveal from '~/components/shared/Reveal.vue'
 
 useSeoMeta({
   title: 'Contacto | Agenda tu Valoración Gratuita — Cefire Fisioterapia',
-  description: 'Contáctanos para agendar tu valoración gratuita de fisioterapia en Tlaxcala. Atención en Insurgentes #2, San Esteban Tizatlan. Tel: (246) 137 0462.',
+  description: 'Contáctanos para agendar tu valoración gratuita de fisioterapia en Tlaxcala. Atención San Esteban Tizatlan. Tel: (246) 137 0462.',
   ogTitle: 'Contacto — Cefire Fisioterapia',
-  ogDescription: 'Agenda tu valoración gratuita. Estamos en Insurgentes #2, San Esteban Tizatlan, Tlaxcala.',
+  ogDescription: 'Agenda tu valoración gratuita. Estamos en San Esteban Tizatlan, Tlaxcala.',
   ogType: 'website',
   twitterCard: 'summary_large_image',
   // canonical: 'https://cefiretlx.com/contact',
@@ -27,7 +27,7 @@ useHead({
         email: 'eliot_77@live.com.mx',
         address: {
           '@type': 'PostalAddress',
-          streetAddress: 'Insurgentes #2',
+          // streetAddress: 'Insurgentes #2',
           addressLocality: 'San Esteban Tizatlan',
           addressRegion: 'Tlaxcala',
           addressCountry: 'MX',
@@ -84,7 +84,7 @@ const contactCards = [
   {
     icon:    'i-lucide-map-pin',
     title:   'Visítanos',
-    value:   'Insurgentes #2, San Esteban Tizatlan Tlaxcala.',
+    value:   'San Esteban Tizatlan Tlaxcala.',
     sub:     'Estacionamiento gratuito disponible en el lugar. \nEntrada accesible para sillas de ruedas.',
     dark:    false,
   },
@@ -126,7 +126,7 @@ const contactCards = [
     </section>
 
     <!-- ─── FORMULARIO + TARJETAS DE CONTACTO ────────────────────── -->
-    <section class="bg-white py-20">
+    <section class="bg-[#f6f7f9] py-20">
       <UContainer class="grid grid-cols-1 md:grid-cols-2 gap-12">
         <!-- Formulario -->
         <div class="flex-1 min-w-0 bg-white rounded-[20px] border border-[#E5E4E1] shadow-[0_4px_24px_rgba(26,25,24,0.03)] p-10 flex flex-col gap-6">

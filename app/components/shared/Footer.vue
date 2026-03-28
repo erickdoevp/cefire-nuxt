@@ -15,8 +15,9 @@ const footerCompany = [
 const footerContact = [
   '(246) 137-0462',
   'eliot_77@live.com.mx',
-  'Insurgentes #2, San Esteban Tizatlan Tlaxcala.',
-  'Lun-Vie: 3pm - 9pm'
+  // 'Insurgentes #2, San Esteban Tizatlan Tlaxcala.',
+  'Lun-Vie: 08:00 - 22:00',
+  'Sab: 08:00 - 12:00'
 ]
 
 </script>

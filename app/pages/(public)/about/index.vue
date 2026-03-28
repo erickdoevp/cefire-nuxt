@@ -146,7 +146,6 @@ const stats = [
               v-for="milestone in milestones"
               :key="milestone.year"
               class="flex gap-5"
-              :once="false"
               :scale="0.80"
             >
               <div
@@ -189,7 +188,6 @@ const stats = [
             class="bg-[#f6f7f9] rounded-2xl p-7 flex flex-col gap-4"
             :delay="index * 120"
             :scale="0.95"
-            :once="false"
           >
             <div class="w-13 h-13 bg-[#c8e9f0] rounded-xl flex items-center justify-center shrink-0">
               <UIcon :name="value.icon" class="w-6 h-6 text-primary" />
@@ -218,7 +216,7 @@ const stats = [
             class="bg-[#2A2928] rounded-2xl px-6 py-8 flex flex-col items-center gap-2"
           >
             <span class="text-primary text-[44px] font-bold tracking-[-1px]">
-              <Reveal :once="false"><CountUp :end="stat.number" :suffix="stat.suffix" :once="false"/></Reveal>
+              <Reveal><CountUp :end="stat.number" :suffix="stat.suffix"/></Reveal>
             </span>
             <span class="text-[#9C9B99] text-[15px] font-medium text-center">{{ stat.label }}</span>
           </div>

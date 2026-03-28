@@ -50,7 +50,7 @@ const services = [
       'Reeducación de la marcha y el equilibrio',
       'Estimulación neuromuscular y plasticidad cerebral',
     ],
-    image: '/images/equipo-medico1.jpg',
+    image: '/images/neurorehabilitacion.jpeg',
     imagePosition: 'left',
     sectionBg: 'bg-[#f6f7f9]',
   },
@@ -88,7 +88,7 @@ const services = [
       'Rehabilitación de mano y miembro superior',
       'Integración sensorial y habilidades cognitivas',
     ],
-    image: '/images/equipo-medico1.jpg',
+    image: '/images/terapia-ocupacional1.jpeg',
     imagePosition: 'left',
     sectionBg: 'bg-[#f6f7f9]',
   },
@@ -136,14 +136,14 @@ const services = [
     accentColor: '#2A7DC0',
     accentBg: '#DBE9F7',
     label: 'ELECTROLIPÓLISIS',
-    title: 'Tecnología al servicio de tu bienestar',
+    title: 'Tratamiento estetico',
     description:
-      'La electrolipólisis es una técnica no invasiva que utiliza corrientes eléctricas para actuar sobre la grasa localizada y mejorar la circulación. Ideal como complemento en tratamientos de remodelación corporal y recuperación de tejidos, con resultados visibles y sin tiempo de recuperación.',
+      'La electrolipólisis es una técnica estética diseñada para combatir la celulitis y la grasa localizada en zonas difíciles como muslos, glúteos, caderas y abdomen. Su objetivo principal es estimular la circulación sanguínea, favorecer el drenaje de los depósitos de grasa y mejorar la tonificación de la piel, logrando una reducción de volumen y reafirmación de los tejidos.',
     bullets: [
-      'Reducción de grasa localizada y celulitis',
-      'Mejora de la circulación linfática y venosa',
-      'Técnica no invasiva y sin tiempo de recuperación',
-      'Complemento en programas de rehabilitación y estética corporal',
+      '⁠Reducción de grasa localizada y volumen corporal',
+      'Mejora la circulación sanguínea y linfática',
+      '⁠Tonifica y reafirma la piel',
+      '⁠Elimina toxinas y mejora la apariencia de celulitis',
     ],
     image: '/images/electropiolisis.jpeg',
     imagePosition: 'right',
@@ -198,15 +198,15 @@ const whyCards = [
   },
   {
     icon: 'i-lucide-award',
-    title: 'Equipo certificado por la junta',
+    title: 'Equipo certificado',
     description:
       'Nuestros especialistas cuentan con certificaciones avanzadas en fisioterapia ortopédica, deportiva y neurológica.',
   },
   {
     icon: 'i-lucide-timer',
-    title: 'Horario flexible',
+    title: 'Horario de atención',
     description:
-      'Citas en la misma semana, horarios temprano por la mañana y por la tarde, y no se necesita derivación para comenzar.',
+      'Lunes a Viernes 08:00 a 20:00 y Sábados 08:00 a 12:00',
   },
 ];
 
@@ -280,7 +280,7 @@ const whyCards = [
             >
               <UIcon :name="service.icon" class="size-5.5" :style="{ color: service.accentColor }" />
             </div>
-            <span class="text-[13px] font-semibold tracking-[2px]" :style="{ color: service.accentColor }">
+            <span class="text-[20px] font-semibold tracking-[2px]" :style="{ color: service.accentColor }">
               {{ service.label }}
             </span>
           </div>
@@ -338,18 +338,22 @@ const whyCards = [
 
         <!-- Cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
-          <UCard
-            v-for="card in whyCards"
+          <Reveal
+            v-for="(card, i) in whyCards"
             :key="card.title"
-            class="bg-[#2A2928] ring-0 border-0 rounded-2xl"
-            :ui="{ body: 'p-7' }"
+            :delay="i * 120"
           >
-            <div class="flex flex-col gap-4">
-              <UIcon :name="card.icon" class="text-primary size-7" />
-              <h3 class="text-[18px] font-semibold text-white">{{ card.title }}</h3>
-              <p class="text-[14px] text-[#9C9B99] leading-[1.6]">{{ card.description }}</p>
-            </div>
-          </UCard>
+            <UCard
+              :ui="{ body: 'p-7' }"
+              class="bg-[#2A2928] ring-0 border-0 rounded-2xl"
+            >
+              <div class="flex flex-col gap-4">
+                <UIcon :name="card.icon" class="text-primary size-7" />
+                <h3 class="text-[18px] font-semibold text-white">{{ card.title }}</h3>
+                <p class="text-[14px] text-[#9C9B99] leading-[1.6]">{{ card.description }}</p>
+              </div>
+            </UCard>
+          </Reveal>
         </div>
       </UContainer>
     </section>
