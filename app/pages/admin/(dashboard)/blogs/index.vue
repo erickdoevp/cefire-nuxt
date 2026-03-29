@@ -1,246 +1,350 @@
 <script setup lang="ts">
-import { useGetPosts } from '~/composables/admin/posts/useGetAllPosts';
+import type { TableColumn } from '@nuxt/ui';
+import type { ZonedDateTime, CalendarDate, CalendarDateTime } from '@internationalized/date';
+import { useDebounceFn } from '@vueuse/core';
+import { usePaginatedBlogs } from '~/composables/admin/posts/usePaginatedBlogs';
+import type { Blog, Category, User } from '~/interfaces/blog';
 
-  const getPosts = useGetPosts();
-onMounted(() => {
-  console.log('get all posts');
-  
-  getPosts.getAllPosts();
-})
-
-definePageMeta({ 
-  middleware:'auth' 
+definePageMeta({
+  middleware:'auth'
 });
 
-const search = ref('')
-const activeTab = ref('all')
-const categoryFilter = ref('all')
-const dateFilter = ref('all')
-const currentPage = ref(1)
-const pageSize = 6
+const UButton = resolveComponent('UButton');
+const inputDate1 = useTemplateRef('inputDate1');
+const inputDate2 = useTemplateRef('inputDate2');
 
+const { 
+  fetchPosts, 
+  blogs, 
+  loading, 
+  page, 
+  pageSize, 
+  totalPages, 
+  total 
+} = usePaginatedBlogs();
 
-type Post = {
-  id: number
-  title: string
-  author: string
-  category: string
-  status: 'Published' | 'Draft'
-  date: string
-  views: number
-}
+const columns: TableColumn<Blog>[] = [
+  {
+    accessorKey: 'id',
+    header: '#',
+    cell: ({row}) => `${(page.value - 1) * pageSize.value + row.index + 1}`
+  },
+  {
+    accessorKey: 'title',
+    header: 'Título',
+    cell: ({row}) => {
+      const title = row.getValue('title');
+      return h(
+        'p',
+          {
+            style: 'white-space: normal; word-break: break-word; max-width: 400px; min-width:300px;',
+            class: 'truncate-text text-md font-semibold text-black',
+          }, 
+          String(title).slice(0, 40) + '...'
+        )
+    }
+  },
+  {
+    accessorKey: 'user',
+    header: 'Autor',
+    cell: ({row}) => {
+      const author = row.getValue('user') as User;
+      console.log(author);
+      
+      const fullName = `${ author.name } ${ author.first_last_name } ${ author.second_last_name }`;
+      return h(
+        'p',
+        {
+          class: 'text-md'
+        },
+        fullName
+      )
+    }
+  },
+  {
+    accessorKey: 'category',
+    header: 'Categoría',
+    cell: ({row}) => {
+      const category = row.getValue('category') as Category;
+      return h(
+        'span', 
+        {
+          class: `text-[${category.text_chip_color}] bg-[${category.chip_color}] rounded-lg py-[2px] px-[10px] text-md`,
+        },
+        category.name
+      )
+    }
+  },
+  {
+    accessorKey: 'status',
+    header: 'Estatus',
+    cell: ({row}) => {
+      const status = row.getValue('status') as string;
+      return h(
+        'p',
+        {
+          class: status === 'Published' ? 'chip-published text-md w-fit' : 'chip-draft text-xl w-fit',
+        },
+        status
+      )
+    }
+  },
+  {
+    accessorKey: 'updated_at',
+    header: 'Última edición',
+    cell: ({row}) => {
+      const date = row.getValue('updated_at') as Date;
 
-const posts: Post[] = [
-  { id: 1, title: '5 Stretches You Should Do Every Morning', author: 'Dr. Michael Chen', category: 'Recovery Tips', status: 'Published', date: 'Mar 15, 2024', views: 1242 },
-  { id: 2, title: 'How Foam Rolling Can Accelerate Your Recovery', author: 'Dr. Lisa Wagner', category: 'Fitness', status: 'Published', date: 'Mar 10, 2024', views: 628 },
-  { id: 3, title: 'Why Athletes Should Never Skip Cool-Down', author: 'Dr. James Patel', category: 'Joint & Arthritis', status: 'Draft', date: 'Mar 9, 2024', views: 0 },
-  { id: 4, title: 'Best Sleeping Positions for Lower Back Pain', author: 'Dr. Lisa Wagner', category: 'Pain Management', status: 'Published', date: 'Mar 2, 2024', views: 2145 },
-  { id: 5, title: 'Understanding Non-Rotator Cuff Injury', author: 'Dr. James Patel', category: 'Sports Medicine', status: 'Draft', date: 'Feb 28, 2023', views: 0 },
-  { id: 6, title: "A Patient's Guide to Post-Surgery Recovery", author: 'Dr. Michael Chen', category: 'Recovery Tips', status: 'Published', date: 'Feb 22, 2024', views: 548 },
-]
+      return h(
+        'p',
+        {
+          class: 'text-md'
+        },
+        new Date(date).toLocaleString()
+      )
+    }
+  },
+  {
+    accessorKey: 'actions',
+    header: 'Acciones',
+    cell: ({row}) => {
+      const blogId = row.getValue('id') as string;
+      const icons = ['material-symbols:edit-outline-sharp'];
 
-const categories = ['Recovery Tips', 'Fitness', 'Joint & Arthritis', 'Pain Management', 'Sports Medicine']
+      return h(
+        'div',
+        { class: 'flex flex-row gap-2' },
+        icons.map((icon) => 
+          h(
+            UButton,
+            {
+              icon: icon,
+              variant: 'link',
+              to: `/admin/blog/${blogId}`,
+              class: 'text-2xl text-[#9C9B99] cursor-pointer hover:text-primary'
+            },
 
-const categoryOptions = [
-  { label: 'All Categories', value: 'all' },
-  ...categories.map(c => ({ label: c, value: c })),
-]
-
-const dateOptions = [
-  { label: 'All Time', value: 'all' },
-  { label: 'This Month', value: 'month' },
-  { label: 'This Week', value: 'week' },
-]
-
-const filteredPosts = computed(() => {
-  return posts.filter(post => {
-    const matchesSearch = post.title.toLowerCase().includes(search.value.toLowerCase())
-      || post.author.toLowerCase().includes(search.value.toLowerCase())
-    const matchesTab = activeTab.value === 'all'
-      || (activeTab.value === 'published' && post.status === 'Published')
-      || (activeTab.value === 'draft' && post.status === 'Draft')
-    const matchesCategory = categoryFilter.value === 'all' || post.category === categoryFilter.value
-    return matchesSearch && matchesTab && matchesCategory
-  })
-})
-
-const paginatedPosts = computed(() => {
-  const start = (currentPage.value - 1) * pageSize
-  return filteredPosts.value.slice(start, start + pageSize)
-})
-
-const categoryColors: Record<string, 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info' | 'neutral'> = {
-  'Recovery Tips': 'info',
-  'Fitness': 'secondary',
-  'Joint & Arthritis': 'success',
-  'Pain Management': 'warning',
-  'Sports Medicine': 'primary',
-}
-
-const tabs = [
-  { value: 'all', label: 'All Posts' },
-  { value: 'published', label: 'Published' },
-  { value: 'draft', label: 'Draft' },
-]
-
-const selectedRows = ref<number[]>([])
-
-function toggleAll() {
-  if (selectedRows.value.length === paginatedPosts.value.length) {
-    selectedRows.value = []
-  } else {
-    selectedRows.value = paginatedPosts.value.map(p => p.id)
+          )
+        )
+      )
+    }
   }
-}
+];
 
-function toggleRow(id: number) {
-  const idx = selectedRows.value.indexOf(id)
-  if (idx === -1) selectedRows.value.push(id)
-  else selectedRows.value.splice(idx, 1)
-}
+const form = reactive<{
+  title: string | null;
+  status: 'All' | 'Published' | 'Draft';
+  categoryId: number | undefined;
+  userId: number | undefined;
+  updatedAtFrom: CalendarDate | CalendarDateTime | ZonedDateTime | undefined;
+  updatedAtTo: CalendarDate | CalendarDateTime | ZonedDateTime | undefined;
+}>({
+  title: null,
+  status: 'All',
+  categoryId: undefined,
+  userId: undefined,
+  updatedAtFrom: undefined,
+  updatedAtTo: undefined,
+});
 
-const rowActions = (_post: Post) => [
-  [{ label: 'Editar', icon: 'i-lucide-pencil' }],
-  [{ label: 'Eliminar', icon: 'i-lucide-trash-2', color: 'error' as const }],
-]
+const applyFilters = useDebounceFn(() => {
+  fetchPosts({
+    page: 1,
+    filters: {
+      title: form.title || undefined,
+      status: form.status === 'All' ? undefined : form.status,
+      categoryId: form.categoryId?.toString(),
+      userId: form.userId?.toString(),
+      updatedAtFrom: form.updatedAtFrom?.toString(),
+      updatedAtTo: form.updatedAtTo?.toString(),
+    }
+  });
+}, 400);
+
+const resetFilters = () => {
+  form.title = null;
+  form.status = 'All';
+  form.categoryId = undefined;
+  form.userId = undefined;
+  form.updatedAtFrom = undefined;
+  form.updatedAtTo = undefined;
+};
+
+watch(form, applyFilters);
+watch(page, () => {
+  fetchPosts({ page: page.value });
+});
+
+onMounted(() => {
+  fetchPosts()
+});
+
 </script>
 
 <template>
-  <div class="flex flex-col h-full gap-6">
+  <div class="flex flex-col h-full p-8 gap-8">
     <!-- Header -->
-    <div class="flex items-start justify-between px-8 pt-8">
+    <div class="flex items-start justify-between">
       <div>
         <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Posts</h1>
-        <p class="text-sm text-gray-500 mt-0.5">Manage your blog, wellness tools content</p>
-      </div>
-      <div class="flex items-center gap-3">
-        <UInput
-          v-model="search"
-          placeholder="Search posts..."
-          icon="i-lucide-search"
-          class="w-60"
-        />
-        <UButton icon="i-lucide-plus" color="primary" @click="navigateTo('/admin/new-blog')">
-          New Post
-        </UButton>
+        <p class="text-sm text-gray-500 mt-0.5">Gestiona el contenido de tu blogs</p>
       </div>
     </div>
-    <div class="p-8">
-      <!-- Tabs + Filters -->
-      <div class="flex items-center justify-between border-b border-gray-200 dark:border-gray-800">
-        <div class="flex gap-1">
-          <button
-            v-for="tab in tabs"
-            :key="tab.value"
-            class="px-4 py-2.5 text-sm font-medium transition-colors border-b-2 -mb-px"
-            :class="activeTab === tab.value
-              ? 'border-primary-500 text-primary-600 dark:text-primary-400'
-              : 'border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'"
-            @click="activeTab = tab.value; currentPage = 1"
+    <!-- Filters -->
+
+    <UForm :state="form" class="space-y-4">
+      <div class="grid grid-cols-2 gap-4">
+
+        <UFormField label="Título" name="title" class="w-full">
+          <UInput 
+            v-model="form.title"
+            icon="i-lucide-search"
+            :ui="{ trailing: 'pe-1' }"
+            placeholder="Buscar por título..." 
+            class="w-full"
+            variant="subtle"
+            size="xl"
           >
-            {{ tab.label }}
-          </button>
-        </div>
-        <div class="flex items-center gap-2 pb-2">
-          <USelectMenu
-            v-model="categoryFilter"
-            :options="categoryOptions"
-            value-attribute="value"
-            option-attribute="label"
-            placeholder="Category"
-            class="w-40"
+            <template #trailing>
+              <UButton
+                class="cursor-pointer"
+                color="neutral"
+                variant="link"
+                size="sm"
+                icon="i-lucide-circle-x"
+                aria-label="Clear input"
+                @click="form.title = ''"
+              />
+            </template>
+          </UInput>
+        </UFormField>
+
+      </div>
+
+      <div class="flex flex-wrap gap-4">
+
+        <UFormField label="Estatus" name="status">
+          <USelect 
+            v-model="form.status" 
+            :items="['All', 'Published', 'Draft']" 
+            variant="subtle"
+            size="lg"
           />
-          <USelectMenu
-            v-model="dateFilter"
-            :options="dateOptions"
-            value-attribute="value"
-            option-attribute="label"
-            placeholder="Date Range"
-            class="w-36"
+        </UFormField>
+
+         <UFormField label="Categoría" name="categoryId">
+          <USelect 
+            v-model="form.categoryId" 
+            :items="[{value: 1, label: 'Categoría 1'}, {value: 2, label: 'Categoría 2'}, {value: 3, label: 'Categoría 3'}]" 
+            variant="subtle"
+            size="lg"
+            placeholder="Seleccione una categoría" 
+          />
+        </UFormField>
+        
+        <UFormField label="Autor" name="userId">
+          <USelect 
+            v-model="form.userId" 
+            :items="[{value: 1, label: 'Autor 1'}, {value: 2, label: 'Autor 2'}, {value: 3, label: 'Autor 3'}]" 
+            variant="subtle" 
+            size="lg" 
+            placeholder="Seleccione un autor" 
+          />
+        </UFormField>
+
+        <UFormField label="Última edición desde" name="updatedAtFrom">
+          <UInputDate ref="inputDate1" v-model="(form.updatedAtFrom as any)" variant="subtle" size="lg">
+            <template #trailing>
+              <UPopover :reference="inputDate1?.inputsRef[3]?.$el">
+                <UButton
+                  color="neutral"
+                  variant="link"
+                  size="sm"
+                  icon="i-lucide-calendar"
+                  aria-label="Select a date"
+                  class="px-0"
+                />
+
+                <template #content>
+                  <UCalendar v-model="(form.updatedAtFrom as any)" class="p-2" />
+                </template>
+              </UPopover>
+            </template>
+          </UInputDate>
+        </UFormField>
+
+        <UFormField label="Última edición hasta" name="updatedAtTo">
+          <UInputDate ref="inputDate2" v-model="(form.updatedAtTo as any)" variant="subtle" size="lg">
+            <template #trailing>
+              <UPopover :reference="inputDate2?.inputsRef[3]?.$el">
+                <UButton
+                  color="neutral"
+                  variant="link"
+                  size="sm"
+                  icon="i-lucide-calendar"
+                  aria-label="Select a date"
+                  class="px-0"
+                />
+
+                <template #content>
+                  <UCalendar v-model="(form.updatedAtTo as any)" class="p-2" />
+                </template>
+              </UPopover>
+            </template>
+          </UInputDate>
+        </UFormField>
+
+        <UButton
+          color="error"
+          variant="subtle"
+          size="lg"
+          class="h-fit self-end"
+          @click="resetFilters"
+          >Borrar filtros</UButton>
+
+      </div>
+
+
+    </UForm>
+
+    <div class="">
+      <div class="flex-1 overflow-auto border border-solid rounded-lg border-default">
+        <UTable 
+          :columns="columns" 
+          :data="blogs" 
+          :loading="loading"
+          loading-color="primary"
+          loading-animation="carousel"
+          sticky
+          />
+        <div class="flex justify-between border-t border-default pt-4 px-4">
+          <p class="text-[#9C9B99] text-xs font-light">Mostrando {{ blogs.length }} de {{ total }} resultados</p>
+          <UPagination
+            v-model:page="page"
+            :items-per-page="pageSize"
+            :total="totalPages"
+            :show-edges="false"
+            variant="ghost"
+            active-variant="ghost"
           />
         </div>
       </div>
-
-      <!-- Table -->
-      <div class="flex-1 overflow-auto">
-        <table class="w-full text-sm">
-          <thead>
-            <tr class="border-b border-gray-200 dark:border-gray-800">
-              <th class="w-10 pb-3 text-left">
-                <UCheckbox
-                  :checked="selectedRows.length === paginatedPosts.length && paginatedPosts.length > 0"
-                  :indeterminate="selectedRows.length > 0 && selectedRows.length < paginatedPosts.length"
-                  @change="toggleAll"
-                />
-              </th>
-              <th class="pb-3 text-left font-medium text-gray-500 dark:text-gray-400 pr-4">Title</th>
-              <th class="pb-3 text-left font-medium text-gray-500 dark:text-gray-400 pr-4">Category</th>
-              <th class="pb-3 text-left font-medium text-gray-500 dark:text-gray-400 pr-4">Status</th>
-              <th class="pb-3 text-left font-medium text-gray-500 dark:text-gray-400 pr-4">Date</th>
-              <th class="pb-3 text-left font-medium text-gray-500 dark:text-gray-400 pr-4">Views</th>
-              <th class="pb-3 w-10" />
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              v-for="post in paginatedPosts"
-              :key="post.id"
-              class="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors"
-            >
-              <td class="py-3.5 pr-3">
-                <UCheckbox
-                  :checked="selectedRows.includes(post.id)"
-                  @change="toggleRow(post.id)"
-                />
-              </td>
-              <td class="py-3.5 pr-4">
-                <p class="font-medium text-gray-900 dark:text-white">{{ post.title }}</p>
-                <p class="text-xs text-gray-400 mt-0.5">{{ post.author }}</p>
-              </td>
-              <td class="py-3.5 pr-4">
-                <UBadge :color="categoryColors[post.category]" variant="subtle" size="sm">
-                  {{ post.category }}
-                </UBadge>
-              </td>
-              <td class="py-3.5 pr-4">
-                <div class="flex items-center gap-1.5">
-                  <span
-                    class="w-1.5 h-1.5 rounded-full"
-                    :class="post.status === 'Published' ? 'bg-green-500' : 'bg-amber-400'"
-                  />
-                  <span
-                    class="text-sm font-medium"
-                    :class="post.status === 'Published' ? 'text-green-600 dark:text-green-400' : 'text-amber-600 dark:text-amber-400'"
-                  >
-                    {{ post.status }}
-                  </span>
-                </div>
-              </td>
-              <td class="py-3.5 pr-4 text-gray-500 dark:text-gray-400">{{ post.date }}</td>
-              <td class="py-3.5 pr-4 text-gray-500 dark:text-gray-400">{{ post.views.toLocaleString() }}</td>
-              <td class="py-3.5">
-                <UDropdownMenu :items="rowActions(post)">
-                  <UButton variant="ghost" color="neutral" icon="i-lucide-ellipsis" size="sm" />
-                </UDropdownMenu>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Footer: count + pagination -->
-      <div class="flex items-center justify-between pt-2 border-t border-gray-200 dark:border-gray-800">
-        <p class="text-sm text-gray-500">
-          Showing {{ (currentPage - 1) * pageSize + 1 }}–{{ Math.min(currentPage * pageSize, filteredPosts.length) }} of {{ filteredPosts.length }} posts
-        </p>
-        <UPagination
-          v-model:page="currentPage"
-          :total="filteredPosts.length"
-          :items-per-page="pageSize"
-        />
-      </div>
-    
-
     </div>
   </div>
 </template>
+
+<style lang="css">
+.chip-published {
+  border-radius: 16px;
+  padding: 2px 10px;
+  background-color: #bfdbfe20;
+  color: #2563EB;
+}
+
+.chip-draft {
+  border-radius: 16px;
+  padding: 2px 10px;
+  background-color: #FFF3CD;
+  color: #D4A64A;
+} 
+</style>

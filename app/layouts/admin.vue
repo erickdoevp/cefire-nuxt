@@ -12,8 +12,8 @@ const navSections = [
   {
     label: 'Settings',
     items: [
-      { label: 'Media Library', icon: 'i-lucide-image', to: '/admin/media' },
-      { label: 'Settings', icon: 'i-lucide-settings', to: '/admin/settings' },
+      // { label: 'Media Library', icon: 'i-lucide-image', to: '/admin/media' },
+      // { label: 'Settings', icon: 'i-lucide-settings', to: '/admin/settings' },
     ],
   },
 ]
@@ -84,7 +84,7 @@ function isActive(to: string) {
     </aside>
 
     <!-- Main content -->
-    <main class="flex-1 overflow-auto bg-[#f6f7f9]">
+    <main class="flex-1 overflow-auto bg-[#f6f7f9] p-5">
       <slot />
     </main>
   </div>

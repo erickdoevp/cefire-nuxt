@@ -31,7 +31,7 @@
         </p>
 
         <!-- Subtitle -->
-        <p class="w-[360px] text-sm leading-relaxed text-[#6D6C6A]">
+        <p class="w-[360px] text-sm leading-relaxed text-white">
           Su plataforma integral para la gestión de su consulta de fisioterapia.
         </p>
       </div>
