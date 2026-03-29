@@ -4,6 +4,8 @@ import type { ZonedDateTime, CalendarDate, CalendarDateTime } from '@internation
 import { useDebounceFn } from '@vueuse/core';
 import { usePaginatedBlogs } from '~/composables/admin/posts/usePaginatedBlogs';
 import type { Blog, Category, User } from '~/interfaces/blog';
+import { useFetchCategories } from '~/composables/admin/categories/useFetchCategories';
+import { useFetchProfiles } from '~/composables/admin/profiles/useFetchProfiles';
 
 definePageMeta({
   middleware:'auth'
@@ -22,6 +24,16 @@ const {
   totalPages, 
   total 
 } = usePaginatedBlogs();
+
+const { 
+  categoryList, 
+  fetchCategories 
+} = useFetchCategories();
+
+const { 
+  fetchProfiles, 
+  userList 
+} = useFetchProfiles();
 
 const columns: TableColumn<Blog>[] = [
   {
@@ -132,10 +144,10 @@ const columns: TableColumn<Blog>[] = [
 ];
 
 const form = reactive<{
-  title: string | null;
+  title: string | undefined;
   status: 'All' | 'Published' | 'Draft';
   categoryId: number | undefined;
-  userId: number | undefined;
+  userId: string | undefined;
   updatedAtFrom: CalendarDate | CalendarDateTime | ZonedDateTime | undefined;
   updatedAtTo: CalendarDate | CalendarDateTime | ZonedDateTime | undefined;
 }>({
@@ -154,7 +166,7 @@ const applyFilters = useDebounceFn(() => {
       title: form.title || undefined,
       status: form.status === 'All' ? undefined : form.status,
       categoryId: form.categoryId?.toString(),
-      userId: form.userId?.toString(),
+      userId: form.userId,
       updatedAtFrom: form.updatedAtFrom?.toString(),
       updatedAtTo: form.updatedAtTo?.toString(),
     }
@@ -162,7 +174,7 @@ const applyFilters = useDebounceFn(() => {
 }, 400);
 
 const resetFilters = () => {
-  form.title = null;
+  form.title = undefined;
   form.status = 'All';
   form.categoryId = undefined;
   form.userId = undefined;
@@ -176,7 +188,9 @@ watch(page, () => {
 });
 
 onMounted(() => {
-  fetchPosts()
+  fetchPosts();
+  fetchCategories();
+  fetchProfiles();
 });
 
 </script>
@@ -223,19 +237,20 @@ onMounted(() => {
 
       <div class="flex flex-wrap gap-4">
 
-        <UFormField label="Estatus" name="status">
+        <UFormField label="Estatus" name="status" class="w-40">
           <USelect 
             v-model="form.status" 
             :items="['All', 'Published', 'Draft']" 
             variant="subtle"
             size="lg"
+            class="w-full"
           />
         </UFormField>
 
          <UFormField label="Categoría" name="categoryId">
           <USelect 
             v-model="form.categoryId" 
-            :items="[{value: 1, label: 'Categoría 1'}, {value: 2, label: 'Categoría 2'}, {value: 3, label: 'Categoría 3'}]" 
+            :items="categoryList" 
             variant="subtle"
             size="lg"
             placeholder="Seleccione una categoría" 
@@ -245,7 +260,7 @@ onMounted(() => {
         <UFormField label="Autor" name="userId">
           <USelect 
             v-model="form.userId" 
-            :items="[{value: 1, label: 'Autor 1'}, {value: 2, label: 'Autor 2'}, {value: 3, label: 'Autor 3'}]" 
+            :items="userList" 
             variant="subtle" 
             size="lg" 
             placeholder="Seleccione un autor" 
