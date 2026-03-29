@@ -73,7 +73,7 @@ const items = computed<NavigationMenuItem[]>(() => [
     </template>
 
     <template #body>
-      <UNavigationMenu :items="items" orientation="vertical" class="-mx-2.5" />
+      <UNavigationMenu :items="items" orientation="vertical" class="-mx-2.5" :ui="{ link: 'p-1.5 overflow-hidden' }"/>
     </template>
 
   </UHeader>

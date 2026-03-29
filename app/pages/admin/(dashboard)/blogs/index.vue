@@ -182,11 +182,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex flex-col h-full p-8 gap-8">
+  <div class="flex flex-col h-full gap-8">
     <!-- Header -->
     <div class="flex items-start justify-between">
       <div>
-        <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Posts</h1>
+        <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Blogs</h1>
         <p class="text-sm text-gray-500 mt-0.5">Gestiona el contenido de tu blogs</p>
       </div>
     </div>
