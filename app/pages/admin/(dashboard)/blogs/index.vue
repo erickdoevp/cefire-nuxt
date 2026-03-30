@@ -78,10 +78,13 @@ const columns: TableColumn<Blog>[] = [
     header: 'Categoría',
     cell: ({row}) => {
       const category = row.getValue('category') as Category;
+      const textColor = `color: ${category.text_chip_color}`;
+      const bgColor = `background-color: ${category.chip_color}`;
       return h(
-        'span', 
+        'p', 
         {
-          class: `text-[${category.text_chip_color}] bg-[${category.chip_color}] rounded-lg py-[2px] px-[10px] text-md`,
+          class: `rounded-lg py-[2px] px-[10px] text-md w-fit`,
+          style: `${textColor}; ${bgColor}`
         },
         category.name
       )
@@ -95,7 +98,7 @@ const columns: TableColumn<Blog>[] = [
       return h(
         'p',
         {
-          class: status === 'Published' ? 'chip-published text-md w-fit' : 'chip-draft text-xl w-fit',
+          class: status === 'Published' ? 'chip-published text-md w-fit' : 'chip-draft text-md w-fit',
         },
         status
       )
@@ -151,7 +154,7 @@ const form = reactive<{
   updatedAtFrom: CalendarDate | CalendarDateTime | ZonedDateTime | undefined;
   updatedAtTo: CalendarDate | CalendarDateTime | ZonedDateTime | undefined;
 }>({
-  title: null,
+  title: undefined,
   status: 'All',
   categoryId: undefined,
   userId: undefined,
@@ -171,7 +174,7 @@ const applyFilters = useDebounceFn(() => {
       updatedAtTo: form.updatedAtTo?.toString(),
     }
   });
-}, 400);
+}, 500);
 
 const resetFilters = () => {
   form.title = undefined;
@@ -203,6 +206,12 @@ onMounted(() => {
         <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Blogs</h1>
         <p class="text-sm text-gray-500 mt-0.5">Gestiona el contenido de tu blogs</p>
       </div>
+      <UButton 
+        color="primary" 
+        variant="solid" 
+        size="lg" 
+        to="/admin/new-blog"
+        >Crear nuevo blog</UButton>
     </div>
     <!-- Filters -->
 
@@ -219,7 +228,7 @@ onMounted(() => {
             variant="subtle"
             size="xl"
           >
-            <template #trailing>
+            <template v-if="form.title" #trailing>
               <UButton
                 class="cursor-pointer"
                 color="neutral"

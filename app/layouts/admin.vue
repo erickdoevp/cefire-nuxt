@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import type { NavigationMenuItem, SidebarProps } from '@nuxt/ui'
-
-//defineProps<Pick<SidebarProps, 'variant' | 'side'>>();
-
+import type { NavigationMenuItem } from '@nuxt/ui'
 
 const variant = ref<'sidebar' | 'floating' | 'inset'>('sidebar');
 const side = ref<'left' | 'right'>('left');
@@ -79,10 +76,10 @@ const user = ref({
     </USidebar>
 
     <div
-      class="flex-1 flex flex-col overflow-hidden lg:peer-data-[variant=floating]:my-4 peer-data-[variant=inset]:m-4 lg:peer-data-[variant=inset]:not-peer-data-[collapsible=offcanvas]:ms-0 peer-data-[variant=inset]:rounded-xl peer-data-[variant=inset]:shadow-sm peer-data-[variant=inset]:ring peer-data-[variant=inset]:ring-default h-screen bg-[#f6f7f9]"
+      class="flex-1 flex flex-col lg:peer-data-[variant=floating]:my-4 peer-data-[variant=inset]:m-4 lg:peer-data-[variant=inset]:not-peer-data-[collapsible=offcanvas]:ms-0 peer-data-[variant=inset]:rounded-xl peer-data-[variant=inset]:shadow-sm peer-data-[variant=inset]:ring peer-data-[variant=inset]:ring-default bg-[#f6f7f9] w-auto"
     >
       <div
-        class="h-(--ui-header-height) shrink-0 flex items-center px-4 bg-white"
+        class="h-(--ui-header-height) shrink-0 flex items-center px-4 bg-white sticky top-0 z-10"
         :class="[
           variant !== 'floating' && 'border-b border-default',
           side === 'right' && 'justify-end'
@@ -97,8 +94,8 @@ const user = ref({
         />
       </div>
 
-      <div class="flex-1 p-6">
-        <div class="bg-white p-4">
+      <div class="flex-1">
+        <div class="bg-white p-6">
           <slot />
         </div>
       </div>

@@ -65,9 +65,14 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
 
+    cloudinaryApiSecret: process.env.CLOUDINARY_API_SECRET,
+    cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
+    cloudinaryCloudName: process.env.CLOUDINARY_CLOUD_NAME,
+
     public: {
       supabaseUrl: process.env.NUXT_PUBLIC_SUPABASE_URL,
-      supabaseAnonKey: process.env.NUXT_PUBLIC_SUPABASE_ANON_KEY
+      supabaseAnonKey: process.env.NUXT_PUBLIC_SUPABASE_ANON_KEY,
+      cloudinaryCloudName: process.env.CLOUDINARY_CLOUD_NAME,
     },
   },
 

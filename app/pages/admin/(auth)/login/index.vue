@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useAuth } from '~/composables/admin/auth/useAuth';
+
 
 definePageMeta({
   layout: 'auth-layout'

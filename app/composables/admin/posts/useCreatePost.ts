@@ -6,7 +6,7 @@ export interface Payload {
   excerpt:         string;
   tags:            number[];
   readTime:        number;
-  status:          string;
+  status:          'Draft' | 'Published';
   metaDescription: string;
   featuredImage:   string;
 }

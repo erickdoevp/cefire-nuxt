@@ -5,33 +5,47 @@ import Image from '@tiptap/extension-image'
 import Link from '@tiptap/extension-link'
 import Placeholder from '@tiptap/extension-placeholder'
 // import Underline from '@tiptap/extension-underline' // yarn add @tiptap/extension-underline
-import { ref, computed, onBeforeUnmount } from 'vue'
-import { useCreatePost } from '~/composables/admin/posts/useCreatePost'
+import { computed, onBeforeUnmount } from 'vue'
+import type { JSONContent } from '@tiptap/vue-3'
+import { useUploadImage } from '~/composables/admin/posts/useUploadImage'
+import type { Payload } from '~/composables/admin/posts/useCreatePost'
+
 type Level = 1 | 2 | 3 | 4 | 5 | 6;
 
-const emit = defineEmits(['save-draft', 'publish'])
+const emit = defineEmits(['post-data']);
+defineProps<{
+  categoryList: { label: string, value: number }[],
+  tagList: { label: string, value: number }[],
+}>();
+
+const { upload, uploading, uploadError } = useUploadImage();
+
 
 /* ─── Post state ─────────────────────────────────────────── */
-const title = ref('')
-const excerpt = ref('')
-const conclusion = ref('')
-const category = ref('')
-const tags = ref<string[]>([])
-const tagInput = ref('')
-const status = ref('Draft')
-const metaDescription = ref('')
-const featuredImage = ref<File | null>(null)
-const featuredImagePreview = ref<string | null>(null)
-
-const categories = [
-  'Recovery Tips',
-  'Fitness',
-  'Joint & Arthritis',
-  'Pain Management',
-  'Sports Medicine',
-]
-
-const createPost = useCreatePost();
+const featuredImage = ref<File | null>(null);
+const form = reactive<{
+  title: string,
+  category: number | undefined,
+  excerpt: string,
+  conclusion: string,
+  tags: number[],
+  status: 'Draft' | 'Published',
+  metaDescription: string,
+  featuredImage: string | null,
+  featuredImagePreview: string | null,
+  tagInput: number | undefined
+}>({
+  title: '',
+  excerpt: '',
+  conclusion: '',
+  category: undefined as number | undefined,
+  tags: [] as number[],
+  status: 'Draft',
+  metaDescription: '',
+  featuredImage: '',
+  featuredImagePreview: null as string | null,
+  tagInput: undefined,
+});
 
 /* ─── TipTap editor ─────────────────────────────────────── */
 const editor = useEditor({
@@ -53,16 +67,6 @@ const wordCount = computed(() => {
 const charCount = computed(() => editor.value?.getText().length ?? 0)
 const readTime = computed(() => Math.max(1, Math.ceil(wordCount.value / 200)))
 
-/* ─── Tags ──────────────────────────────────────────────── */
-const addTag = () => {
-  const t = tagInput.value.trim()
-  if (t && !tags.value.includes(t)) tags.value.push(t)
-  tagInput.value = ''
-}
-const removeTag = (tag: string) => {
-  tags.value = tags.value.filter((t) => t !== tag)
-}
-
 /* ─── Featured image ────────────────────────────────────── */
 const onFeaturedImageChange = (e: Event) => {
   const target = e.target as HTMLInputElement;
@@ -70,7 +74,7 @@ const onFeaturedImageChange = (e: Event) => {
   const file = target.files[0]
   if (!file) return
   featuredImage.value = file
-  featuredImagePreview.value = URL.createObjectURL(file)
+  form.featuredImagePreview = URL.createObjectURL(file)
 }
 
 const onDrop = (e: DragEvent) => {
@@ -78,18 +82,16 @@ const onDrop = (e: DragEvent) => {
   const file = e.dataTransfer?.files[0]
   if (!file) return
   featuredImage.value = file
-  featuredImagePreview.value = URL.createObjectURL(file)
+  form.featuredImagePreview = URL.createObjectURL(file)
 }
 
-/* ─── Editor image upload ───────────────────────────────── */
 const onEditorImageChange = (e: Event) => {
   const file = (e.target as HTMLInputElement).files?.[0]
   if (!file) return
-  const url = URL.createObjectURL(file)
-  editor.value?.chain().focus().setImage({ src: url }).run()
+  // Inserta preview local; se reemplaza con URL de Cloudinary al guardar
+  editor.value?.chain().focus().setImage({ src: URL.createObjectURL(file) }).run()
 }
 
-/* ─── Link ──────────────────────────────────────────────── */
 const setLink = () => {
   const url = prompt('Ingresa la URL')
   if (url) {
@@ -97,46 +99,81 @@ const setLink = () => {
   }
 }
 
-/* ─── Actions ───────────────────────────────────────────── */
-const postData = () => ({
-  title: title.value,
-  category: 1,
-  content: editor.value?.getJSON(),
-  conclusion: conclusion.value,
-  excerpt: excerpt.value,
-  tags: [1,2],
-  readTime: readTime.value,
-  status: status.value,
-  metaDescription: metaDescription.value,
-  featuredImage: 'wwww.lorem.com'
-})
+const replaceBlobImages = async (node: JSONContent): Promise<JSONContent> => {
+  if (node.type === 'image' && node.attrs?.src?.startsWith('blob:')) {
+    const blob = await fetch(node.attrs.src).then(r => r.blob())
+    const file = new File([blob], 'image', { type: blob.type })
+    const url = await upload(file)
+    return { ...node, attrs: { ...node.attrs, src: url ?? node.attrs.src } }
+  }
+  if (node.content?.length) {
+    return { ...node, content: await Promise.all(node.content.map(replaceBlobImages)) }
+  }
+  return node
+}
 
-const saveDraft = () => {
-  console.log(postData());
-  createPost.savePost(postData());
-  emit('save-draft', postData())
+const uploadPendingImages = async (): Promise<boolean> => {
+  // Imagen destacada
+  if (featuredImage.value) {
+    const url = await upload(featuredImage.value)
+    if (!url) return false
+    form.featuredImage = url
+  }
+
+  // Imágenes del editor con blob URLs
+  const content = editor.value?.getJSON()
+  if (content) {
+    const updated = await replaceBlobImages(content)
+    editor.value?.commands.setContent(updated)
+  }
+
+  return !uploadError.value
 }
-const publish = () => {
-  status.value = 'Published'
-  createPost.savePost(postData());
-  emit('publish', postData())
-}
+
+const postData = (): Payload => ({
+  title: form.title,
+  category: form.category!,
+  content: editor.value?.getJSON(),
+  conclusion: form.conclusion,
+  excerpt: form.excerpt,
+  tags: form.tags,
+  readTime: readTime.value,
+  status: form.status,
+  metaDescription: form.metaDescription,
+  featuredImage: form.featuredImage!
+});
+
+const hadleSubmit = async (status: 'Draft' | 'Published') => {
+  form.status = status
+  const ok = await uploadPendingImages()
+  if (!ok) return
+  emit('post-data', postData())
+};
 
 /* ─── Cleanup ───────────────────────────────────────────── */
-onBeforeUnmount(() => editor.value?.destroy())
+onBeforeUnmount(() => editor.value?.destroy());
+
 </script>
 
 <template>
   <div class="flex flex-col h-full bg-white dark:bg-gray-950">
 
     <!-- ── Header ──────────────────────────────────────────────── -->
-    <div class="flex items-center justify-between px-8 py-4 border-b border-gray-200 dark:border-gray-800 sticky top-0 z-10 bg-white">
-      <h1 class="text-xl font-semibold text-gray-900 dark:text-white">Crear Nuevo Post</h1>
+    <div class="flex items-center justify-between border-b border-gray-200 dark:border-gray-800 bg-white pb-6">
+      <div class="flex gap-4">
+        <UButton 
+          icon="mdi:keyboard-backspace" 
+          class="w-6 h-6 text-black cursor-pointer hover:text-gray-600" 
+          to="/admin/blogs"
+          variant="link"
+          />
+        <h1 class="text-xl font-semibold text-gray-900 dark:text-white">Crear Nuevo Post</h1>
+      </div>
       <div class="flex items-center gap-2">
-        <UButton variant="outline" color="neutral" @click="saveDraft">
+        <UButton variant="outline" color="neutral" @click="hadleSubmit('Draft')">
           Guardar Borrador
         </UButton>
-        <UButton color="primary" icon="i-lucide-send" @click="publish">
+        <UButton color="primary" icon="i-lucide-send" @click="hadleSubmit('Published')">
           Publicar
         </UButton>
       </div>
@@ -152,7 +189,7 @@ onBeforeUnmount(() => editor.value?.destroy())
         <div class="flex flex-col gap-1">
           <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Título del post</label>
           <UInput
-            v-model="title"
+            v-model="form.title"
             placeholder="Ingresa el título del post..."
             size="lg"
             class="w-full"
@@ -161,9 +198,9 @@ onBeforeUnmount(() => editor.value?.destroy())
 
         <!-- Extract -->
         <div class="flex flex-col gap-1">
-          <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Resumen del post</label>
+          <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Extracto del post</label>
           <UInput
-            v-model="excerpt"
+            v-model="form.excerpt"
             placeholder="Ingresa un resumen corto del post..."
             size="lg"
             class="w-full"
@@ -294,7 +331,7 @@ onBeforeUnmount(() => editor.value?.destroy())
         <div class="flex flex-col gap-1">
           <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Conclusión del post</label>
           <textarea
-            v-model="conclusion"
+            v-model="form.conclusion"
             placeholder="Ingresa la conclusión del post..."
             rows="4"
             class="w-full text-sm rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2 text-gray-700 dark:text-gray-300 placeholder-gray-400 resize-none focus:outline-none focus:ring-2 focus:ring-primary-500"
@@ -305,13 +342,36 @@ onBeforeUnmount(() => editor.value?.destroy())
       <!-- ── Right: sidebar ─────────────────────────────────────── -->
       <div class="flex flex-col gap-4 w-72 shrink-0">
 
+        <!-- Status -->
+        <!-- <div class="sidebar-card">
+          <h3 class="sidebar-title">Estatus</h3>
+          <div class="flex rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <button
+              class="flex-1 py-1.5 text-sm font-medium transition-colors"
+              :class="form.status === 'Draft'
+                ? 'bg-primary-500 text-white'
+                : 'bg-white dark:bg-gray-900 text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-800'"
+            >
+              Borrador
+            </button>
+            <button
+              class="flex-1 py-1.5 text-sm font-medium transition-colors"
+              :class="form.status === 'Published'
+                ? 'bg-primary-500 text-white'
+                : 'bg-white dark:bg-gray-900 text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-800'"
+            >
+              Publicado
+            </button>
+          </div>
+        </div> -->
+
         <!-- Category -->
         <div class="sidebar-card">
           <h3 class="sidebar-title">Categoría</h3>
-          <USelectMenu
-            v-model="category"
-            :options="categories"
-            placeholder="Select a category"
+          <USelect
+            v-model="form.category"
+            :items="categoryList"
+            placeholder="Selecciona una categoría"
             class="w-full"
           />
         </div>
@@ -319,30 +379,13 @@ onBeforeUnmount(() => editor.value?.destroy())
         <!-- Tags -->
         <div class="sidebar-card">
           <h3 class="sidebar-title">Tags</h3>
-          <div class="flex flex-wrap gap-1.5 mb-2">
-            <span
-              v-for="tag in tags"
-              :key="tag"
-              class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-700 dark:bg-primary-900 dark:text-primary-300"
-            >
-              {{ tag }}
-              <button class="hover:text-primary-900" @click="removeTag(tag)">
-                <UIcon name="i-lucide-x" class="w-3 h-3" />
-              </button>
-            </span>
-          </div>
-          <UInput
-            v-model="tagInput"
-            placeholder="Agrega un tag..."
-            size="sm"
-            @keydown.enter.prevent="addTag"
-          >
-            <template #trailing>
-              <button class="text-gray-400 hover:text-gray-600" @click="addTag">
-                <UIcon name="i-lucide-plus" class="w-4 h-4" />
-              </button>
-            </template>
-          </UInput>
+          <USelect
+            v-model="form.tags"
+            multiple
+            :items="tagList"
+            placeholder="Selecciona uno o más tags"
+            class="w-full"
+          />
         </div>
 
         <!-- Featured Image -->
@@ -353,8 +396,12 @@ onBeforeUnmount(() => editor.value?.destroy())
             @dragover.prevent
             @drop="onDrop"
           >
-            <template v-if="featuredImagePreview">
-              <img :src="featuredImagePreview" class="w-full h-full object-cover" alt="Featured">
+            <template v-if="uploading">
+              <UIcon name="i-lucide-loader-circle" class="w-7 h-7 text-primary-400 animate-spin" />
+              <span class="text-xs text-gray-500">Subiendo imagen...</span>
+            </template>
+            <template v-else-if="form.featuredImagePreview">
+              <img :src="form.featuredImagePreview" class="w-full h-full object-cover" alt="Featured">
             </template>
             <template v-else>
               <UIcon name="i-lucide-upload-cloud" class="w-7 h-7 text-gray-400" />
@@ -363,33 +410,9 @@ onBeforeUnmount(() => editor.value?.destroy())
                 <span class="text-gray-400">JPG, PNG, up to 5MB</span>
               </span>
             </template>
+            <p v-if="uploadError" class="text-xs text-red-500 text-center px-2">{{ uploadError }}</p>
             <input type="file" accept="image/*" class="hidden" @change="onFeaturedImageChange">
           </label>
-        </div>
-
-        <!-- Status -->
-        <div class="sidebar-card">
-          <h3 class="sidebar-title">Estatus</h3>
-          <div class="flex rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
-            <button
-              class="flex-1 py-1.5 text-sm font-medium transition-colors"
-              :class="status === 'Draft'
-                ? 'bg-primary-500 text-white'
-                : 'bg-white dark:bg-gray-900 text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-800'"
-              @click="status = 'Draft'"
-            >
-              Borrador
-            </button>
-            <button
-              class="flex-1 py-1.5 text-sm font-medium transition-colors"
-              :class="status === 'Published'
-                ? 'bg-primary-500 text-white'
-                : 'bg-white dark:bg-gray-900 text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-800'"
-              @click="status = 'Published'"
-            >
-              Publicado
-            </button>
-          </div>
         </div>
 
         <!-- SEO Settings -->
@@ -397,12 +420,12 @@ onBeforeUnmount(() => editor.value?.destroy())
           <h3 class="sidebar-title">Ajustes SEO</h3>
           <label class="text-xs text-gray-500 dark:text-gray-400 mb-1 block">Meta Description</label>
           <textarea
-            v-model="metaDescription"
+            v-model="form.metaDescription"
             rows="4"
             placeholder="Escribe una descripción corta para SEO..."
             class="w-full text-sm rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2 text-gray-700 dark:text-gray-300 placeholder-gray-400 resize-none focus:outline-none focus:ring-2 focus:ring-primary-500"
           />
-          <p class="text-xs text-gray-400 mt-1 text-right">{{ metaDescription.length }}/160</p>
+          <p class="text-xs text-gray-400 mt-1 text-right">{{ form.metaDescription.length }}/160</p>
         </div>
 
       </div>

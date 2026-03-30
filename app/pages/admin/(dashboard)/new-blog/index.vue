@@ -1,23 +1,34 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import PostEditor from '~/components/shared/PostEditor.vue';
+import { useFetchCategories } from '~/composables/admin/categories/useFetchCategories';
+import { useCreatePost, type Payload } from '~/composables/admin/posts/useCreatePost';
+import { useFetchTags } from '~/composables/admin/tags/useFetchTags';
 
 definePageMeta({ 
   middleware:'auth' 
 });
 
-const categories = useCategories();
+const { fetchCategories, categoryList } = useFetchCategories();
+const { fetchTags, tagList } = useFetchTags();
+const { savePost } = useCreatePost();
+
+const handleSavePost = (data: Payload) => {
+  savePost(data);
+};
 
 onMounted(() => {
-  categories.getCategories();
-}
-)
-const content = ref(null)
+  fetchCategories();
+  fetchTags();
+});
 
 </script>
 
 <template>
   <div>
-    <PostEditor v-model="content"/>
+    <PostEditor 
+      :category-list="categoryList" 
+      :tag-list="tagList"
+      @post-data="handleSavePost" 
+    />
   </div>
 </template>
