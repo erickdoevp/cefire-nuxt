@@ -1,4 +1,4 @@
-import type { Blog, Category, User } from "~/interfaces/blog";
+import type { Blog, Category, User } from "~/interfaces/paginated-blog";
 
 export interface BlogFilters {
   title?: string

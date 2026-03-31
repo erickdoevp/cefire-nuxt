@@ -2,23 +2,21 @@
 import PostEditor from '~/components/shared/PostEditor.vue';
 import { useFetchCategories } from '~/composables/admin/categories/useFetchCategories';
 import { useCreatePost, type Payload } from '~/composables/admin/posts/useCreatePost';
-import { useFetchTags } from '~/composables/admin/tags/useFetchTags';
 
 definePageMeta({ 
   middleware:'auth' 
 });
 
 const { fetchCategories, categoryList } = useFetchCategories();
-const { fetchTags, tagList } = useFetchTags();
-const { savePost } = useCreatePost();
+const { savePost, isLoading } = useCreatePost();
 
 const handleSavePost = (data: Payload) => {
+  console.log(data);
   savePost(data);
 };
 
 onMounted(() => {
   fetchCategories();
-  fetchTags();
 });
 
 </script>
@@ -27,7 +25,7 @@ onMounted(() => {
   <div>
     <PostEditor 
       :category-list="categoryList" 
-      :tag-list="tagList"
+      :is-loading="isLoading"
       @post-data="handleSavePost" 
     />
   </div>

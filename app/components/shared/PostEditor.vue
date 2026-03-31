@@ -7,7 +7,7 @@ import Placeholder from '@tiptap/extension-placeholder'
 // import Underline from '@tiptap/extension-underline' // yarn add @tiptap/extension-underline
 import { computed, onBeforeUnmount } from 'vue'
 import type { JSONContent } from '@tiptap/vue-3'
-import { useUploadImage } from '~/composables/admin/posts/useUploadImage'
+import { useUploadImage } from '~/composables/admin/cloudinary/useUploadImage'
 import type { Payload } from '~/composables/admin/posts/useCreatePost'
 
 type Level = 1 | 2 | 3 | 4 | 5 | 6;
@@ -15,7 +15,7 @@ type Level = 1 | 2 | 3 | 4 | 5 | 6;
 const emit = defineEmits(['post-data']);
 defineProps<{
   categoryList: { label: string, value: number }[],
-  tagList: { label: string, value: number }[],
+  isLoading: boolean
 }>();
 
 const { upload, uploading, uploadError } = useUploadImage();
@@ -28,7 +28,7 @@ const form = reactive<{
   category: number | undefined,
   excerpt: string,
   conclusion: string,
-  tags: number[],
+  tags: string[],
   status: 'Draft' | 'Published',
   metaDescription: string,
   featuredImage: string | null,
@@ -39,7 +39,7 @@ const form = reactive<{
   excerpt: '',
   conclusion: '',
   category: undefined as number | undefined,
-  tags: [] as number[],
+  tags: [] as string[],
   status: 'Draft',
   metaDescription: '',
   featuredImage: '',
@@ -170,10 +170,10 @@ onBeforeUnmount(() => editor.value?.destroy());
         <h1 class="text-xl font-semibold text-gray-900 dark:text-white">Crear Nuevo Post</h1>
       </div>
       <div class="flex items-center gap-2">
-        <UButton variant="outline" color="neutral" @click="hadleSubmit('Draft')">
+        <UButton :disabled="isLoading" variant="outline" :icon="isLoading ? 'i-lucide-loader' : 'mdi:eraser'" color="neutral" @click="hadleSubmit('Draft')">
           Guardar Borrador
         </UButton>
-        <UButton color="primary" icon="i-lucide-send" @click="hadleSubmit('Published')">
+        <UButton :disabled="isLoading" color="primary" :icon="isLoading ? 'i-lucide-loader' : 'i-lucide-send'" @click="hadleSubmit('Published')">
           Publicar
         </UButton>
       </div>
@@ -379,13 +379,7 @@ onBeforeUnmount(() => editor.value?.destroy());
         <!-- Tags -->
         <div class="sidebar-card">
           <h3 class="sidebar-title">Tags</h3>
-          <USelect
-            v-model="form.tags"
-            multiple
-            :items="tagList"
-            placeholder="Selecciona uno o más tags"
-            class="w-full"
-          />
+          <UInputTags v-model="form.tags" color="neutral" />
         </div>
 
         <!-- Featured Image -->

@@ -3,7 +3,7 @@ import type { TableColumn } from '@nuxt/ui';
 import type { ZonedDateTime, CalendarDate, CalendarDateTime } from '@internationalized/date';
 import { useDebounceFn } from '@vueuse/core';
 import { usePaginatedBlogs } from '~/composables/admin/posts/usePaginatedBlogs';
-import type { Blog, Category, User } from '~/interfaces/blog';
+import type { Blog, Category, User } from '~/interfaces/paginated-blog';
 import { useFetchCategories } from '~/composables/admin/categories/useFetchCategories';
 import { useFetchProfiles } from '~/composables/admin/profiles/useFetchProfiles';
 

@@ -4,7 +4,7 @@ export interface Payload {
   content:         any;
   conclusion:      string;
   excerpt:         string;
-  tags:            number[];
+  tags:            string[];
   readTime:        number;
   status:          'Draft' | 'Published';
   metaDescription: string;
@@ -32,7 +32,8 @@ export const useCreatePost = () => {
         status: body.status,
         profile_id: '3e412a68-d2e9-4a58-a8d8-12ce5cfe357c',
         meta_description: body.metaDescription,
-        category_id: body.category
+        category_id: body.category,
+        tags: body.tags
       });
 
       if(error?.message) {
@@ -47,7 +48,8 @@ export const useCreatePost = () => {
 
   return {
     savePost,
-    err
+    err,
+    isLoading
   }
 
 }
