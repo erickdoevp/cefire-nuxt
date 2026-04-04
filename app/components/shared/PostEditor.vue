@@ -8,20 +8,22 @@ import Placeholder from '@tiptap/extension-placeholder'
 import { computed, onBeforeUnmount } from 'vue'
 import type { JSONContent } from '@tiptap/vue-3'
 import { useUploadImage } from '~/composables/admin/cloudinary/useUploadImage'
+import { useDeleteImage } from '~/composables/admin/cloudinary/useDeleteImage'
 import type { Payload } from '~/composables/admin/posts/useCreatePost'
+import type { BlogById } from '~/interfaces/fetch-blog-id'
 
 type Level = 1 | 2 | 3 | 4 | 5 | 6;
 
 const emit = defineEmits(['post-data']);
-defineProps<{
+const props = defineProps<{
   categoryList: { label: string, value: number }[],
-  isLoading: boolean
+  isLoading: boolean,
+  post?: BlogById
 }>();
 
 const { upload, uploading, uploadError } = useUploadImage();
+const { deleteImage } = useDeleteImage();
 
-
-/* ─── Post state ─────────────────────────────────────────── */
 const featuredImage = ref<File | null>(null);
 const form = reactive<{
   title: string,
@@ -47,7 +49,6 @@ const form = reactive<{
   slug: undefined,
 });
 
-/* ─── TipTap editor ─────────────────────────────────────── */
 const editor = useEditor({
   content: { type: 'doc', content: [] },
   extensions: [
@@ -59,7 +60,6 @@ const editor = useEditor({
   ],
 })
 
-/* ─── Stats ─────────────────────────────────────────────── */
 const wordCount = computed(() => {
   const text = editor.value?.getText() ?? ''
   return text.trim() === '' ? 0 : text.trim().split(/\s+/).length
@@ -67,28 +67,34 @@ const wordCount = computed(() => {
 const charCount = computed(() => editor.value?.getText().length ?? 0)
 const readTime = computed(() => Math.max(1, Math.ceil(wordCount.value / 200)))
 
-/* ─── Featured image ────────────────────────────────────── */
+const replaceFeaturedImage = (file: File) => {
+  // Si ya había una imagen en Cloudinary, la eliminamos
+  if (form.featuredImage) {
+    deleteImage(form.featuredImage)
+    form.featuredImage = null
+  }
+  featuredImage.value = file
+  form.featuredImagePreview = URL.createObjectURL(file)
+}
+
 const onFeaturedImageChange = (e: Event) => {
   const target = e.target as HTMLInputElement;
   if(!target.files) return;
   const file = target.files[0]
   if (!file) return
-  featuredImage.value = file
-  form.featuredImagePreview = URL.createObjectURL(file)
+  replaceFeaturedImage(file)
 }
 
 const onDrop = (e: DragEvent) => {
   e.preventDefault()
   const file = e.dataTransfer?.files[0]
   if (!file) return
-  featuredImage.value = file
-  form.featuredImagePreview = URL.createObjectURL(file)
+  replaceFeaturedImage(file)
 }
 
 const onEditorImageChange = (e: Event) => {
   const file = (e.target as HTMLInputElement).files?.[0]
   if (!file) return
-  // Inserta preview local; se reemplaza con URL de Cloudinary al guardar
   editor.value?.chain().focus().setImage({ src: URL.createObjectURL(file) }).run()
 }
 
@@ -113,14 +119,12 @@ const replaceBlobImages = async (node: JSONContent): Promise<JSONContent> => {
 }
 
 const uploadPendingImages = async (): Promise<boolean> => {
-  // Imagen destacada
   if (featuredImage.value) {
     const url = await upload(featuredImage.value)
     if (!url) return false
     form.featuredImage = url
   }
 
-  // Imágenes del editor con blob URLs
   const content = editor.value?.getJSON()
   if (content) {
     const updated = await replaceBlobImages(content)
@@ -151,7 +155,33 @@ const hadleSubmit = async (status: 'Draft' | 'Published') => {
   emit('post-data', postData())
 };
 
-/* ─── Cleanup ───────────────────────────────────────────── */
+/* ─── Populate form when editing ───────────────────────── */
+watch(() => props.post, (post) => {
+  if (!post) return
+
+  form.title                = post.title
+  form.excerpt              = post.excerpt
+  form.conclusion           = post.conclusion
+  form.category             = post.category.id
+  form.tags                 = post.tags ?? []
+  form.status               = post.status
+  form.metaDescription      = post.metaDescription
+  form.featuredImage        = post.featuredImage
+  form.featuredImagePreview = post.featuredImage
+  form.slug                 = post.slug
+
+  if (editor.value && post.content) {
+    editor.value.commands.setContent(post.content)
+  }
+}, { immediate: true })
+
+// Si el editor no estaba listo cuando llegó el post, lo setea al inicializarse
+watch(editor, (instance) => {
+  if (instance && props.post?.content) {
+    instance.commands.setContent(props.post.content)
+  }
+}, { once: true })
+
 onBeforeUnmount(() => editor.value?.destroy());
 
 </script>

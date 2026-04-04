@@ -19,11 +19,12 @@ export const useFetchBlog = (id: number) => {
       content,
       conclusion,
       excerpt,
-      reading_time:readTime,
+      readTime:reading_time,
       status,
-      meta_description:metaDescription,
-      featured_image:featuredImage,
-      tags
+      metaDescription:meta_description,
+      featuredImage:featured_image,
+      tags,
+      slug
     `)
     .eq('id', id)
     .single();

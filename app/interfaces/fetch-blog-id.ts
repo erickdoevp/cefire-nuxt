@@ -10,6 +10,7 @@ export interface BlogById {
   status:           'Draft' | 'Published';
   metaDescription:  string;
   featuredImage:    string;
+  slug:             string;
 }
 
 export interface Category {
