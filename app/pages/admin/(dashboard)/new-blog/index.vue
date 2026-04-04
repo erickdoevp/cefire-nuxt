@@ -10,9 +10,8 @@ definePageMeta({
 const { fetchCategories, categoryList } = useFetchCategories();
 const { savePost, isLoading } = useCreatePost();
 
-const handleSavePost = (data: Payload) => {
-  console.log(data);
-  savePost(data);
+const handleSavePost = async (data: Payload) => {
+  await savePost(data);
 };
 
 onMounted(() => {

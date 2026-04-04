@@ -44,6 +44,8 @@ export const useCreatePost = () => {
       if(error?.message) {
         err.value = error.message;
         console.log(err.value);
+      } else {
+        navigateTo('/admin/blogs');
       }
 
       isLoading.value = false;

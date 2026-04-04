@@ -30,6 +30,8 @@ export const useUpdatePost = () => {
 
     if (error) {
       err.value = error.message
+    } else {
+      navigateTo('/admin/blogs');
     }
 
     isLoading.value = false

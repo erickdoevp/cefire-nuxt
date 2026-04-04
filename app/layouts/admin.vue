@@ -54,7 +54,6 @@ onMounted(() => {
       side === 'right' && 'flex-row-reverse'
     ]"
   >
-
     <USidebar
       v-model:open="open"
       :variant="variant"
