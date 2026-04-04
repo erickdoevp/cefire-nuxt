@@ -1,3 +1,5 @@
+import { useAuthStore } from '~/store/admin/auth/authStore'
+
 export interface Payload {
   title:           string;
   category:        number;
@@ -9,11 +11,13 @@ export interface Payload {
   status:          'Draft' | 'Published';
   metaDescription: string;
   featuredImage:   string;
+  slug:            string;
 }
 
 export const useCreatePost = () => {
 
   const { $supabase } = useNuxtApp();
+  const auth = useAuthStore();
   
   const err = ref<string>('');
   const isLoading = ref<boolean>(false);
@@ -30,10 +34,11 @@ export const useCreatePost = () => {
         conclusion: body.conclusion,
         reading_time: body.readTime,
         status: body.status,
-        profile_id: '3e412a68-d2e9-4a58-a8d8-12ce5cfe357c',
+        profile_id: auth.user?.id,
         meta_description: body.metaDescription,
         category_id: body.category,
-        tags: body.tags
+        tags: body.tags,
+        slug: body.slug
       });
 
       if(error?.message) {

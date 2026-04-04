@@ -17,6 +17,7 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@pinia/nuxt',
     '@nuxtjs/sitemap',
+    'pinia-plugin-persistedstate',
   ],
 
   site: {
@@ -42,7 +43,7 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       crawlLinks: true,
-      ignore: ['/admin/**'],
+      ignore: ['/admin/**','/blogs','/blog/**'],
     },
   },
 

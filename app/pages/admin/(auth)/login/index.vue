@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useAuth } from '~/composables/admin/auth/useAuth';
 
-
 definePageMeta({
   layout: 'auth-layout'
 });
@@ -17,12 +16,13 @@ async function handleSubmit() {
   await auth.login(email.value, password.value);
   console.log(auth.error);
   
-  if(!auth.error.value) {
+  if(!auth.error) {
     console.log('paso');
     
     navigateTo('/admin/blogs')
   }
 }
+
 </script>
 
 <template >

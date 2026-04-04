@@ -8,7 +8,7 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "deploy": "yarn run generate && wrangler pages deploy .output/public"
+    "deploy": "yarn run generate && npx wrangler pages deploy .output/public"
   },
   "dependencies": {
     "@nuxt/eslint": "1.12.1",
@@ -28,12 +28,14 @@
     "eslint": "^9.0.0",
     "nuxt": "^4.2.2",
     "pinia": "^3.0.4",
+    "pinia-plugin-persistedstate": "4.7.1",
     "tailwindcss": "^4.1.18",
     "vue": "^3.5.27",
     "vue-router": "^4.6.4"
   },
   "devDependencies": {
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "wrangler": "^4.79.0"
   },
   "packageManager": "yarn@4.9.1"
 }

@@ -1,26 +1,48 @@
 <script setup lang="ts">
 import type { NavigationMenuItem } from '@nuxt/ui'
+import { useAuthStore } from '~/store/admin/auth/authStore'
+
+const auth = useAuthStore()
 
 const variant = ref<'sidebar' | 'floating' | 'inset'>('sidebar');
 const side = ref<'left' | 'right'>('left');
 
 const open = ref(true)
 
-const items: NavigationMenuItem[] = [
-  {
-    label: 'Blogs',
-    icon: 'i-lucide-house',
-    active: true
-  }
+const items: NavigationMenuItem[][] = [
+  [
+    {
+      label: 'Contenido',
+      type: 'label',
+      slot: 'content-label' as const
+    },
+    {
+      label: 'Blogs',
+      icon: 'i-lucide-house',
+      active: true
+    },
+    {
+      label: 'Categorías',
+      icon: 'i-lucide-tag',
+    },
+  ],
+  [
+    {
+      label: 'Ajustes',
+      type: 'label',
+      slot: 'settings-label' as const
+    },
+    {
+      label: 'Usuarios',
+      icon: 'i-lucide-users',
+    },
+  ]
+
 ];
 
-const user = ref({
-  name: 'Benjamin Canac',
-  avatar: {
-    src: 'https://github.com/benjamincanac.png',
-    alt: 'Benjamin Canac'
-  }
-});
+onMounted(() => {
+  auth.init()
+})
 
 </script>
 
@@ -36,6 +58,7 @@ const user = ref({
     <USidebar
       v-model:open="open"
       :variant="variant"
+      mode="drawer"
       collapsible="icon"
       :side="side"
       :ui="{
@@ -59,18 +82,21 @@ const user = ref({
       />
 
       <template #footer>
-        <UButton
-          v-bind="user"
-          :label="user?.name"
-          trailing-icon="i-lucide-chevrons-up-down"
-          color="neutral"
-          variant="ghost"
-          square
-          class="w-full data-[state=open]:bg-elevated overflow-hidden"
-          :ui="{
-            trailingIcon: 'text-dimmed ms-auto'
-          }"
-        />
+        <div class="flex w-full items-center justify-between gap-2 overflow-hidden">
+          <UButton
+            :label="auth.user?.email ?? ''"
+            color="neutral"
+            variant="ghost"
+            class="flex-1 overflow-hidden data-[state=open]:bg-elevated"
+          />
+          <UButton
+            icon="i-lucide-log-out"
+            color="neutral"
+            variant="ghost"
+            aria-label="Cerrar sesión"
+            @click="async () => { await auth.logout(); navigateTo('/admin/login') }"
+          />
+        </div>
       </template>
 
     </USidebar>

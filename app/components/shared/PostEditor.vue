@@ -33,7 +33,7 @@ const form = reactive<{
   metaDescription: string,
   featuredImage: string | null,
   featuredImagePreview: string | null,
-  tagInput: number | undefined
+  slug: string | undefined
 }>({
   title: '',
   excerpt: '',
@@ -44,7 +44,7 @@ const form = reactive<{
   metaDescription: '',
   featuredImage: '',
   featuredImagePreview: null as string | null,
-  tagInput: undefined,
+  slug: undefined,
 });
 
 /* ─── TipTap editor ─────────────────────────────────────── */
@@ -140,7 +140,8 @@ const postData = (): Payload => ({
   readTime: readTime.value,
   status: form.status,
   metaDescription: form.metaDescription,
-  featuredImage: form.featuredImage!
+  featuredImage: form.featuredImage!,
+  slug: form.slug!
 });
 
 const hadleSubmit = async (status: 'Draft' | 'Published') => {
@@ -364,6 +365,16 @@ onBeforeUnmount(() => editor.value?.destroy());
             </button>
           </div>
         </div> -->
+
+        <div class="sidebar-card">
+          <h3 class="sidebar-title">Slug</h3>
+          <UInput
+            v-model="form.slug"
+            placeholder="Ingresa el slug del post..."
+            size="md"
+            class="w-full"
+          />
+        </div>
 
         <!-- Category -->
         <div class="sidebar-card">

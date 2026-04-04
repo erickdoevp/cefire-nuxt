@@ -1,15 +1,10 @@
-import { useAuth } from "~/composables/admin/auth/useAuth";
+import { useAuthStore } from '~/store/admin/auth/authStore'
 
-export default defineNuxtRouteMiddleware((to, from) => {
-
-  const user = useAuth(); // o tu lógica de auth
-
-//   if (!user.data.value) {
-//     console.log('No tienes permisos', user.data);
-
-//     console.log('No tienes permisos', user.data.value);
-    
-//     return navigateTo('/admin/login')
-//   }
-
-});
+export default defineNuxtRouteMiddleware(async () => {
+  const auth = useAuthStore()
+  console.log('isAuth? : ',auth.isAuthenticated);
+  
+  if (!auth.isAuthenticated) {
+    return navigateTo('/admin/login')
+  }
+})
