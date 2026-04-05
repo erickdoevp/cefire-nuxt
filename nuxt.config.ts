@@ -55,6 +55,7 @@ export default defineNuxtConfig({
     '/contact': { static: true },
     '/blogs': { static: true },
     '/blog/**': { isr: 60 * 60 }, // revalida cada hora
+    '/admin': { redirect: '/admin/login' },
     '/admin/**': { ssr: false },
   },
 

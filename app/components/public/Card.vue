@@ -27,7 +27,7 @@ const formatDate = (dateStr: Date) => {
       />
     </div>
     <!-- Content -->
-    <div class="flex flex-col gap-3 p-6">
+    <div class="flex flex-col gap-3 p-0 md:p-3">
       <div class="w-fit rounded-full text-xs px-4 py-2" :style="{ 'background-color': post.category.chip_color, 'color': post.category.text_chip_color }">
         <span class="">{{ post.category.name }}</span>
       </div>
