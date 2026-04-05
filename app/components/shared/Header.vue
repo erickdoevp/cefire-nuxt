@@ -33,11 +33,11 @@ const items = computed<NavigationMenuItem[]>(() => [
     to: '/contact',
     active: route.path.startsWith('/contact')
   },
-  // {
-  //   label: 'Blog',
-  //   to: '/blogs',
-  //   active: route.path.startsWith('/blog')
-  // },
+  {
+    label: 'Blog',
+    to: '/blogs',
+    active: route.path.startsWith('/blog')
+  },
 ]);
 
 </script>

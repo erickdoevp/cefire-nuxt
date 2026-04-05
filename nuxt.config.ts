@@ -43,7 +43,7 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       crawlLinks: true,
-      ignore: ['/admin/**','/blogs','/blog/**'],
+      ignore: ['/admin/**', '/blog/**'],
     },
   },
 
@@ -54,7 +54,7 @@ export default defineNuxtConfig({
     '/services': { static: true },
     '/contact': { static: true },
     '/blogs': { static: true },
-    // '/blog/**': { isr: 60 * 60 }, // revalida cada hora
+    '/blog/**': { isr: 60 * 60 }, // revalida cada hora
     '/admin/**': { ssr: false },
   },
 

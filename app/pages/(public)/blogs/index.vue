@@ -30,35 +30,15 @@ useHead({
   }],
 });
 
-onMounted(()=> {
-  fetchPosts();
-});
-
-const { 
-  blogs: posts, 
-  loading, 
-  total, 
-  page, 
-  pageSize, 
-  totalPages, 
-  fetchPosts 
+const {
+  blogs: posts,
+  page,
+  totalPages,
+  lastPost: featuredPost
 } = usePaginatedPublicBlogs();
 
-const categories = ['Todos', 'Recuperación', 'Medicina Deportiva', 'Bienestar', 'Historias']
-const activeCategory = ref('Todos')
-
-const currentPage = ref(1)
-
-const featuredPost = {
-  category: 'Recuperación',
-  title: 'Guía Completa de Recuperación Post-Cirugía: Lo que tu Cuerpo Necesita',
-  description: 'La recuperación después de una cirugía no tiene que ser abrumadora. Aprende los pasos esenciales, los tiempos esperados y los ejercicios respaldados por expertos que te ayudarán a recuperar fuerza y movilidad más rápido de lo que imaginas.',
-  author: 'Lic. Paloma Cruz',
-  date: '15 Mar 2026',
-  readTime: '8 min de lectura',
-  image: '/images/tratamientos1.jpg',
-  slug: 'guia-recuperacion-post-cirugia',
-}
+// const categories = ['Todos', 'Recuperación', 'Medicina Deportiva', 'Bienestar', 'Historias']
+// const activeCategory = ref('Todos')
 
 // const filteredPosts = computed(() =>
 //   activeCategory.value === 'Todos'
@@ -66,12 +46,15 @@ const featuredPost = {
 //     : posts.filter(p => p.category === activeCategory.value)
 // )
 
-const categoryColors: Record<string, string> = {
-  'Recuperación': 'primary',
-  'Medicina Deportiva': 'success',
-  'Bienestar': 'warning',
-  'Historias': 'error',
-}
+const formatDate = (dateStr: Date) => {
+  const date = new Date(dateStr);
+  return date.toLocaleDateString('es-MX', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric'
+  });
+};
+
 </script>
 
 <template>
@@ -88,7 +71,7 @@ const categoryColors: Record<string, string> = {
           NUESTRO BLOG
         </UBadge>
         <h1 class="max-w-200 text-center text-[52px] font-bold text-[#1A1918] leading-[1.1] tracking-[-1px]">
-          Información para <br> tu Recuperación
+          Información Para tú <br> Recuperación
         </h1>
         <p class="max-w-155 text-[18px] text-[#6D6C6A] leading-[1.6] text-center">
           Consejos de fisioterapia, bienestar e historias de recuperación inspiradoras para apoyarte en tu camino hacia una vida plena y sin dolor.
@@ -106,38 +89,34 @@ const categoryColors: Record<string, string> = {
         </div>
 
         <!-- Featured card -->
-        <NuxtLink :to="`/blog/${featuredPost.slug}`" class="group">
+        <NuxtLink :to="`/blog/${featuredPost?.slug}`" class="group">
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-0 bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
             <!-- Image -->
             <div class="aspect-4/3 lg:aspect-auto lg:min-h-90 overflow-hidden">
               <img
-                :src="featuredPost.image"
-                :alt="featuredPost.title"
+                :src="featuredPost?.featuredImage"
+                :alt="featuredPost?.title"
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 loading="lazy"
-              />
+              >
             </div>
             <!-- Content -->
             <div class="flex flex-col justify-center gap-5 p-8 lg:p-12">
-              <UBadge
-                :color="categoryColors[featuredPost.category] as any"
-                variant="soft"
-                class="w-fit rounded-full px-3"
-              >
-                {{ featuredPost.category }}
-              </UBadge>
+              <div class="w-fit rounded-full text-xs px-4 py-2" :style="{ 'background-color': featuredPost?.category.chip_color, 'color': featuredPost?.category.text_chip_color }">
+                <span class="">{{ featuredPost?.category.name }}</span>
+              </div>
               <h3 class="text-[#1A1918] text-[26px] font-bold leading-tigth tracking-[-0.3px] group-hover:text-primary transition-colors">
-                {{ featuredPost.title }}
+                {{ featuredPost?.title }}
               </h3>
               <p class="text-[#6D6C6A] text-[16px] leading-[1.65]">
-                {{ featuredPost.description }}
+                {{ featuredPost?.excerpt }}
               </p>
               <div class="flex items-center gap-2 text-[#9D9B99] text-sm">
-                <span>{{ featuredPost.author }}</span>
+                <span>{{ featuredPost?.user.name }}</span>
                 <span>·</span>
-                <span>{{ featuredPost.date }}</span>
+                <span>{{ formatDate(featuredPost!.updatedAt) }}</span>
                 <span>·</span>
-                <span>{{ featuredPost.readTime }}</span>
+                <span>{{ featuredPost?.readingTime }} minutos de lectura</span>
               </div>
               <UButton
                 variant="soft"
@@ -166,7 +145,7 @@ const categoryColors: Record<string, string> = {
               </p>
             </div>
             <!-- Category filter -->
-            <div class="flex flex-wrap gap-2">
+            <!-- <div class="flex flex-wrap gap-2">
               <UButton
                 v-for="cat in categories"
                 :key="cat"
@@ -178,7 +157,7 @@ const categoryColors: Record<string, string> = {
               >
                 {{ cat }}
               </UButton>
-            </div>
+            </div> -->
           </div>
         </div>
 
@@ -199,28 +178,28 @@ const categoryColors: Record<string, string> = {
           <UButton
             variant="ghost"
             color="neutral"
-            :disabled="currentPage === 1"
+            :disabled="page === 1"
             leading-icon="i-lucide-chevron-left"
-            @click="currentPage > 1 && currentPage--"
+            @click="page--"
           >
             Anterior
           </UButton>
           <UButton
-            v-for="upage in totalPages"
-            :key="upage"
-            :variant="currentPage === upage ? 'link' : 'ghost'"
-            :color="currentPage === upage ? 'primary' : 'neutral'"
+            v-for="p in totalPages"
+            :key="p"
+            :variant="page === p ? 'link' : 'ghost'"
+            :color="page === p ? 'primary' : 'neutral'"
             class="w-9 h-9 text-center rounded-md"
-            @click="currentPage = page"
+            @click="page = p"
           >
-            <p>{{ upage }}</p>
+            {{ p }}
           </UButton>
           <UButton
             variant="ghost"
             color="neutral"
-            :disabled="currentPage === totalPages"
+            :disabled="page === totalPages"
             trailing-icon="i-lucide-chevron-right"
-            @click="currentPage < totalPages && currentPage++"
+            @click="page++"
           >
             Siguiente
           </UButton>
