@@ -6,17 +6,31 @@ export const useAuthStore = defineStore('auth', () => {
   const { $supabase } = useNuxtApp()
 
   const user = ref<User | null>(null)
+  const role = ref<string | null>(null)
   const loading = ref(false)
   const error = ref<string | null>(null)
 
   const isAuthenticated = computed(() => !!user.value)
+  const isAdmin = computed(() => role.value === 'admin')
+
+  async function fetchRole(userId: string) {
+    const { data } = await $supabase
+      .from('profiles')
+      .select('role')
+      .eq('id', userId)
+      .single()
+    role.value = data?.role ?? null
+  }
 
   async function init() {
     const { data } = await $supabase.auth.getSession()
     user.value = data.session?.user ?? null
+    if (user.value) await fetchRole(user.value.id)
 
-    $supabase.auth.onAuthStateChange((_event, session) => {
+    $supabase.auth.onAuthStateChange(async (_event, session) => {
       user.value = session?.user ?? null
+      if (user.value) await fetchRole(user.value.id)
+      else role.value = null
     })
   }
 
@@ -42,9 +56,11 @@ export const useAuthStore = defineStore('auth', () => {
 
   return {
     user,
+    role,
     loading,
     error,
     isAuthenticated,
+    isAdmin,
     init,
     login,
     logout,
@@ -52,6 +68,6 @@ export const useAuthStore = defineStore('auth', () => {
 
 }, {
   persist: {
-    pick: ['user'],
+    pick: ['user', 'role'],
   }
 })

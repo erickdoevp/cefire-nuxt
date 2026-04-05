@@ -61,7 +61,7 @@ export const usePaginatedBlogs = () => {
       query = query.eq('category_id', filters.value.categoryId)
     }
     if (filters.value.userId) {
-      query = query.eq('user_id', filters.value.userId)
+      query = query.eq('profile_id', filters.value.userId)
     }
     if (filters.value.updatedAtFrom) {
       query = query.gte('updated_at', filters.value.updatedAtFrom)

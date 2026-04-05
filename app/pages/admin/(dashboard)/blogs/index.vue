@@ -6,6 +6,7 @@ import { usePaginatedBlogs } from '~/composables/admin/posts/usePaginatedBlogs';
 import type { Blog, Category, User } from '~/interfaces/paginated-blog';
 import { useFetchCategories } from '~/composables/admin/categories/useFetchCategories';
 import { useFetchProfiles } from '~/composables/admin/profiles/useFetchProfiles';
+import { useAuthStore } from '~/store/admin/auth/authStore';
 
 definePageMeta({
   middleware:'auth'
@@ -30,10 +31,12 @@ const {
   fetchCategories 
 } = useFetchCategories();
 
-const { 
-  fetchProfiles, 
-  userList 
+const {
+  fetchProfiles,
+  userList
 } = useFetchProfiles();
+
+const auth = useAuthStore();
 
 const columns: TableColumn<Blog>[] = [
   {
@@ -180,7 +183,7 @@ const resetFilters = () => {
   form.title = undefined;
   form.status = 'All';
   form.categoryId = undefined;
-  form.userId = undefined;
+  form.userId = auth.isAdmin ? undefined : auth.user?.id;
   form.updatedAtFrom = undefined;
   form.updatedAtTo = undefined;
 };
@@ -191,9 +194,12 @@ watch(page, () => {
 });
 
 onMounted(() => {
-  fetchPosts();
+  const userId = auth.isAdmin ? undefined : auth.user?.id;
+  fetchPosts({ filters: { userId } });
   fetchCategories();
-  fetchProfiles();
+  if (auth.isAdmin) fetchProfiles();
+  console.log('onmounted');
+  
 });
 
 </script>
@@ -266,13 +272,13 @@ onMounted(() => {
           />
         </UFormField>
         
-        <UFormField label="Autor" name="userId">
-          <USelect 
-            v-model="form.userId" 
-            :items="userList" 
-            variant="subtle" 
-            size="lg" 
-            placeholder="Seleccione un autor" 
+        <UFormField v-if="auth.isAdmin" label="Autor" name="userId">
+          <USelect
+            v-model="form.userId"
+            :items="userList"
+            variant="subtle"
+            size="lg"
+            placeholder="Seleccione un autor"
           />
         </UFormField>
 

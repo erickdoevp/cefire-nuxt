@@ -9,40 +9,40 @@ const side = ref<'left' | 'right'>('left');
 
 const open = ref(true)
 
-const items: NavigationMenuItem[][] = [
-  [
-    {
-      label: 'Contenido',
-      type: 'label',
-      slot: 'content-label' as const
-    },
-    {
-      label: 'Blogs',
-      icon: 'i-lucide-house',
-      active: true,
-      to: '/admin/blogs'
-    },
-    {
-      label: 'Categorías',
-      icon: 'i-lucide-tag',
-      to: '/admin/categories'
-
-    },
-  ],
-  [
-    {
-      label: 'Ajustes',
-      type: 'label',
-      slot: 'settings-label' as const
-    },
-    {
-      label: 'Usuarios',
-      icon: 'i-lucide-users',
-      to: '/admin/users'
-    },
-  ]
-
+const baseItems: NavigationMenuItem[] = [
+  {
+    label: 'Contenido',
+    type: 'label',
+    slot: 'content-label' as const
+  },
+  {
+    label: 'Blogs',
+    icon: 'i-lucide-house',
+    to: '/admin/blogs'
+  },
+  {
+    label: 'Categorías',
+    icon: 'i-lucide-tag',
+    to: '/admin/categories'
+  },
 ];
+
+const adminItems: NavigationMenuItem[] = [
+  {
+    label: 'Ajustes',
+    type: 'label',
+    slot: 'settings-label' as const
+  },
+  {
+    label: 'Usuarios',
+    icon: 'i-lucide-users',
+    to: '/admin/users'
+  },
+];
+
+const items = computed<NavigationMenuItem[][]>(() =>
+  auth.isAdmin ? [baseItems, adminItems] : [baseItems]
+);
 
 onMounted(() => {
   auth.init()
@@ -130,6 +130,5 @@ onMounted(() => {
       </div>
 
     </div>
-
   </div>
 </template>

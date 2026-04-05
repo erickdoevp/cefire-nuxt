@@ -58,6 +58,32 @@ const editor = useEditor({
     Placeholder.configure({ placeholder: 'Empieza a escribir tu post...' }),
     // Underline,
   ],
+  editorProps: {
+    transformPastedHTML(html) {
+      const el = document.createElement('div')
+      el.innerHTML = html
+
+      // Reemplaza divs por párrafos para que Tiptap los entienda
+      el.querySelectorAll('div').forEach(node => {
+        const p = document.createElement('p')
+        p.innerHTML = node.innerHTML
+        node.replaceWith(p)
+      })
+
+      // Elimina elementos no soportados por StarterKit
+      el.querySelectorAll('table, thead, tbody, tr, td, th, iframe, script, style, form').forEach(node => {
+        node.replaceWith(document.createTextNode(node.textContent ?? ''))
+      })
+
+      // Limpia atributos de estilo y clase que pueden traer CSS externo
+      el.querySelectorAll('[style], [class]').forEach(node => {
+        node.removeAttribute('style')
+        node.removeAttribute('class')
+      })
+
+      return el.innerHTML
+    },
+  },
 })
 
 const wordCount = computed(() => {
@@ -140,7 +166,7 @@ const postData = (): Payload => ({
   content: editor.value?.getJSON(),
   conclusion: form.conclusion,
   excerpt: form.excerpt,
-  tags: form.tags,
+  tags: form.tags.map(t => t.trim()).filter(Boolean),
   readTime: readTime.value,
   status: form.status,
   metaDescription: form.metaDescription,
@@ -151,6 +177,8 @@ const postData = (): Payload => ({
 const hadleSubmit = async (status: 'Draft' | 'Published') => {
   form.status = status
   const ok = await uploadPendingImages()
+  console.log(ok);
+  
   if (!ok) return
   emit('post-data', postData())
 };
