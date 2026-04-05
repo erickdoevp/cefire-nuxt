@@ -1,14 +1,14 @@
-import type { UserProfile } from "~/interfaces/profiles";
+import type { UserProfile } from '~/interfaces/profiles';
 
-type CreateUserPayload = Omit<UserProfile, 'id'> & { password?: string; avatar_img_url?: string | null };
+type UpdateUserPayload = Omit<UserProfile, 'id'> & { password?: string; avatarFile?: File | null };
 
-export const useCreateUser = () => {
+export const useUpdateUser = () => {
   const { $supabase } = useNuxtApp();
 
   const isLoading = ref<boolean>(false);
   const error = ref<string | null>(null);
 
-  const createUser = async (payload: CreateUserPayload) => {
+  const updateUser = async (id: string, payload: UpdateUserPayload) => {
     isLoading.value = true;
     error.value = null;
 
@@ -21,8 +21,8 @@ export const useCreateUser = () => {
     }
 
     try {
-      const data = await $fetch<UserProfile>('/api/admin/users/create', {
-        method: 'POST',
+      const data = await $fetch<UserProfile>(`/api/admin/users/${id}`, {
+        method: 'PUT',
         headers: {
           Authorization: `Bearer ${session.access_token}`,
         },
@@ -31,7 +31,7 @@ export const useCreateUser = () => {
 
       return data;
     } catch (err: any) {
-      error.value = err?.data?.message ?? 'Error al crear el usuario';
+      error.value = err?.data?.message ?? 'Error al actualizar el usuario';
       return null;
     } finally {
       isLoading.value = false;
@@ -41,6 +41,6 @@ export const useCreateUser = () => {
   return {
     isLoading,
     error,
-    createUser,
+    updateUser,
   };
 };

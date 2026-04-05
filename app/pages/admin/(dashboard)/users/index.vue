@@ -82,7 +82,7 @@ const columns: TableColumn<PaginatedUserProfile>[] = [
           h(UButton, {
             icon: 'material-symbols:edit-outline-sharp',
             variant: 'link',
-            to: `/admin/users/${userId}`,
+            to: `/admin/user/${userId}`,
             class: 'text-2xl text-[#9C9B99] cursor-pointer hover:text-primary',
           }),
         ]

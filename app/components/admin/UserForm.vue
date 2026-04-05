@@ -1,15 +1,19 @@
 <script setup lang="ts">
 import { z } from 'zod';
 import type { FormSubmitEvent } from '@nuxt/ui';
+import type { UserProfile } from '~/interfaces/profiles';
 
 const props = defineProps<{
+  userProfile?: UserProfile | null;
   createError?: string | null;
   isSubmitting?: boolean;
 }>();
 
 const emit = defineEmits(['post-user']);
 
-const schema = z.object({
+const isEditMode = computed(() => !!props.userProfile);
+
+const baseFields = {
   name: z.string().min(2, 'El nombre debe tener al menos 2 caracteres'),
   first_last_name: z.string().min(2, 'El apellido paterno debe tener al menos 2 caracteres'),
   second_last_name: z.string().optional(),
@@ -24,10 +28,21 @@ const schema = z.object({
     .optional()
     .or(z.literal('')),
   role: z.enum(['admin', 'editor', 'user']),
+};
+
+const createSchema = z.object({
+  ...baseFields,
   password: z.string().min(8, 'La contraseña debe tener al menos 8 caracteres'),
 });
 
-type Schema = z.output<typeof schema>;
+const editSchema = z.object({
+  ...baseFields,
+  password: z.string().min(8, 'La contraseña debe tener al menos 8 caracteres').optional().or(z.literal('')),
+});
+
+type Schema = z.output<typeof editSchema>;
+
+const schema = computed(() => isEditMode.value ? editSchema : createSchema);
 
 const form = reactive<Schema>({
   name: '',
@@ -39,6 +54,24 @@ const form = reactive<Schema>({
   role: 'admin',
   password: '',
 });
+
+watch(() => props.userProfile, (profile) => {
+  
+    if (!profile) return;
+
+    form.name = profile.name;
+    form.first_last_name = profile.first_last_name;
+    form.second_last_name = profile.second_last_name ?? '';
+    form.email = profile.email;
+    form.username = profile.username;
+    form.phone = profile.phone ?? '';
+    form.role = profile.role as Schema['role'];
+    form.password = '';
+    avatarPreview.value = profile.avatar_img_url ?? null;
+
+  },
+  { immediate: true }
+);
 
 const avatarPreview = ref<string | null>(null);
 const avatarFile = ref<File | null>(null);
@@ -194,7 +227,7 @@ function onSubmit(event: FormSubmitEvent<Schema>) {
                 size="lg"
               />
             </UFormField>
-            <UFormField label="Contraseña" name="password" required>
+            <UFormField v-if="!props.userProfile" label="Contraseña" name="password" required>
               <UInput
                 v-model="form.password"
                 :type="showPassword ? 'text' : 'password'"
@@ -246,7 +279,7 @@ function onSubmit(event: FormSubmitEvent<Schema>) {
                 Cancelar
               </UButton>
               <UButton type="submit" color="primary" variant="solid" :loading="isSubmitting">
-                Crear usuario
+                {{ isEditMode ? 'Guardar cambios' : 'Crear usuario' }}
               </UButton>
             </div>
           </div>

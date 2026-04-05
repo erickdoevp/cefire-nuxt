@@ -157,6 +157,7 @@ const hadleSubmit = async (status: 'Draft' | 'Published') => {
 
 /* ─── Populate form when editing ───────────────────────── */
 watch(() => props.post, (post) => {
+  
   if (!post) return
 
   form.title                = post.title

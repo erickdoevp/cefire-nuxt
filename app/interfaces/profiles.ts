@@ -10,7 +10,7 @@ export interface UserProfile {
     second_last_name?: string | undefined;
     username: string;
     email: string;
-    password: string;
+    password?: string;
     role: string;
     phone?: string | undefined;
     avatar_img_url: string | null;
