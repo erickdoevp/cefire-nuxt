@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import Card from '~/components/public/Card.vue'
+import { usePaginatedPublicBlogs } from '~/composables/public/posts/usePaginatedBlogs';
+
 
 useSeoMeta({
   title: 'Blog | Consejos de Fisioterapia y Recuperación — Cefire Tlaxcala',
@@ -7,7 +10,7 @@ useSeoMeta({
   ogDescription: 'Consejos de fisioterapia, recuperación y bienestar escritos por nuestros especialistas en Tlaxcala.',
   ogType: 'website',
   twitterCard: 'summary_large_image',
-})
+});
 
 useHead({
   script: [{
@@ -25,13 +28,26 @@ useHead({
       },
     }),
   }],
-})
+});
+
+onMounted(()=> {
+  fetchPosts();
+});
+
+const { 
+  blogs: posts, 
+  loading, 
+  total, 
+  page, 
+  pageSize, 
+  totalPages, 
+  fetchPosts 
+} = usePaginatedPublicBlogs();
 
 const categories = ['Todos', 'Recuperación', 'Medicina Deportiva', 'Bienestar', 'Historias']
 const activeCategory = ref('Todos')
 
 const currentPage = ref(1)
-const totalPages = 4
 
 const featuredPost = {
   category: 'Recuperación',
@@ -44,74 +60,11 @@ const featuredPost = {
   slug: 'guia-recuperacion-post-cirugia',
 }
 
-const posts = [
-  {
-    category: 'Medicina Deportiva',
-    title: '5 Ejercicios que Todo Corredor Debe Hacer para Prevenir Lesiones de Rodilla',
-    description: 'Fortalece los músculos que protegen tus rodillas con estos ejercicios de prevención comprobados.',
-    author: 'Lic. Luna Hernández',
-    date: '12 Mar',
-    readTime: '5 min de lectura',
-    image: '/images/tratamientos2.jpg',
-    slug: 'ejercicios-prevenir-lesiones-rodilla',
-  },
-  {
-    category: 'Recuperación',
-    title: 'Dolor de Espalda Baja: Causas, Mitos y Tratamientos Modernos',
-    description: 'Desmitificamos las creencias más comunes sobre el dolor lumbar y exploramos enfoques terapéuticos basados en evidencia.',
-    author: 'Lic. Paloma Cruz',
-    date: '8 Mar',
-    readTime: '7 min de lectura',
-    image: '/images/tratamientos3.jpg',
-    slug: 'dolor-espalda-baja-causas-mitos-tratamientos',
-  },
-  {
-    category: 'Bienestar',
-    title: 'Rutinas de Estiramiento Matutino que Transforman tu Día',
-    description: 'Empieza cada mañana con estos estiramientos simples para mejorar la flexibilidad y reducir los dolores diarios.',
-    author: 'Lic. Luna Hernández',
-    date: '5 Mar',
-    readTime: '4 min de lectura',
-    image: '/images/tratamientos5.jpg',
-    slug: 'rutinas-estiramiento-matutino',
-  },
-  {
-    category: 'Historias',
-    title: 'De la Silla de Ruedas al Maratón: Cómo la Fisioterapia Cambió mi Vida',
-    description: 'Lee el increíble camino de recuperación de un paciente desde una lesión devastadora hasta cruzar la meta.',
-    author: 'Paciente Cefire',
-    date: '28 Feb',
-    readTime: '10 min de lectura',
-    image: '/images/quienes-somos1.jpg',
-    slug: 'silla-ruedas-maraton-historia',
-  },
-  {
-    category: 'Recuperación',
-    title: 'Hielo vs. Calor: ¿Cuándo Usar Cada uno en la Recuperación de Lesiones?',
-    description: 'El debate de siempre resuelto por la ciencia. Aprende cuándo el frío o el calor acelerará tu curación.',
-    author: 'Lic. Paloma Cruz',
-    date: '22 Feb',
-    readTime: '6 min de lectura',
-    image: '/images/artritis-reumatismo.jpg',
-    slug: 'hielo-vs-calor-recuperacion-lesiones',
-  },
-  {
-    category: 'Medicina Deportiva',
-    title: 'Volver al Deporte tras una Cirugía de LCA: Una Línea de Tiempo',
-    description: 'Una guía mes a mes para regresar de forma segura a las actividades que amas después de la reconstrucción del ligamento cruzado anterior.',
-    author: 'Lic. Luna Hernández',
-    date: '15 Feb',
-    readTime: '9 min de lectura',
-    image: '/images/tratamientos4.png',
-    slug: 'volver-deporte-cirugia-lca-timeline',
-  },
-]
-
-const filteredPosts = computed(() =>
-  activeCategory.value === 'Todos'
-    ? posts
-    : posts.filter(p => p.category === activeCategory.value)
-)
+// const filteredPosts = computed(() =>
+//   activeCategory.value === 'Todos'
+//     ? posts
+//     : posts.filter(p => p.category === activeCategory.value)
+// )
 
 const categoryColors: Record<string, string> = {
   'Recuperación': 'primary',
@@ -125,7 +78,7 @@ const categoryColors: Record<string, string> = {
   <UPage>
 
     <!-- ─── HERO ─── -->
-    <section class="bg-white h-auto md:h-[400px]">
+    <section class="bg-white h-auto md:h-100">
       <UContainer class="flex flex-col items-center gap-6 py-8 md:py-10">
         <UBadge
           icon="i-lucide-newspaper"
@@ -134,10 +87,10 @@ const categoryColors: Record<string, string> = {
         >
           NUESTRO BLOG
         </UBadge>
-        <h1 class="max-w-[800px] text-center text-[52px] font-bold text-[#1A1918] leading-[1.1] tracking-[-1px]">
+        <h1 class="max-w-200 text-center text-[52px] font-bold text-[#1A1918] leading-[1.1] tracking-[-1px]">
           Información para <br> tu Recuperación
         </h1>
-        <p class="max-w-[620px] text-[18px] text-[#6D6C6A] leading-[1.6] text-center">
+        <p class="max-w-155 text-[18px] text-[#6D6C6A] leading-[1.6] text-center">
           Consejos de fisioterapia, bienestar e historias de recuperación inspiradoras para apoyarte en tu camino hacia una vida plena y sin dolor.
         </p>
       </UContainer>
@@ -156,7 +109,7 @@ const categoryColors: Record<string, string> = {
         <NuxtLink :to="`/blog/${featuredPost.slug}`" class="group">
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-0 bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
             <!-- Image -->
-            <div class="aspect-[4/3] lg:aspect-auto lg:min-h-[360px] overflow-hidden">
+            <div class="aspect-4/3 lg:aspect-auto lg:min-h-90 overflow-hidden">
               <img
                 :src="featuredPost.image"
                 :alt="featuredPost.title"
@@ -173,7 +126,7 @@ const categoryColors: Record<string, string> = {
               >
                 {{ featuredPost.category }}
               </UBadge>
-              <h3 class="text-[#1A1918] text-[26px] font-bold leading-[1.25] tracking-[-0.3px] group-hover:text-primary transition-colors">
+              <h3 class="text-[#1A1918] text-[26px] font-bold leading-tigth tracking-[-0.3px] group-hover:text-primary transition-colors">
                 {{ featuredPost.title }}
               </h3>
               <p class="text-[#6D6C6A] text-[16px] leading-[1.65]">
@@ -208,7 +161,7 @@ const categoryColors: Record<string, string> = {
           <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
             <div>
               <h2 class="text-[#1A1918] text-[32px] font-bold tracking-[-0.5px]">Explora Nuestros Recursos</h2>
-              <p class="text-[#6D6C6A] text-[16px] leading-[1.6] mt-1 max-w-[540px]">
+              <p class="text-[#6D6C6A] text-[16px] leading-[1.6] mt-1 max-w-135">
                 Nuestra colección de artículos expertos sobre recuperación, bienestar y cómo vivir sin dolor.
               </p>
             </div>
@@ -232,45 +185,12 @@ const categoryColors: Record<string, string> = {
         <!-- Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <NuxtLink
-            v-for="post in filteredPosts"
+            v-for="post in posts"
             :key="post.slug"
             :to="`/blog/${post.slug}`"
             class="group"
           >
-            <UCard class="h-full overflow-hidden hover:shadow-md transition-shadow p-0">
-              <!-- Image -->
-              <div class="aspect-[16/9] overflow-hidden">
-                <img
-                  :src="post.image"
-                  :alt="post.title"
-                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  loading="lazy"
-                />
-              </div>
-              <!-- Content -->
-              <div class="flex flex-col gap-3 p-6">
-                <UBadge
-                  :color="categoryColors[post.category] as any"
-                  variant="soft"
-                  class="w-fit rounded-full px-3 text-xs"
-                >
-                  {{ post.category }}
-                </UBadge>
-                <h3 class="text-[#1A1918] text-[17px] font-semibold leading-[1.3] group-hover:text-primary transition-colors line-clamp-2">
-                  {{ post.title }}
-                </h3>
-                <p class="text-[#6D6C6A] text-sm leading-[1.6] line-clamp-2">
-                  {{ post.description }}
-                </p>
-                <div class="flex items-center gap-1.5 text-[#9D9B99] text-xs mt-1">
-                  <span>{{ post.author }}</span>
-                  <span>·</span>
-                  <span>{{ post.date }}</span>
-                  <span>·</span>
-                  <span>{{ post.readTime }}</span>
-                </div>
-              </div>
-            </UCard>
+            <Card :post="post" />
           </NuxtLink>
         </div>
 
@@ -286,14 +206,14 @@ const categoryColors: Record<string, string> = {
             Anterior
           </UButton>
           <UButton
-            v-for="page in totalPages"
-            :key="page"
-            :variant="currentPage === page ? 'solid' : 'ghost'"
-            :color="currentPage === page ? 'primary' : 'neutral'"
-            class="w-9 h-9"
+            v-for="upage in totalPages"
+            :key="upage"
+            :variant="currentPage === upage ? 'link' : 'ghost'"
+            :color="currentPage === upage ? 'primary' : 'neutral'"
+            class="w-9 h-9 text-center rounded-md"
             @click="currentPage = page"
           >
-            {{ page }}
+            <p>{{ upage }}</p>
           </UButton>
           <UButton
             variant="ghost"
