@@ -66,6 +66,8 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
 
+    supabaseServiceKey: process.env.NUXT_SUPABASE_SERVICE_KEY,
+
     cloudinaryApiSecret: process.env.CLOUDINARY_API_SECRET,
     cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
     cloudinaryCloudName: process.env.CLOUDINARY_CLOUD_NAME,
@@ -76,5 +78,13 @@ export default defineNuxtConfig({
       cloudinaryCloudName: process.env.CLOUDINARY_CLOUD_NAME,
     },
   },
+
+  ui: {
+    formField: {
+      slots: {
+        error: 'text-red-500 text-xs font-medium mt-1'
+      }
+    }
+  }
 
 })

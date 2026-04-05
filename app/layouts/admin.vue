@@ -19,11 +19,14 @@ const items: NavigationMenuItem[][] = [
     {
       label: 'Blogs',
       icon: 'i-lucide-house',
-      active: true
+      active: true,
+      to: '/admin/blogs'
     },
     {
       label: 'Categorías',
       icon: 'i-lucide-tag',
+      to: '/admin/categories'
+
     },
   ],
   [
@@ -35,6 +38,7 @@ const items: NavigationMenuItem[][] = [
     {
       label: 'Usuarios',
       icon: 'i-lucide-users',
+      to: '/admin/users'
     },
   ]
 
