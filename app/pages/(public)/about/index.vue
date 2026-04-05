@@ -40,14 +40,14 @@ const milestones = [
     description: 'LTFyR. Elliut Cruz empezó CEFIRE TLAX con una creencia simple: cada paciente merece un plan de recuperación diseñado en torno a su vida, no solo a su diagnóstico.'
   },
   {
-    year: '2017',
+    year: '2019',
     title: 'Ampliamos nuestras especialidades',
     description: 'Se instala área de neurorehabilitación, especialidad terapéutica enfocada en ayudar a las personas a recuperar y adaptar las funciones perdidas o deterioradas a causa de una enfermedad o lesión que afectan al sistema nervioso.'
   },
   {
-    year: '2023',
-    title: 'Un centro comunitario',
-    description: 'Con más de 1000 pacientes atendidos y unas instalaciones de última generación, seguimos marcando el estándar en atención compasiva y orientada a resultados.'
+    year: '2022',
+    title: 'Un hito en nuestra historia',
+    description: 'Con la confianza de más de 1000 pacientes, dimos el paso hacia un espacio propio, equipándolo con tecnología de última generación para elevar nuestros estándares de atención.'
   }
 ];
 

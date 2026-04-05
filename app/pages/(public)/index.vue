@@ -232,6 +232,22 @@ const faqs = [
     label:   '¿Cuáles son los beneficios de la fisioterapia?',
     content: 'La fisioterapia ofrece múltiples beneficios para la salud física y funcional, destacando el alivio del dolor (agudo o crónico), la recuperación de lesiones y cirugías, y la mejora de la movilidad, fuerza muscular y flexibilidad.',
   },
+  {
+    label:   '¿Cuánto dura una sesión?',
+    content: 'Cada sesión tiene una duración aproximada de no menos de 1 hora. El tiempo puede variar según el tipo de tratamiento y las necesidades específicas de cada paciente. Todas nuestras sesiones son completamente personalizadas.',
+  },
+  {
+    label:   '¿Cuáles son las formas de pago?',
+    content: 'Aceptamos efectivo y transferencia bancaria. El pago se realiza al finalizar cada sesión.',
+  },
+  {
+    label:   '¿Emiten factura?',
+    content: 'Sí, emitimos factura por cada sesión. Por favor, solicítela al finalizar su tratamiento.',
+  },
+  {
+    label:   '¿Puedo cancelar mi sesión?',
+    content: 'Sí, puedes cancelar tu terapia y solicitar un nuevo horario. Por favor ten en cuenta nuestra política de cancelación. Cancelación con más de 24 horas de anticipación: Sin cargo. Puedes solicitar un nuevo turno. Cancelación el mismo día del turno: Tiene un cargo del 50% del valor de la sesión. Avísanos por WhatsApp o llamada para cancelar y coordinar un nuevo horario.',
+  },
 ];
 
 </script>

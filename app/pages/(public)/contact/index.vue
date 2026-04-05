@@ -75,9 +75,10 @@ const contactCards = [
     dark:    false,
   },
   {
-    icon:    'i-lucide-mail',
-    title:   'Envíenos un correo electrónico',
-    value:   'eliot_77@live.com.mx',
+    icon:    'ic:outline-whatsapp',
+    title:   'Contactenos por Whatsapp',
+    value:   '(246) 137-0462',
+    to:      "https://wa.me/522461370462?text=Gracias%20por%20comunicarte%20con%20CEFIRE%20(Centro%20Especializado%20en%20Fisioterapia%20y%20Rehabilitación).%20¿Cómo%20podemos%20ayudarte?",
     sub:     'Respondemos dentro de las 24 horas en días hábiles.',
     dark:    false,
   },
@@ -243,7 +244,18 @@ const contactCards = [
                 <span class="text-[18px] font-semibold text-[#1A1918]">{{ card.title }}</span>
               </div>
               <!-- Valor -->
-              <p class="text-[16px] font-medium text-primary">{{ card.value }}</p>
+              <p v-if="!card.to" class="text-[16px] font-medium text-primary">{{ card.value }}</p>
+              <UButton
+                v-else
+                :to="card.to"
+                variant="ghost"
+                target="_blank"
+                rel="noopener noreferrer"
+                size="md"
+                class="w-fit text-[16px] font-medium"
+              >
+                {{ card.value }}
+              </UButton>
               <!-- Sub-texto -->
               <p class="text-[14px] text-[#6D6C6A] leading-normal whitespace-pre-line">{{ card.sub }}</p>
             </div>

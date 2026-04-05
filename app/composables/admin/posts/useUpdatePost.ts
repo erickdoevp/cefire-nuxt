@@ -10,7 +10,7 @@ export const useUpdatePost = () => {
   const updatePost = async (id: number, body: Payload) => {
     isLoading.value = true
     err.value = ''
-
+    
     const { error } = await $supabase
       .from('posts')
       .update({
@@ -27,7 +27,7 @@ export const useUpdatePost = () => {
         slug:          body.slug,
       })
       .eq('id', id)
-
+      
     if (error) {
       err.value = error.message
     } else {
