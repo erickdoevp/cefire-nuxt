@@ -41,9 +41,13 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
 
   nitro: {
+    preset: 'cloudflare-pages',
+    externals: {
+      inline: [/^@supabase/],
+    },
     prerender: {
       crawlLinks: true,
-      ignore: ['/admin/**', '/blog/**'],
+      ignore: ['/admin/**', '/blogs', '/blog/**'],
     },
   },
 
@@ -53,7 +57,7 @@ export default defineNuxtConfig({
     '/about': { static: true },
     '/services': { static: true },
     '/contact': { static: true },
-    '/blogs': { static: true },
+    '/blogs': { isr: 60 * 60 },
     '/blog/**': { isr: 60 * 60 }, // revalida cada hora
     '/admin': { redirect: '/admin/login' },
     '/admin/**': { ssr: false },

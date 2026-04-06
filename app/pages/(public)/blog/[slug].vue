@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { createClient } from '@supabase/supabase-js'
 import { generateHTML } from '@tiptap/core'
 import StarterKit from '@tiptap/starter-kit'
 import Image from '@tiptap/extension-image'
@@ -8,13 +9,14 @@ import type { PublicBlog } from '~/interfaces/public-blog'
 
 const route = useRoute()
 const slug = route.params.slug as string
-const { $supabase } = useNuxtApp()
 
 // ── Fetch post principal ──────────────────────────────────────
 const { data: post } = await useAsyncData<PublicBlogDetail>(
   `post-${slug}`,
   async () => {
-    const { data, error } = await $supabase
+    const config = useRuntimeConfig()
+    const supabase = createClient(config.public.supabaseUrl, config.public.supabaseAnonKey)
+    const { data, error } = await supabase
       .from('posts')
       .select(`
         slug,
@@ -63,10 +65,12 @@ const contentHtml = computed(() => {
 const { data: relatedPosts } = await useAsyncData<PublicBlog[]>(
   `related-${slug}`,
   async () => {
+    const config = useRuntimeConfig()
+    const supabase = createClient(config.public.supabaseUrl, config.public.supabaseAnonKey)
     const categoryId = post.value?.category?.id
     if (!categoryId) return []
 
-    const { data, error } = await $supabase
+    const { data, error } = await supabase
       .from('posts')
       .select(`
         slug,

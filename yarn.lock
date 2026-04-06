@@ -5518,7 +5518,6 @@ __metadata:
     "@tiptap/extension-placeholder": "npm:^3.20.4"
     "@tiptap/starter-kit": "npm:^3.20.4"
     "@tiptap/vue-3": "npm:^3.20.4"
-    cloudinary: "npm:^2.9.0"
     eslint: "npm:^9.0.0"
     nuxt: "npm:^4.2.2"
     pinia: "npm:^3.0.4"
@@ -5639,15 +5638,6 @@ __metadata:
   version: 2.1.2
   resolution: "clone@npm:2.1.2"
   checksum: 10c0/ed0601cd0b1606bc7d82ee7175b97e68d1dd9b91fd1250a3617b38d34a095f8ee0431d40a1a611122dcccb4f93295b4fdb94942aa763392b5fe44effa50c2d5e
-  languageName: node
-  linkType: hard
-
-"cloudinary@npm:^2.9.0":
-  version: 2.9.0
-  resolution: "cloudinary@npm:2.9.0"
-  dependencies:
-    lodash: "npm:^4.17.21"
-  checksum: 10c0/263e843b3ca6446ece4312dc2b84892aaeab35847b0fdbd0e80086ce2485a755f647e02ef60e4ebcf4e700f223d91efb8afcc1f7ee5bc41f8973f3bb34fe573f
   languageName: node
   linkType: hard
 
@@ -8508,7 +8498,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:^4.17.15, lodash@npm:^4.17.21":
+"lodash@npm:^4.17.15":
   version: 4.17.23
   resolution: "lodash@npm:4.17.23"
   checksum: 10c0/1264a90469f5bb95d4739c43eb6277d15b6d9e186df4ac68c3620443160fc669e2f14c11e7d8b2ccf078b81d06147c01a8ccced9aab9f9f63d50dcf8cace6bf6

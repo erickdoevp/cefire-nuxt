@@ -1,8 +1,7 @@
+import { createClient } from '@supabase/supabase-js';
 import type { PublicBlog } from "~/interfaces/public-blog";
 
 export const usePaginatedPublicBlogs = (initialPageSize = 9) => {
-
-  const { $supabase } = useNuxtApp();
 
   const page = ref<number>(1);
   const pageSize = ref<number>(initialPageSize);
@@ -13,10 +12,12 @@ export const usePaginatedPublicBlogs = (initialPageSize = 9) => {
   const { data, pending: loading, refresh } = useAsyncData<PublicBlog[]>(
     'public-blogs',
     async () => {
+      const config = useRuntimeConfig();
+      const supabase = createClient(config.public.supabaseUrl, config.public.supabaseAnonKey);
       const from = (page.value - 1) * pageSize.value;
       const to = from + pageSize.value - 1;
 
-      const { data, count, error } = await $supabase
+      const { data, count, error } = await supabase
         .from('posts')
         .select(
           `slug,

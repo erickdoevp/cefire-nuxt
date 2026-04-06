@@ -46,7 +46,8 @@ const {
 //     : posts.filter(p => p.category === activeCategory.value)
 // )
 
-const formatDate = (dateStr: Date) => {
+const formatDate = (dateStr: Date | undefined) => {
+  if (!dateStr) return '';
   const date = new Date(dateStr);
   return date.toLocaleDateString('es-MX', {
     day: 'numeric',
@@ -114,7 +115,7 @@ const formatDate = (dateStr: Date) => {
               <div class="flex items-center gap-2 text-[#9D9B99] text-sm">
                 <span>{{ featuredPost?.user.name }}</span>
                 <span>·</span>
-                <span>{{ formatDate(featuredPost!.updatedAt) }}</span>
+                <span>{{ formatDate(featuredPost?.updatedAt) }}</span>
                 <span>·</span>
                 <span>{{ featuredPost?.readingTime }} minutos de lectura</span>
               </div>
