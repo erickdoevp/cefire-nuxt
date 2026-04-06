@@ -157,7 +157,7 @@ useHead({
 
     <!-- ─── ARTICLE HERO ─── -->
     <section class="bg-white py-15 px-5 flex flex-col items-center gap-8">
-      <UContainer class="flex flex-col items-center gap-8 w-full">
+      <UContainer class="flex flex-col items-center gap-8 w-full p-0 md:p-4">
 
         <!-- Meta row -->
         <div class="flex items-center gap-4 flex-wrap justify-center">
@@ -197,7 +197,7 @@ useHead({
     <!-- ─── FEATURED IMAGE ─── -->
     <section v-if="post!.featuredImage" class="bg-white px-5 pb-0">
       <UContainer>
-        <div class="rounded-[20px] overflow-hidden h-[320px] md:h-[500px]">
+        <div class="rounded-[20px] overflow-hidden h-80 md:h-125">
           <img
             :src="post!.featuredImage"
             :alt="post!.title"

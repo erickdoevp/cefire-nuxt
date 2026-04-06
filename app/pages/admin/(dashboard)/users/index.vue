@@ -110,10 +110,10 @@ onMounted(() => {
       </div>
       <UButton 
         color="primary" 
-        variant="solid" 
+        variant="outline" 
         size="lg" 
         to="/admin/new-user"
-        >Crear nuevo usuario
+        >Nuevo usuario
       </UButton>
     </div>
 

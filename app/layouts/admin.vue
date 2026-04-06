@@ -105,7 +105,7 @@ onMounted(() => {
     </USidebar>
 
     <div
-      class="flex-1 flex flex-col lg:peer-data-[variant=floating]:my-4 peer-data-[variant=inset]:m-4 lg:peer-data-[variant=inset]:not-peer-data-[collapsible=offcanvas]:ms-0 peer-data-[variant=inset]:rounded-xl peer-data-[variant=inset]:shadow-sm peer-data-[variant=inset]:ring peer-data-[variant=inset]:ring-default bg-[#f6f7f9] w-auto"
+      class="flex-1 min-w-0 flex flex-col lg:peer-data-[variant=floating]:my-4 peer-data-[variant=inset]:m-4 lg:peer-data-[variant=inset]:not-peer-data-[collapsible=offcanvas]:ms-0 peer-data-[variant=inset]:rounded-xl peer-data-[variant=inset]:shadow-sm peer-data-[variant=inset]:ring peer-data-[variant=inset]:ring-default bg-[#f6f7f9] overflow-hidden"
     >
       <div
         class="h-(--ui-header-height) shrink-0 flex items-center px-4 bg-white sticky top-0 z-10"
@@ -123,8 +123,8 @@ onMounted(() => {
         />
       </div>
 
-      <div class="flex-1">
-        <div class="bg-white p-6">
+      <div class="flex-1 overflow-auto">
+        <div class="bg-white p-6 min-w-0">
           <slot />
         </div>
       </div>

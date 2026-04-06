@@ -134,7 +134,7 @@ function onSubmit(event: FormSubmitEvent<Schema>) {
 </script>
 
 <template>
-  <div class="flex gap-4">
+  <div class="flex flex-wrap md:flex-nowrap gap-4">
     <!-- Form -->
     <UForm :schema="schema" :state="form" class="w-full" @submit="onSubmit">
       <UCard>
@@ -288,7 +288,7 @@ function onSubmit(event: FormSubmitEvent<Schema>) {
     </UForm>
 
     <!-- Role Description -->
-    <div class="w-100 p-4 rounded-lg border border-default bg-white h-fit">
+    <div class="w-full md:w-170 p-4 rounded-lg border border-default bg-white h-fit">
       <div class="flex flex-col gap-3">
         <label
           v-for="role in roles"

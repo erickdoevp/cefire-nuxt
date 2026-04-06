@@ -32,12 +32,12 @@
 
         <!-- Subtitle -->
         <p class="w-[360px] text-sm leading-relaxed text-white">
-          Su plataforma integral para la gestión de su consulta de fisioterapia.
+          Su plataforma integral para la gestión de contenido.
         </p>
       </div>
     </div>
 
-    <div class="flex flex-1 items-center justify-center bg-white px-20 py-15">
+    <div class="flex flex-1 items-center justify-center bg-white p-5 md:px-20 md:py-15">
       <div class="flex w-full max-w-[400px] flex-col gap-6">
         <slot />
       </div>

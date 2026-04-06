@@ -219,7 +219,7 @@ onBeforeUnmount(() => editor.value?.destroy());
   <div class="flex flex-col h-full bg-white dark:bg-gray-950">
 
     <!-- ── Header ──────────────────────────────────────────────── -->
-    <div class="flex items-center justify-between border-b border-gray-200 dark:border-gray-800 bg-white pb-6">
+    <div class="flex items-center flex-wrap gap-4 md:gap-0 md:justify-between border-b border-gray-200 dark:border-gray-800 bg-white pb-6">
       <div class="flex gap-4">
         <UButton 
           icon="mdi:keyboard-backspace" 
@@ -240,7 +240,7 @@ onBeforeUnmount(() => editor.value?.destroy());
     </div>
 
     <!-- ── Body: two-column ────────────────────────────────────── -->
-    <div class="flex flex-1 gap-6 p-6 overflow-auto">
+    <div class="flex flex-col md:flex-row gap-6 p-0 md:p-6 overflow-auto">
 
       <!-- ── Left: title + editor ──────────────────────────────── -->
       <div class="flex flex-col flex-1 gap-4 min-w-0">
@@ -400,7 +400,7 @@ onBeforeUnmount(() => editor.value?.destroy());
       </div>
 
       <!-- ── Right: sidebar ─────────────────────────────────────── -->
-      <div class="flex flex-col gap-4 w-72 shrink-0">
+      <div class="flex flex-col gap-4 w-full md:w-72 shrink-0">
 
         <!-- Status -->
         <!-- <div class="sidebar-card">
@@ -493,6 +493,7 @@ onBeforeUnmount(() => editor.value?.destroy());
         </div>
 
       </div>
+
     </div>
   </div>
 </template>

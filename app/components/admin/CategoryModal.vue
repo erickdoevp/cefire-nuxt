@@ -162,7 +162,7 @@ watch(() => props.open, (val) => {
               Cancelar
             </UButton>
             <UButton type="submit" color="primary" variant="solid" :loading="props.isSubmitting">
-              {{ isEditMode ? 'Actualizar' : 'Crear' }} Categoría
+              {{ isEditMode ? 'Actualizar' : 'Aceptar' }}
             </UButton>
           </div>
         </UForm>

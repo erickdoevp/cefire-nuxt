@@ -214,15 +214,15 @@ onMounted(() => {
       </div>
       <UButton 
         color="primary" 
-        variant="solid" 
+        variant="outline" 
         size="lg" 
         to="/admin/new-blog"
-        >Crear nuevo blog</UButton>
+        >Nuevo blog</UButton>
     </div>
     <!-- Filters -->
 
     <UForm :state="form" class="space-y-4">
-      <div class="grid grid-cols-2 gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
         <UFormField label="Título" name="title" class="w-full">
           <UInput 
@@ -252,7 +252,7 @@ onMounted(() => {
 
       <div class="flex flex-wrap gap-4">
 
-        <UFormField label="Estatus" name="status" class="w-40">
+        <UFormField label="Estatus" name="status" class="w-full md:w-40">
           <USelect 
             v-model="form.status" 
             :items="['All', 'Published', 'Draft']" 
@@ -262,28 +262,30 @@ onMounted(() => {
           />
         </UFormField>
 
-         <UFormField label="Categoría" name="categoryId">
+         <UFormField label="Categoría" name="categoryId" class="w-full md:w-40">
           <USelect 
             v-model="form.categoryId" 
             :items="categoryList" 
             variant="subtle"
             size="lg"
             placeholder="Seleccione una categoría" 
+            class="w-full"
           />
         </UFormField>
         
-        <UFormField v-if="auth.isAdmin" label="Autor" name="userId">
+        <UFormField v-if="auth.isAdmin" label="Autor" name="userId" class="w-full md:w-40">
           <USelect
             v-model="form.userId"
             :items="userList"
             variant="subtle"
             size="lg"
             placeholder="Seleccione un autor"
+            class="w-full"
           />
         </UFormField>
 
-        <UFormField label="Última edición desde" name="updatedAtFrom">
-          <UInputDate ref="inputDate1" v-model="(form.updatedAtFrom as any)" variant="subtle" size="lg">
+        <UFormField label="Última edición desde" name="updatedAtFrom" class="w-full md:w-40">
+          <UInputDate ref="inputDate1" v-model="(form.updatedAtFrom as any)" variant="subtle" size="lg" class="w-full">
             <template #trailing>
               <UPopover :reference="inputDate1?.inputsRef[3]?.$el">
                 <UButton
@@ -296,15 +298,15 @@ onMounted(() => {
                 />
 
                 <template #content>
-                  <UCalendar v-model="(form.updatedAtFrom as any)" class="p-2" />
+                  <UCalendar v-model="(form.updatedAtFrom as any)" class="w-full md:w-40" />
                 </template>
               </UPopover>
             </template>
           </UInputDate>
         </UFormField>
 
-        <UFormField label="Última edición hasta" name="updatedAtTo">
-          <UInputDate ref="inputDate2" v-model="(form.updatedAtTo as any)" variant="subtle" size="lg">
+        <UFormField label="Última edición hasta" name="updatedAtTo" class="w-full md:w-40">
+          <UInputDate ref="inputDate2" v-model="(form.updatedAtTo as any)" variant="subtle" size="lg" class="w-full">
             <template #trailing>
               <UPopover :reference="inputDate2?.inputsRef[3]?.$el">
                 <UButton

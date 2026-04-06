@@ -126,10 +126,10 @@ onMounted(() => {
       </div>
       <UButton
         color="primary"
-        variant="solid"
+        variant="outline" 
         size="lg"
         @click="openCreate"
-      >Crear nueva categoría</UButton>
+      >Nueva categoría</UButton>
     </div>
 
     <!-- Table -->
