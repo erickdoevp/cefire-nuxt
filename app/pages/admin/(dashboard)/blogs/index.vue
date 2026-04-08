@@ -17,13 +17,12 @@ const inputDate1 = useTemplateRef('inputDate1');
 const inputDate2 = useTemplateRef('inputDate2');
 
 const { 
-  fetchPosts, 
-  blogs, 
-  loading, 
-  page, 
-  pageSize, 
-  totalPages, 
-  total 
+  fetchPosts,
+  blogs,
+  loading,
+  page,
+  pageSize,
+  total
 } = usePaginatedBlogs();
 
 const { 
@@ -350,11 +349,11 @@ onMounted(() => {
           sticky
           />
         <div class="flex justify-between border-t border-default pt-4 px-4">
-          <p class="text-[#9C9B99] text-xs font-light">Mostrando {{ blogs.length }} de {{ total }} resultados</p>
+          <p class="text-[#9C9B99] text-xs font-light">Mostrando {{  }} de {{ total }} resultados</p>
           <UPagination
             v-model:page="page"
             :items-per-page="pageSize"
-            :total="totalPages"
+            :total="total"
             :show-edges="false"
             variant="ghost"
             active-variant="ghost"

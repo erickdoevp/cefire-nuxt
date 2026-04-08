@@ -17,7 +17,7 @@ export const usePaginatedBlogs = () => {
   const loading = ref<boolean>(false);
   const total = ref<number>(0);
   const page = ref<number>(1);
-  const pageSize = ref<number>(10);
+  const pageSize = ref<number>(5);
   const filters = ref<BlogFilters>({});
 
   const totalPages = computed(() =>

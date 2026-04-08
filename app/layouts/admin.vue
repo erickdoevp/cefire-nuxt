@@ -44,6 +44,11 @@ const items = computed<NavigationMenuItem[][]>(() =>
   auth.isAdmin ? [baseItems, adminItems] : [baseItems]
 );
 
+const initials = computed(() => {
+  const email = auth.user?.email ?? ''
+  return email.substring(0, 2).toUpperCase()
+})
+
 onMounted(() => {
   auth.init()
 })
@@ -52,7 +57,7 @@ onMounted(() => {
 
 <template>
   <div
-    class="flex flex-1"
+    class="flex h-screen overflow-hidden"
     :class="[
       variant === 'inset' && 'bg-neutral-50 dark:bg-neutral-950',
       side === 'right' && 'flex-row-reverse'
@@ -62,7 +67,7 @@ onMounted(() => {
       v-model:open="open"
       :variant="variant"
       mode="drawer"
-      collapsible="icon"
+      collapsible="offcanvas"
       :side="side"
       :ui="{
         container: 'h-full'
@@ -75,7 +80,14 @@ onMounted(() => {
           width="30"
           height="30"
         >
-        <p class="w-full data-[state=open]:bg-elevated overflow-hidden">CEFIRE</p>
+        <p class="text-black font-semibold tracking-wide flex-1 overflow-hidden">CEFIRE</p>
+        <UBadge
+          v-if="auth.isAdmin"
+          label="Admin"
+          color="primary"
+          variant="soft"
+          class="shrink-0 text-xs rounded-full"
+        />
       </template>
 
       <UNavigationMenu
@@ -85,13 +97,14 @@ onMounted(() => {
       />
 
       <template #footer>
-        <div class="flex w-full items-center justify-between gap-2 overflow-hidden">
-          <UButton
-            :label="auth.user?.email ?? ''"
-            color="neutral"
-            variant="ghost"
-            class="flex-1 overflow-hidden data-[state=open]:bg-elevated"
-          />
+        <div class="flex w-full items-center gap-3 overflow-hidden">
+          <div class="rounded-full bg-primary w-9 h-9 flex items-center justify-center shrink-0">
+            <span class="text-white text-sm font-bold">{{ initials }}</span>
+          </div>
+          <div class="flex-1 min-w-0 overflow-hidden">
+            <p class="text-sm font-medium truncate">{{ auth.user?.email ?? '' }}</p>
+            <p class="text-xs capitalize">{{ auth.role ?? 'editor' }}</p>
+          </div>
           <UButton
             icon="i-lucide-log-out"
             color="neutral"
@@ -105,10 +118,10 @@ onMounted(() => {
     </USidebar>
 
     <div
-      class="flex-1 min-w-0 flex flex-col lg:peer-data-[variant=floating]:my-4 peer-data-[variant=inset]:m-4 lg:peer-data-[variant=inset]:not-peer-data-[collapsible=offcanvas]:ms-0 peer-data-[variant=inset]:rounded-xl peer-data-[variant=inset]:shadow-sm peer-data-[variant=inset]:ring peer-data-[variant=inset]:ring-default bg-[#f6f7f9] overflow-hidden"
+      class="flex-1 min-w-0 flex flex-col lg:peer-data-[variant=floating]:my-4 peer-data-[variant=inset]:m-4 lg:peer-data-[variant=inset]:not-peer-data-[collapsible=offcanvas]:ms-0 peer-data-[variant=inset]:rounded-xl peer-data-[variant=inset]:shadow-sm peer-data-[variant=inset]:ring peer-data-[variant=inset]:ring-default bg-[#f6f7f9]"
     >
       <div
-        class="h-(--ui-header-height) shrink-0 flex items-center px-4 bg-white sticky top-0 z-10"
+        class="h-(--ui-header-height) shrink-0 flex items-center px-4 bg-white"
         :class="[
           variant !== 'floating' && 'border-b border-default',
           side === 'right' && 'justify-end'
@@ -132,3 +145,17 @@ onMounted(() => {
     </div>
   </div>
 </template>
+
+<style scoped>
+/* Active nav link */
+.sidebar-nav :deep([data-active='true']) {
+  background-color: rgba(37, 99, 235, 0.15);
+  color: white;
+}
+
+.sidebar-nav :deep([data-active='true'] .i-lucide-house),
+.sidebar-nav :deep([data-active='true'] .i-lucide-tag),
+.sidebar-nav :deep([data-active='true'] .i-lucide-users) {
+  color: #2563EB;
+}
+</style>
