@@ -9,8 +9,13 @@ useSeoMeta({
   ogDescription: 'Recupera el movimiento con fisioterapia personalizada. Agenda tu valoración gratuita hoy.',
   ogImage: 'https://cefiretlx.com/images/comience-hoy.jpg',
   ogType: 'website',
+  ogUrl: 'https://cefiretlx.com',
+  ogLocale: 'es_MX',
   twitterCard: 'summary_large_image',
-  // canonical: 'https://cefiretlx.com',
+  twitterTitle: 'Cefire | Clínica de Fisioterapia en Tlaxcala',
+  twitterDescription: 'Recupera el movimiento con fisioterapia personalizada. Agenda tu valoración gratuita hoy.',
+  twitterImage: 'https://cefiretlx.com/images/comience-hoy.jpg',
+  canonical: 'https://cefiretlx.com',
 })
 
 useHead({

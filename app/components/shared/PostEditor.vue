@@ -18,7 +18,8 @@ const emit = defineEmits(['post-data']);
 const props = defineProps<{
   categoryList: { label: string, value: number }[],
   isLoading: boolean,
-  post?: BlogById
+  post?: BlogById,
+  id?: number | undefined
 }>();
 
 const { upload, uploading, uploadError } = useUploadImage();
@@ -227,7 +228,7 @@ onBeforeUnmount(() => editor.value?.destroy());
           to="/admin/blogs"
           variant="link"
           />
-        <h1 class="text-xl font-semibold text-gray-900 dark:text-white">Crear Nuevo Post</h1>
+        <h1 class="text-xl font-semibold text-gray-900 dark:text-white">{{ props.id ? 'Editar' : 'Crear' }} Post</h1>
       </div>
       <div class="flex items-center gap-2">
         <UButton :disabled="isLoading" variant="outline" :icon="isLoading ? 'i-lucide-loader' : 'mdi:eraser'" color="neutral" @click="hadleSubmit('Draft')">

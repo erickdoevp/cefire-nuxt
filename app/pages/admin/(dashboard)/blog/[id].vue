@@ -27,6 +27,7 @@ const handleEditPost = async (data: Payload) => {
 <template>
   <div>
     <PostEditor
+      :id="id"
       :post="blog ?? undefined"
       :category-list="categoryList"
       :is-loading="false"

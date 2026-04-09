@@ -8,29 +8,48 @@ useSeoMeta({
   description: 'Desde 2009, Cefire Fisioterapia se dedica a ayudar a las personas a recuperar su movilidad y calidad de vida con fisioterapia personalizada y basada en evidencia.',
   ogTitle: 'Nosotros | Cefire Fisioterapia en Tlaxcala',
   ogDescription: 'Conoce al equipo de Cefire: especialistas certificados comprometidos con tu recuperación desde 2009.',
+  ogImage: 'https://cefiretlx.com/images/about-1.jpeg',
   ogType: 'website',
+  ogUrl: 'https://cefiretlx.com/about',
+  ogLocale: 'es_MX',
   twitterCard: 'summary_large_image',
-  // canonical: 'https://cefiretlx.com/about',
+  twitterTitle: 'Nosotros | Cefire Fisioterapia en Tlaxcala',
+  twitterDescription: 'Conoce al equipo de Cefire: especialistas certificados comprometidos con tu recuperación desde 2009.',
+  twitterImage: 'https://cefiretlx.com/images/about-1.jpeg',
+  canonical: 'https://cefiretlx.com/about',
 })
 
 useHead({
-  script: [{
-    type: 'application/ld+json',
-    innerHTML: JSON.stringify({
-      '@context': 'https://schema.org',
-      '@type': 'AboutPage',
-      name: 'Nosotros — Cefire Fisioterapia',
-      description: 'Desde 2009, Cefire Fisioterapia ayuda a las personas a recuperar su movilidad y calidad de vida con fisioterapia personalizada.',
-      url: 'https://cefiretlx.com/about',
-      isPartOf: {
-        '@type': 'MedicalBusiness',
-        name: 'Cefire Fisioterapia',
-        url: 'https://cefiretlx.com',
-        foundingDate: '2009',
-        numberOfEmployees: { '@type': 'QuantitativeValue', value: 2 },
-      },
-    }),
-  }],
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'AboutPage',
+        name: 'Nosotros — Cefire Fisioterapia',
+        description: 'Desde 2009, Cefire Fisioterapia ayuda a las personas a recuperar su movilidad y calidad de vida con fisioterapia personalizada.',
+        url: 'https://cefiretlx.com/about',
+        isPartOf: {
+          '@type': 'MedicalBusiness',
+          name: 'Cefire Fisioterapia',
+          url: 'https://cefiretlx.com',
+          foundingDate: '2009',
+          numberOfEmployees: { '@type': 'QuantitativeValue', value: 3 },
+        },
+      }),
+    },
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://cefiretlx.com' },
+          { '@type': 'ListItem', position: 2, name: 'Nosotros', item: 'https://cefiretlx.com/about' },
+        ],
+      }),
+    },
+  ],
 });
 
 const milestones = [
@@ -203,7 +222,7 @@ const stats = [
     <section class="bg-[#1A1918] py-20">
       <UContainer class="flex flex-col items-center gap-12">
         <div class="flex flex-col items-center gap-3 text-center">
-          <span class="text-[#c8e4f0] text-[13px] font-semibold tracking-[2px]">NUESTRA IMPACTO</span>
+          <span class="text-[#c8e4f0] text-[13px] font-semibold tracking-[2px]">NUESTRO IMPACTO</span>
           <h2 class="text-white text-[40px] font-bold tracking-[-0.5px]">
             Los números hablan por nosotros
           </h2>

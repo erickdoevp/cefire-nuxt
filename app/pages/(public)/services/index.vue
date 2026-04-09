@@ -7,31 +7,50 @@ useSeoMeta({
   description: 'Neurorehabilitación, recuperación post fractura, terapia ocupacional y estimulación temprana. Fisioterapia especializada y basada en evidencia en Tlaxcala.',
   ogTitle: 'Servicios de Fisioterapia — Cefire',
   ogDescription: 'Atención experta adaptada a tu recuperación: neurorehabilitación, post fractura, terapia ocupacional y estimulación temprana.',
+  ogImage: 'https://cefiretlx.com/images/neurorehabilitacion.jpeg',
   ogType: 'website',
+  ogUrl: 'https://cefiretlx.com/services',
+  ogLocale: 'es_MX',
   twitterCard: 'summary_large_image',
-  // canonical: 'https://cefiretlx.com/services',
+  twitterTitle: 'Servicios de Fisioterapia — Cefire',
+  twitterDescription: 'Atención experta adaptada a tu recuperación: neurorehabilitación, post fractura, terapia ocupacional y estimulación temprana.',
+  twitterImage: 'https://cefiretlx.com/images/neurorehabilitacion.jpeg',
+  canonical: 'https://cefiretlx.com/services',
 })
 
 useHead({
-  script: [{
-    type: 'application/ld+json',
-    innerHTML: JSON.stringify({
-      '@context': 'https://schema.org',
-      '@type': 'ItemList',
-      name: 'Servicios de Fisioterapia — Cefire',
-      url: 'https://cefiretlx.com/services',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Neurorehabilitación',          url: 'https://cefiretlx.com/services#neurorehabilitation' },
-        { '@type': 'ListItem', position: 2, name: 'Recuperación Post Fractura',   url: 'https://cefiretlx.com/services#fracture-recovery'   },
-        { '@type': 'ListItem', position: 3, name: 'Terapia Ocupacional',          url: 'https://cefiretlx.com/services#occupational-therapy' },
-        { '@type': 'ListItem', position: 4, name: 'Estimulación Temprana',        url: 'https://cefiretlx.com/services#early-stimulation'   },
-        { '@type': 'ListItem', position: 5, name: 'Columna Vertebral',            url: 'https://cefiretlx.com/services#spine-recovery'       },
-        { '@type': 'ListItem', position: 6, name: 'Electrolipólisis',             url: 'https://cefiretlx.com/services#electrolipolysis'     },
-        { '@type': 'ListItem', position: 7, name: 'Terapia del Deporte',          url: 'https://cefiretlx.com/services#sports-therapy'        },
-        { '@type': 'ListItem', position: 8, name: 'Fisioterapia Ortopédica',      url: 'https://cefiretlx.com/services#orthopedic-therapy'     },
-      ],
-    }),
-  }],
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'ItemList',
+        name: 'Servicios de Fisioterapia — Cefire',
+        url: 'https://cefiretlx.com/services',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Neurorehabilitación',          url: 'https://cefiretlx.com/services#neurorehabilitation' },
+          { '@type': 'ListItem', position: 2, name: 'Recuperación Post Fractura',   url: 'https://cefiretlx.com/services#fracture-recovery'   },
+          { '@type': 'ListItem', position: 3, name: 'Terapia Ocupacional',          url: 'https://cefiretlx.com/services#occupational-therapy' },
+          { '@type': 'ListItem', position: 4, name: 'Estimulación Temprana',        url: 'https://cefiretlx.com/services#early-stimulation'   },
+          { '@type': 'ListItem', position: 5, name: 'Columna Vertebral',            url: 'https://cefiretlx.com/services#spine-recovery'       },
+          { '@type': 'ListItem', position: 6, name: 'Electrolipólisis',             url: 'https://cefiretlx.com/services#electrolipolysis'     },
+          { '@type': 'ListItem', position: 7, name: 'Terapia del Deporte',          url: 'https://cefiretlx.com/services#sports-therapy'        },
+          { '@type': 'ListItem', position: 8, name: 'Fisioterapia Ortopédica',      url: 'https://cefiretlx.com/services#orthopedic-therapy'     },
+        ],
+      }),
+    },
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://cefiretlx.com' },
+          { '@type': 'ListItem', position: 2, name: 'Servicios', item: 'https://cefiretlx.com/services' },
+        ],
+      }),
+    },
+  ],
 })
 
 const services = [
@@ -251,6 +270,7 @@ const whyCards = [
     <section
       v-for="service in services"
       :key="service.id"
+      :id="service.id"
       :class="[service.sectionBg, 'py-20']"
     >
       <UContainer class="grid grid-cols-1 md:grid-cols-2 gap-15">

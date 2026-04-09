@@ -7,38 +7,56 @@ useSeoMeta({
   description: 'Contáctanos para agendar tu valoración gratuita de fisioterapia en Tlaxcala. Atención San Esteban Tizatlan. Tel: (246) 137 0462.',
   ogTitle: 'Contacto — Cefire Fisioterapia',
   ogDescription: 'Agenda tu valoración gratuita. Estamos en San Esteban Tizatlan, Tlaxcala.',
+  ogImage: 'https://cefiretlx.com/images/instalaciones-1.jpeg',
   ogType: 'website',
+  ogUrl: 'https://cefiretlx.com/contact',
+  ogLocale: 'es_MX',
   twitterCard: 'summary_large_image',
-  // canonical: 'https://cefiretlx.com/contact',
+  twitterTitle: 'Contacto — Cefire Fisioterapia',
+  twitterDescription: 'Agenda tu valoración gratuita. Estamos en San Esteban Tizatlan, Tlaxcala.',
+  twitterImage: 'https://cefiretlx.com/images/instalaciones-1.jpeg',
+  canonical: 'https://cefiretlx.com/contact',
 })
 
 useHead({
-  script: [{
-    type: 'application/ld+json',
-    innerHTML: JSON.stringify({
-      '@context': 'https://schema.org',
-      '@type': 'ContactPage',
-      name: 'Contacto — Cefire Fisioterapia',
-      url: 'https://cefiretlx.com/contact',
-      isPartOf: {
-        '@type': 'MedicalBusiness',
-        name: 'Cefire Fisioterapia',
-        telephone: '+522461370462',
-        email: 'eliot_77@live.com.mx',
-        address: {
-          '@type': 'PostalAddress',
-          // streetAddress: 'Insurgentes #2',
-          addressLocality: 'San Esteban Tizatlan',
-          addressRegion: 'Tlaxcala',
-          addressCountry: 'MX',
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'ContactPage',
+        name: 'Contacto — Cefire Fisioterapia',
+        url: 'https://cefiretlx.com/contact',
+        isPartOf: {
+          '@type': 'MedicalBusiness',
+          name: 'Cefire Fisioterapia',
+          telephone: '+522461370462',
+          email: 'eliot_77@live.com.mx',
+          address: {
+            '@type': 'PostalAddress',
+            addressLocality: 'San Esteban Tizatlan',
+            addressRegion: 'Tlaxcala',
+            addressCountry: 'MX',
+          },
+          openingHoursSpecification: [
+            { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday'], opens: '07:00', closes: '22:00' },
+            { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Saturday'], opens: '08:00', closes: '14:00' },
+          ],
         },
-        openingHoursSpecification: [
-          { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday'], opens: '07:00', closes: '22:00' },
-          { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Saturday'], opens: '08:00', closes: '14:00' },
+      }),
+    },
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://cefiretlx.com' },
+          { '@type': 'ListItem', position: 2, name: 'Contacto', item: 'https://cefiretlx.com/contact' },
         ],
-      },
-    }),
-  }],
+      }),
+    },
+  ],
 })
 
 // Opciones del selector de servicios
