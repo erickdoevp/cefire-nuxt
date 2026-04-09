@@ -8,21 +8,25 @@ export const useFetchProfiles = () => {
   const isLoading = ref<boolean>(false);
 
   const fetchProfiles = async () => {
-      isLoading.value = true;
+    isLoading.value = true;
 
+    try {
       const { data, error } = await $supabase
         .from('profiles')
         .select('id, name');
 
       if(error?.message) {
-        console.log(error.message);
+        console.error(error.message);
       }
 
       if(data) {
         users.value = data;
       }
-
+    } catch (err) {
+      console.error('Unexpected error fetching profiles:', err)
+    } finally {
       isLoading.value = false;
+    }
   };
 
   return {

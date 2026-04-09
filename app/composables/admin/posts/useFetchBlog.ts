@@ -8,34 +8,40 @@ export const useFetchBlog = (id: number) => {
 
   const fetchBlog = async () => {
 
-  loading.value = true;
+    loading.value = true;
 
-  const { data, error } = await $supabase
-    .from('posts')
-    .select(`
-      id,
-      title,
-      category:categories (id, name),
-      content,
-      conclusion,
-      excerpt,
-      readTime:reading_time,
-      status,
-      metaDescription:meta_description,
-      featuredImage:featured_image,
-      tags,
-      slug
-    `)
-    .eq('id', id)
-    .single();
+    try {
+      const { data, error } = await $supabase
+        .from('posts')
+        .select(`
+          id,
+          title,
+          category:categories (id, name),
+          content,
+          conclusion,
+          excerpt,
+          readTime:reading_time,
+          status,
+          metaDescription:meta_description,
+          featuredImage:featured_image,
+          tags,
+          slug
+        `)
+        .eq('id', id)
+        .single();
 
-    if(error) {
-      console.error('Error fetching blog:', error);
+      if(error) {
+        console.error('Error fetching blog:', error);
+        blog.value = null;
+      } else {
+        blog.value = {...data, category: data.category as unknown as BlogById['category']};
+      }
+    } catch (err) {
+      console.error('Unexpected error fetching blog:', err)
       blog.value = null;
-    } else {
-      blog.value = {...data, category: data.category as unknown as BlogById['category']};
+    } finally {
+      loading.value = false;
     }
-    loading.value = false;
 
   }
   

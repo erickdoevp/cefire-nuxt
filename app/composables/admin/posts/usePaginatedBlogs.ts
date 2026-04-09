@@ -70,22 +70,26 @@ export const usePaginatedBlogs = () => {
       query = query.lte('updated_at', filters.value.updatedAtTo)
     }
 
-    const { data, count, error } = await query
-      .order('created_at', { ascending: false })
-      .range(from, to);
+    try {
+      const { data, count, error } = await query
+        .order('created_at', { ascending: false })
+        .range(from, to);
 
-    if (error) {
-      console.error('Error fetching posts:', error)
-    } else {
-      blogs.value = data.map((blog)=> ({
-        ...blog, 
-        category: blog.category as unknown as Category,
-        user: blog.user as unknown as User
-       }));
-      total.value = count || 0
+      if (error) {
+        console.error('Error fetching posts:', error)
+      } else {
+        blogs.value = data.map((blog)=> ({
+          ...blog,
+          category: blog.category as unknown as Category,
+          user: blog.user as unknown as User
+         }));
+        total.value = count || 0
+      }
+    } catch (err) {
+      console.error('Unexpected error fetching posts:', err)
+    } finally {
+      loading.value = false
     }
-
-    loading.value = false
   }
 
   const nextPage = async () => {

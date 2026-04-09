@@ -21,22 +21,26 @@ export const usePaginatedUsers = () => {
     const from = (page.value - 1) * pageSize.value;
     const to = from + pageSize.value - 1;
 
-    const { data, count, error } = await $supabase
-      .from('profiles')
-      .select('id, name, first_last_name, second_last_name, username, email, role, phone:phone_number', { count: 'exact' })
-      .order('name', { ascending: true })
-      .range(from, to);
+    try {
+      const { data, count, error } = await $supabase
+        .from('profiles')
+        .select('id, name, first_last_name, second_last_name, username, email, role, phone:phone_number', { count: 'exact' })
+        .order('name', { ascending: true })
+        .range(from, to);
 
-    if (error?.message) {
-      console.log(error.message);
+      if (error?.message) {
+        console.error(error.message);
+      }
+
+      if (data) {
+        users.value = data;
+        total.value = count || 0;
+      }
+    } catch (err) {
+      console.error('Unexpected error fetching users:', err)
+    } finally {
+      isLoading.value = false;
     }
-
-    if (data) {
-      users.value = data;
-      total.value = count || 0;
-    }
-
-    isLoading.value = false;
   };
 
   return {

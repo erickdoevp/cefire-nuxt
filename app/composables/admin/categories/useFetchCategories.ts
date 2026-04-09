@@ -11,10 +11,11 @@ export const useFetchCategories = () => {
 
     loading.value = true;
 
-    const { data, error } = await $supabase
-      .from('categories')
-      .select('id, name, chip_color, text_chip_color')
-      .order('name', { ascending: true });
+    try {
+      const { data, error } = await $supabase
+        .from('categories')
+        .select('id, name, chip_color, text_chip_color')
+        .order('name', { ascending: true });
 
       if(error) {
         console.error('Error fetching categories:', error);
@@ -22,7 +23,12 @@ export const useFetchCategories = () => {
       } else {
         categories.value = data as Category[];
       }
+    } catch (err) {
+      console.error('Unexpected error fetching categories:', err)
+      categories.value = [];
+    } finally {
       loading.value = false;
+    }
   }
   
   return {
