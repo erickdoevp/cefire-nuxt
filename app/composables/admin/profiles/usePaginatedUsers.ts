@@ -1,8 +1,7 @@
+import adminApi from "~/api/admin-api";
 import type { PaginatedUserProfile } from "~/interfaces/paginated-profiles";
 
 export const usePaginatedUsers = () => {
-
-  const { $supabase } = useNuxtApp();
 
   const users = ref<PaginatedUserProfile[]>([]);
   const isLoading = ref<boolean>(false);
@@ -19,27 +18,35 @@ export const usePaginatedUsers = () => {
     if (options?.pageSize) pageSize.value = options.pageSize;
 
     const from = (page.value - 1) * pageSize.value;
-    const to = from + pageSize.value - 1;
 
     try {
-      const { data, count, error } = await $supabase
-        .from('profiles')
-        .select('id, name, first_last_name, second_last_name, username, email, role, phone:phone_number', { count: 'exact' })
-        .order('name', { ascending: true })
-        .range(from, to);
+      const { data, headers } = await adminApi.get<PaginatedUserProfile[]>(
+        `/profiles`,
+        {
+          params: {
+            select: 'id,name,first_last_name,second_last_name,username,email,role,phone:phone_number',
+            order: 'name.asc',
+            offset: from,
+            limit: pageSize.value,
+          },
+          headers: {
+            Prefer: 'count=exact',
+          },
+        }
+      );
 
-      if (error?.message) {
-        console.error(error.message);
-      }
+      users.value = data;
+      const contentRange = headers['content-range'];
+      total.value = contentRange ? parseInt(contentRange.split('/')[1]) : 0;
 
-      if (data) {
-        users.value = data;
-        total.value = count || 0;
-      }
-    } catch (err) {
-      console.error('Unexpected error fetching users:', err)
+    } catch (err: any) {
+
+      console.error('Unexpected error fetching users:', err.response?.data?.message ?? err.message);
+
     } finally {
+
       isLoading.value = false;
+
     }
   };
 

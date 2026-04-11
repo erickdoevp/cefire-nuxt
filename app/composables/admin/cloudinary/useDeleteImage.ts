@@ -1,5 +1,7 @@
+import { useAuthStore } from "~/store/admin/auth/authStore"
+
 export const useDeleteImage = () => {
-  const { $supabase } = useNuxtApp()
+  const authStore = useAuthStore()
   const deleting = ref(false)
   const deleteError = ref<string | null>(null)
 
@@ -18,19 +20,17 @@ export const useDeleteImage = () => {
     deleteError.value = null
 
     try {
-      const { data: { session } } = await $supabase.auth.getSession()
-
-      if (!session) throw new Error('No hay sesión activa')
+      if (!authStore.accessToken) throw new Error('No hay sesión activa')
 
       await $fetch('/api/cloudinary/delete', {
         method: 'POST',
-        headers: { authorization: `Bearer ${session.access_token}` },
+        headers: { Authorization: `Bearer ${authStore.accessToken}` },
         body: { publicId },
       })
 
       return true
     } catch (err: any) {
-      deleteError.value = err.message ?? 'Error al eliminar la imagen'
+      deleteError.value = err.response?.data?.error?.message ?? err.message ?? 'Error al eliminar la imagen'
       return false
     } finally {
       deleting.value = false

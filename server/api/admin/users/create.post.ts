@@ -1,29 +1,34 @@
-import { createClient } from '@supabase/supabase-js'
-
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
 
-  // Verificar que el solicitante es un admin autenticado
   const authHeader = getHeader(event, 'authorization')
   if (!authHeader?.startsWith('Bearer ')) {
     throw createError({ statusCode: 401, message: 'No autorizado' })
   }
 
   const token = authHeader.replace('Bearer ', '')
+  const supabaseUrl = config.public.supabaseUrl
+  const anonKey = config.public.supabaseAnonKey
+  const serviceKey = config.supabaseServiceKey
 
-  const anonClient = createClient(config.public.supabaseUrl, config.public.supabaseAnonKey)
-  const { data: { user }, error: authError } = await anonClient.auth.getUser(token)
+  // Verificar token y obtener usuario
+  const authUser = await $fetch<{ id: string }>(`${supabaseUrl}/auth/v1/user`, {
+    headers: { apikey: anonKey, Authorization: `Bearer ${token}` },
+  }).catch(() => null)
 
-  if (authError || !user) {
+  if (!authUser) {
     throw createError({ statusCode: 401, message: 'No autorizado' })
   }
 
-  // Verificar que el usuario autenticado tiene rol admin
-  const { data: profile } = await anonClient
-    .from('profiles')
-    .select('role')
-    .eq('id', user.id)
-    .single()
+  // Verificar rol admin
+  const profile = await $fetch<{ role: string }>(`${supabaseUrl}/rest/v1/profiles`, {
+    headers: {
+      apikey: anonKey,
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/vnd.pgrst.object+json',
+    },
+    params: { id: `eq.${authUser.id}`, select: 'role' },
+  }).catch(() => null)
 
   if (profile?.role !== 'admin') {
     throw createError({ statusCode: 403, message: 'Acceso denegado' })
@@ -36,24 +41,28 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, message: 'Faltan campos requeridos' })
   }
 
-  // Usar service key para crear el usuario en Auth
-  const adminClient = createClient(config.public.supabaseUrl, config.supabaseServiceKey)
-
-  const { data: authData, error: createAuthError } = await adminClient.auth.admin.createUser({
-    email,
-    password,
-    email_confirm: true,
+  // Crear usuario en Auth con service key
+  const newAuthUser = await $fetch<{ id: string }>(`${supabaseUrl}/auth/v1/admin/users`, {
+    method: 'POST',
+    headers: { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` },
+    body: { email, password, email_confirm: true },
+  }).catch((err) => {
+    throw createError({ statusCode: 400, message: err.data?.message ?? 'Error al crear el usuario' })
   })
 
-  if (createAuthError) {
-    throw createError({ statusCode: 400, message: createAuthError.message })
-  }
+  const userId = newAuthUser.id
 
-  const userId = authData.user.id
-
-  const { data: newProfile, error: profileError } = await adminClient
-    .from('profiles')
-    .insert({
+  // Insertar perfil con service key
+  const newProfile = await $fetch(`${supabaseUrl}/rest/v1/profiles`, {
+    method: 'POST',
+    headers: {
+      apikey: serviceKey,
+      Authorization: `Bearer ${serviceKey}`,
+      Accept: 'application/vnd.pgrst.object+json',
+      Prefer: 'return=representation',
+    },
+    params: { select: 'id,name,first_last_name,second_last_name,username,email,role,phone:phone_number,avatar_img_url' },
+    body: {
       id: userId,
       name,
       first_last_name,
@@ -63,15 +72,15 @@ export default defineEventHandler(async (event) => {
       role,
       phone_number: phone || null,
       avatar_img_url,
-    })
-    .select('id, name, first_last_name, second_last_name, username, email, role, phone:phone_number, avatar_img_url')
-    .single()
-
-  if (profileError) {
+    },
+  }).catch(async (err) => {
     // Revertir: eliminar el usuario de Auth si falla el perfil
-    await adminClient.auth.admin.deleteUser(userId)
-    throw createError({ statusCode: 400, message: profileError.message })
-  }
+    await $fetch(`${supabaseUrl}/auth/v1/admin/users/${userId}`, {
+      method: 'DELETE',
+      headers: { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` },
+    }).catch(() => null)
+    throw createError({ statusCode: 400, message: err.data?.message ?? 'Error al crear el perfil' })
+  })
 
   return newProfile
 })

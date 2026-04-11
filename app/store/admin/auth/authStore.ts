@@ -1,57 +1,93 @@
 import { defineStore } from 'pinia'
-import type { User } from '@supabase/supabase-js'
+import axios from 'axios'
+import adminApi from '~/api/admin-api'
+
+interface AuthUser {
+  id: string
+  email: string
+  [key: string]: any
+}
 
 export const useAuthStore = defineStore('auth', () => {
 
-  const { $supabase } = useNuxtApp()
+  const config = useRuntimeConfig()
 
-  const user = ref<User | null>(null)
+  const authApi = axios.create({
+    baseURL: `${config.public.supabaseUrl}/auth/v1`,
+    headers: {
+      apikey: config.public.supabaseAnonKey,
+    },
+  })
+
+  const user = ref<AuthUser | null>(null)
   const role = ref<string | null>(null)
   const loading = ref(false)
   const error = ref<string | null>(null)
+  const accessToken = ref<string | null>(null)
 
   const isAuthenticated = computed(() => !!user.value)
   const isAdmin = computed(() => role.value === 'admin')
 
   async function fetchRole(userId: string) {
-    const { data } = await $supabase
-      .from('profiles')
-      .select('role')
-      .eq('id', userId)
-      .single()
+    const { data } = await adminApi.get<{ role: string }>(
+      '/profiles',
+      {
+        params: {
+          id: `eq.${userId}`,
+          select: 'role',
+        },
+        headers: {
+          Accept: 'application/vnd.pgrst.object+json',
+        },
+      }
+    )
     role.value = data?.role ?? null
   }
 
   async function init() {
-    const { data } = await $supabase.auth.getSession()
-    user.value = data.session?.user ?? null
-    if (user.value) await fetchRole(user.value.id)
-
-    $supabase.auth.onAuthStateChange(async (_event, session) => {
-      user.value = session?.user ?? null
+    if (!accessToken.value) return
+    try {
+      const { data } = await authApi.get<AuthUser>('/user', {
+        headers: { Authorization: `Bearer ${accessToken.value}` },
+      })
+      user.value = data
       if (user.value) await fetchRole(user.value.id)
-      else role.value = null
-    })
+    } catch {
+      user.value = null
+      role.value = null
+      accessToken.value = null
+    }
   }
 
   async function login(email: string, password: string) {
     loading.value = true
     error.value = null
 
-    const { data, error: err } = await $supabase.auth.signInWithPassword({ email, password })
-
-    if (err) {
-      error.value = err.message
-    } else {
+    try {
+      const { data } = await authApi.post<{ access_token: string; user: AuthUser }>(
+        '/token?grant_type=password',
+        { email, password }
+      )
+      accessToken.value = data.access_token
       user.value = data.user
+      if (user.value) await fetchRole(user.value.id)
+    } catch (err: any) {
+      error.value = err.response?.data?.error_description ?? err.message
+    } finally {
+      loading.value = false
     }
-
-    loading.value = false
   }
 
   async function logout() {
-    await $supabase.auth.signOut()
-    user.value = null
+    try {
+      await authApi.post('/logout', {}, {
+        headers: { Authorization: `Bearer ${accessToken.value}` },
+      })
+    } finally {
+      user.value = null
+      role.value = null
+      accessToken.value = null
+    }
   }
 
   return {
@@ -64,10 +100,11 @@ export const useAuthStore = defineStore('auth', () => {
     init,
     login,
     logout,
+    accessToken
   }
 
 }, {
   persist: {
-    pick: ['user', 'role'],
+    pick: ['user', 'role', 'accessToken'],
   }
 })

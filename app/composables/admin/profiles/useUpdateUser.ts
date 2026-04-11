@@ -1,9 +1,10 @@
 import type { UserProfile } from '~/interfaces/profiles';
+import { useAuthStore } from '~/store/admin/auth/authStore';
 
 type UpdateUserPayload = Omit<UserProfile, 'id'> & { password?: string; avatarFile?: File | null };
 
 export const useUpdateUser = () => {
-  const { $supabase } = useNuxtApp();
+  const authStore = useAuthStore();
 
   const isLoading = ref<boolean>(false);
   const error = ref<string | null>(null);
@@ -12,9 +13,7 @@ export const useUpdateUser = () => {
     isLoading.value = true;
     error.value = null;
 
-    const { data: { session } } = await $supabase.auth.getSession();
-
-    if (!session) {
+    if (!authStore.accessToken) {
       error.value = 'No autenticado';
       isLoading.value = false;
       return null;
@@ -24,7 +23,7 @@ export const useUpdateUser = () => {
       const data = await $fetch<UserProfile>(`/api/admin/users/${id}`, {
         method: 'PUT',
         headers: {
-          Authorization: `Bearer ${session.access_token}`,
+          Authorization: `Bearer ${authStore.accessToken}`,
         },
         body: payload,
       });

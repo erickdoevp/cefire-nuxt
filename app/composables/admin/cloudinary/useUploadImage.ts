@@ -1,5 +1,8 @@
+import axios from 'axios'
+import { useAuthStore } from '~/store/admin/auth/authStore'
+
 export const useUploadImage = () => {
-  const { $supabase } = useNuxtApp()
+  const authStore = useAuthStore()
   const uploading = ref(false)
   const uploadError = ref<string | null>(null)
 
@@ -8,9 +11,7 @@ export const useUploadImage = () => {
     uploadError.value = null
 
     try {
-      const { data: { session } } = await $supabase.auth.getSession()
-
-      if (!session) {
+      if (!authStore.accessToken) {
         throw new Error('No hay sesión activa')
       }
 
@@ -22,7 +23,7 @@ export const useUploadImage = () => {
         folder: string
       }>('/api/cloudinary/sign', {
         method: 'POST',
-        headers: { authorization: `Bearer ${session.access_token}` },
+        headers: { Authorization: `Bearer ${authStore.accessToken}` },
         body: { folder },
       })
 
@@ -33,20 +34,15 @@ export const useUploadImage = () => {
       formData.append('signature', signature)
       formData.append('folder', signedFolder)
 
-      const res = await fetch(
+      const { data } = await axios.post(
         `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-        { method: 'POST', body: formData }
+        formData
       )
 
-      if (!res.ok) {
-        throw new Error('Error al subir la imagen a Cloudinary')
-      }
-
-      const data = await res.json()
       return data.secure_url as string
 
     } catch (err: any) {
-      uploadError.value = err.message ?? 'Error desconocido'
+      uploadError.value = err.response?.data?.error?.message ?? err.message ?? 'Error desconocido'
       return null
     } finally {
       uploading.value = false

@@ -1,5 +1,3 @@
-import { createClient } from '@supabase/supabase-js'
-
 async function signRequest(params: Record<string, string | number>, apiSecret: string): Promise<string> {
   const sorted = Object.keys(params)
     .sort()
@@ -24,10 +22,14 @@ export default defineEventHandler(async (event) => {
   const token = authHeader.replace('Bearer ', '')
   const config = useRuntimeConfig()
 
-  const supabase = createClient(config.public.supabaseUrl, config.public.supabaseAnonKey)
-  const { data: { user }, error: authError } = await supabase.auth.getUser(token)
-
-  if (authError || !user) {
+  try {
+    await $fetch(`${config.public.supabaseUrl}/auth/v1/user`, {
+      headers: {
+        apikey: config.public.supabaseAnonKey,
+        Authorization: `Bearer ${token}`,
+      },
+    })
+  } catch {
     throw createError({ statusCode: 401, message: 'No autorizado' })
   }
 

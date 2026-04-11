@@ -14,7 +14,8 @@ const { createUser, isLoading: creating, error: createError } = useCreateUser();
 const isSubmitting = computed(() => uploading.value || creating.value);
 
 const handleSubmit = async (event: UserProfile & { avatarFile: File | null }) => {
-
+  console.log('submit');
+  
  let avatar_url: string | null = null;
   if (event.avatarFile) {
     avatar_url = await upload(event.avatarFile, 'cefire/avatars');
@@ -41,7 +42,7 @@ const handleSubmit = async (event: UserProfile & { avatarFile: File | null }) =>
         variant="link"
       />
       <div>
-        <h1 class="text-2xl font-semibold text-gray-900">Crear nuevo usuario</h1>
+        <h1 class="text-2xl font-semibold text-gray-900">Crear Usuario</h1>
         <p class="text-sm text-gray-500 mt-0.5">Completa la información para agregar un usuario al sistema</p>
       </div>
     </div>

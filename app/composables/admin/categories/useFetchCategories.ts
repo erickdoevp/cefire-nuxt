@@ -1,8 +1,8 @@
+import adminApi from "~/api/admin-api";
 import type { Category } from "~/interfaces/category";
 
 
 export const useFetchCategories = () => {
-  const { $supabase } = useNuxtApp();
 
   const categories = ref<Category[]>([]);
   const loading = ref<boolean>(false);
@@ -12,19 +12,17 @@ export const useFetchCategories = () => {
     loading.value = true;
 
     try {
-      const { data, error } = await $supabase
-        .from('categories')
-        .select('id, name, chip_color, text_chip_color')
-        .order('name', { ascending: true });
 
-      if(error) {
-        console.error('Error fetching categories:', error);
-        categories.value = [];
-      } else {
-        categories.value = data as Category[];
-      }
-    } catch (err) {
-      console.error('Unexpected error fetching categories:', err)
+      const { data } = await adminApi.get<Category[]>('/categories', {
+        params: {
+          select: 'id,name,chip_color,text_chip_color',
+          order: 'name.asc',
+        },
+      });
+      
+      categories.value = data;
+    } catch (err: any) {
+      console.error('Error fetching categories:', err.response?.data?.message ?? err);
       categories.value = [];
     } finally {
       loading.value = false;

@@ -3,6 +3,7 @@ import UserForm from '~/components/admin/UserForm.vue';
 import { useFetchUser } from '~/composables/admin/profiles/useFetchUser';
 import { useUpdateUser } from '~/composables/admin/profiles/useUpdateUser';
 import { useUploadImage } from '~/composables/admin/cloudinary/useUploadImage';
+import { useDeleteImage } from '~/composables/admin/cloudinary/useDeleteImage';
 import type { UserProfile } from '~/interfaces/profiles';
 
 definePageMeta({ middleware: 'auth' });
@@ -13,6 +14,7 @@ const id = route.params.id as string;
 const { user, fetchUser, isLoading: fetching } = useFetchUser();
 const { updateUser, isLoading: updating, error: updateError } = useUpdateUser();
 const { upload, uploading } = useUploadImage();
+const { deleteImage } = useDeleteImage();
 
 const isSubmitting = computed(() => fetching.value || updating.value || uploading.value);
 
@@ -20,6 +22,9 @@ const handleUpdate = async (event: UserProfile & { avatarFile: File | null }) =>
   let avatar_img_url = user.value?.avatar_img_url ?? null;
 
   if (event.avatarFile) {
+    if (avatar_img_url) {
+      await deleteImage(avatar_img_url);
+    }
     const uploaded = await upload(event.avatarFile, 'cefire/avatars');
     if (!uploaded) return;
     avatar_img_url = uploaded;
