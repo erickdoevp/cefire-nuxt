@@ -34,8 +34,8 @@ const {
   blogs: posts,
   page,
   totalPages,
-  lastPost: featuredPost
-} = usePaginatedPublicBlogs();
+  featuredPost,
+} = usePaginatedPublicBlogs()
 
 // const categories = ['Todos', 'Recuperación', 'Medicina Deportiva', 'Bienestar', 'Historias']
 // const activeCategory = ref('Todos')

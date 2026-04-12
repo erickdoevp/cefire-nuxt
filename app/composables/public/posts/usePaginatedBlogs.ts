@@ -1,57 +1,50 @@
-import { createClient } from '@supabase/supabase-js';
-import type { PublicBlog } from "~/interfaces/public-blog";
+import { createPublicApi } from '~/api/public-api'
+import type { PublicBlog } from '~/interfaces/public-blog'
+
+interface PaginatedResult {
+  blogs: PublicBlog[]
+  total: number
+}
 
 export const usePaginatedPublicBlogs = (initialPageSize = 9) => {
+  const page = ref<number>(1)
+  const pageSize = ref<number>(initialPageSize)
 
-  const page = ref<number>(1);
-  const pageSize = ref<number>(initialPageSize);
-  const total = ref<number>(0);
-
-  const totalPages = computed(() => Math.ceil(total.value / pageSize.value));
-
-  const { data, pending: loading, refresh } = useAsyncData<PublicBlog[]>(
+  const { data, pending: loading, refresh } = useAsyncData<PaginatedResult>(
     'public-blogs',
     async () => {
-      const config = useRuntimeConfig();
-      const supabase = createClient(config.public.supabaseUrl, config.public.supabaseAnonKey);
-      const from = (page.value - 1) * pageSize.value;
-      const to = from + pageSize.value - 1;
+      const api = createPublicApi()
+      const from = (page.value - 1) * pageSize.value
+      const to = from + pageSize.value - 1
 
-      const { data, count, error } = await supabase
-        .from('posts')
-        .select(
-          `slug,
-          title,
-          excerpt,
-          updatedAt:updated_at,
-          status,
-          readingTime:reading_time,
-          featuredImage:featured_image,
-          category:categories!inner(name, chip_color, text_chip_color),
-          user:profiles!inner(name, first_last_name, second_last_name)`,
-          { count: 'exact' }
-        )
-        .eq('status', 'Published')
-        .order('created_at', { ascending: false })
-        .range(from, to);
+      const { data, headers } = await api.get('/posts', {
+        params: {
+          select: 'slug,title,excerpt,updatedAt:updated_at,status,readingTime:reading_time,featuredImage:featured_image,category:categories!inner(name,chip_color,text_chip_color),user:profiles!inner(name,first_last_name,second_last_name)',
+          status: 'eq.Published',
+          order: 'created_at.desc',
+        },
+        headers: {
+          Prefer: 'count=exact',
+          Range: `${from}-${to}`,
+        },
+      })
 
-      if (error) {
-        console.error('Error fetching posts:', error);
-        return [];
+      // Content-Range: "0-8/100" → extraer el total
+      let total = 0
+      const contentRange = headers['content-range'] as string | undefined
+      if (contentRange) {
+        const match = contentRange.match(/\/(\d+)$/)
+        if (match) total = parseInt(match[1])
       }
 
-      total.value = count ?? 0;
-
-      return data.map(blog => ({
-        ...blog,
-        category: blog.category as unknown as PublicBlog['category'],
-        user: blog.user as unknown as PublicBlog['user'],
-      }));
+      return { blogs: data as PublicBlog[], total }
     },
     { watch: [page] }
-  );
+  )
 
-  const blogs = computed(() => data.value ?? []);
+  const blogs = computed(() => data.value?.blogs ?? [])
+  const total = computed(() => data.value?.total ?? 0)
+  const totalPages = computed(() => Math.ceil(total.value / pageSize.value))
 
   return {
     blogs,
@@ -61,7 +54,6 @@ export const usePaginatedPublicBlogs = (initialPageSize = 9) => {
     pageSize,
     totalPages,
     refresh,
-    lastPost: computed(() => blogs.value.length > 0 ? blogs.value[blogs.value.length - 1] : null),
-  };
-
-};
+    featuredPost: computed(() => blogs.value[0] ?? null),
+  }
+}

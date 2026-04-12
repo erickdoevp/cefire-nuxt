@@ -1,50 +1,20 @@
 <script setup lang="ts">
-import { createClient } from '@supabase/supabase-js'
 import { generateHTML } from '@tiptap/core'
 import StarterKit from '@tiptap/starter-kit'
 import Image from '@tiptap/extension-image'
 import Link from '@tiptap/extension-link'
-import type { PublicBlogDetail, PublicBlogDetailCategory, PublicBlogDetailAuthor } from '~/interfaces/public-blog-detail'
+import type { PublicBlogDetail } from '~/interfaces/public-blog-detail'
 import type { PublicBlog } from '~/interfaces/public-blog'
+import { useBlogs } from '~/composables/public/posts/useBlogs'
 
 const route = useRoute()
 const slug = route.params.slug as string
+const { fetchBlogBySlug, fetchRelatedPosts } = useBlogs()
 
 // ── Fetch post principal ──────────────────────────────────────
 const { data: post } = await useAsyncData<PublicBlogDetail>(
   `post-${slug}`,
-  async () => {
-    const config = useRuntimeConfig()
-    const supabase = createClient(config.public.supabaseUrl, config.public.supabaseAnonKey)
-    const { data, error } = await supabase
-      .from('posts')
-      .select(`
-        slug,
-        title,
-        excerpt,
-        conclusion,
-        content,
-        tags,
-        readTime:reading_time,
-        featuredImage:featured_image,
-        metaDescription:meta_description,
-        status,
-        createdAt:created_at,
-        category:categories!inner(id, name, chip_color, text_chip_color),
-        author:profiles!inner(name, first_last_name, second_last_name)
-      `)
-      .eq('slug', slug)
-      .eq('status', 'Published')
-      .single()
-
-    if (error || !data) return null as any
-
-    return {
-      ...data,
-      category: data.category as unknown as PublicBlogDetailCategory,
-      author: data.author as unknown as PublicBlogDetailAuthor,
-    }
-  }
+  () => fetchBlogBySlug(slug)
 )
 
 if (!post.value) {
@@ -64,37 +34,10 @@ const contentHtml = computed(() => {
 // ── Fetch posts relacionados ──────────────────────────────────
 const { data: relatedPosts } = await useAsyncData<PublicBlog[]>(
   `related-${slug}`,
-  async () => {
-    const config = useRuntimeConfig()
-    const supabase = createClient(config.public.supabaseUrl, config.public.supabaseAnonKey)
+  () => {
     const categoryId = post.value?.category?.id
-    if (!categoryId) return []
-
-    const { data, error } = await supabase
-      .from('posts')
-      .select(`
-        slug,
-        title,
-        excerpt,
-        updatedAt:updated_at,
-        status,
-        readingTime:reading_time,
-        featuredImage:featured_image,
-        category:categories!inner(name, chip_color, text_chip_color),
-        user:profiles!inner(name, first_last_name, second_last_name)
-      `)
-      .eq('status', 'Published')
-      .eq('category_id', categoryId)
-      .neq('slug', slug)
-      .limit(3)
-
-    if (error || !data) return []
-
-    return data.map(b => ({
-      ...b,
-      category: b.category as unknown as PublicBlog['category'],
-      user: b.user as unknown as PublicBlog['user'],
-    }))
+    if (!categoryId) return Promise.resolve([])
+    return fetchRelatedPosts(categoryId, slug)
   }
 )
 
