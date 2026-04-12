@@ -6,13 +6,15 @@ export function createAdminApi() {
 
   return $fetch.create({
     baseURL: `${config.public.supabaseUrl}/rest/v1`,
-    headers: {
-      apikey: config.public.supabaseAnonKey,
-    },
     onRequest({ options }) {
       const token = authStore.accessToken ?? config.public.supabaseAnonKey
+      const existing = options.headers instanceof Headers
+        ? Object.fromEntries((options.headers as Headers).entries())
+        : { ...(options.headers as Record<string, string> ?? {}) }
+
       options.headers = {
-        ...(options.headers as Record<string, string>),
+        ...existing,
+        apikey: config.public.supabaseAnonKey as string,
         Authorization: `Bearer ${token}`,
       }
     },
