@@ -42,9 +42,6 @@ export default defineNuxtConfig({
 
   nitro: {
     preset: 'cloudflare-pages',
-    externals: {
-      inline: [/^@supabase/],
-    },
     prerender: {
       crawlLinks: true,
       ignore: ['/admin/**', '/blogs', '/blog/**'],
