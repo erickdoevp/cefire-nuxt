@@ -1,19 +1,20 @@
-import axios from 'axios';
-import { useAuthStore } from '~/store/admin/auth/authStore';
+import { useAuthStore } from '~/store/admin/auth/authStore'
 
-const config = useRuntimeConfig();
-const adminApi = axios.create({
-  baseURL: `${config.public.supabaseUrl}/rest/v1`,
-  headers: {
-    apikey: config.public.supabaseAnonKey,
-  },
-});
+export function createAdminApi() {
+  const config = useRuntimeConfig()
+  const authStore = useAuthStore()
 
-adminApi.interceptors.request.use((requestConfig) => {
-  const authStore = useAuthStore();
-  const token = authStore.accessToken ?? config.public.supabaseAnonKey;
-  requestConfig.headers.Authorization = `Bearer ${token}`;
-  return requestConfig;
-});
-
-export default adminApi;
+  return $fetch.create({
+    baseURL: `${config.public.supabaseUrl}/rest/v1`,
+    headers: {
+      apikey: config.public.supabaseAnonKey,
+    },
+    onRequest({ options }) {
+      const token = authStore.accessToken ?? config.public.supabaseAnonKey
+      options.headers = {
+        ...(options.headers as Record<string, string>),
+        Authorization: `Bearer ${token}`,
+      }
+    },
+  })
+}

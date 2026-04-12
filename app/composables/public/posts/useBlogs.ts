@@ -6,8 +6,8 @@ export const useBlogs = () => {
   const api = createPublicApi()
 
   async function fetchBlogBySlug(slug: string): Promise<PublicBlogDetail> {
-    const { data } = await api.get('/posts', {
-      params: {
+    return api<PublicBlogDetail>('/posts', {
+      query: {
         select: 'slug,title,excerpt,conclusion,content,tags,readTime:reading_time,featuredImage:featured_image,metaDescription:meta_description,status,createdAt:created_at,category:categories!inner(id,name,chip_color,text_chip_color),author:profiles!inner(name,first_last_name,second_last_name)',
         slug: `eq.${slug}`,
         status: 'eq.Published',
@@ -16,12 +16,11 @@ export const useBlogs = () => {
         Accept: 'application/vnd.pgrst.object+json',
       },
     })
-    return data
   }
 
   async function fetchRelatedPosts(categoryId: number, currentSlug: string): Promise<PublicBlog[]> {
-    const { data } = await api.get('/posts', {
-      params: {
+    return api<PublicBlog[]>('/posts', {
+      query: {
         select: 'slug,title,excerpt,updatedAt:updated_at,status,readingTime:reading_time,featuredImage:featured_image,category:categories!inner(name,chip_color,text_chip_color),user:profiles!inner(name,first_last_name,second_last_name)',
         status: 'eq.Published',
         category_id: `eq.${categoryId}`,
@@ -29,7 +28,6 @@ export const useBlogs = () => {
         limit: 3,
       },
     })
-    return data
   }
 
   return {

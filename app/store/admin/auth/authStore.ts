@@ -1,6 +1,4 @@
 import { defineStore } from 'pinia'
-import axios from 'axios'
-import adminApi from '~/api/admin-api'
 
 interface AuthUser {
   id: string
@@ -12,13 +10,6 @@ export const useAuthStore = defineStore('auth', () => {
 
   const config = useRuntimeConfig()
 
-  const authApi = axios.create({
-    baseURL: `${config.public.supabaseUrl}/auth/v1`,
-    headers: {
-      apikey: config.public.supabaseAnonKey,
-    },
-  })
-
   const user = ref<AuthUser | null>(null)
   const role = ref<string | null>(null)
   const loading = ref(false)
@@ -28,27 +19,27 @@ export const useAuthStore = defineStore('auth', () => {
   const isAuthenticated = computed(() => !!user.value)
   const isAdmin = computed(() => role.value === 'admin')
 
+  const authBase = `${config.public.supabaseUrl}/auth/v1`
+  const restBase = `${config.public.supabaseUrl}/rest/v1`
+  const commonHeaders = { apikey: config.public.supabaseAnonKey as string }
+
   async function fetchRole(userId: string) {
-    const { data } = await adminApi.get<{ role: string }>(
-      '/profiles',
-      {
-        params: {
-          id: `eq.${userId}`,
-          select: 'role',
-        },
-        headers: {
-          Accept: 'application/vnd.pgrst.object+json',
-        },
-      }
-    )
+    const data = await $fetch<{ role: string }>(`${restBase}/profiles`, {
+      query: { id: `eq.${userId}`, select: 'role' },
+      headers: {
+        ...commonHeaders,
+        Authorization: `Bearer ${accessToken.value}`,
+        Accept: 'application/vnd.pgrst.object+json',
+      },
+    })
     role.value = data?.role ?? null
   }
 
   async function init() {
     if (!accessToken.value) return
     try {
-      const { data } = await authApi.get<AuthUser>('/user', {
-        headers: { Authorization: `Bearer ${accessToken.value}` },
+      const data = await $fetch<AuthUser>(`${authBase}/user`, {
+        headers: { ...commonHeaders, Authorization: `Bearer ${accessToken.value}` },
       })
       user.value = data
       if (user.value) await fetchRole(user.value.id)
@@ -64,15 +55,19 @@ export const useAuthStore = defineStore('auth', () => {
     error.value = null
 
     try {
-      const { data } = await authApi.post<{ access_token: string; user: AuthUser }>(
-        '/token?grant_type=password',
-        { email, password }
+      const data = await $fetch<{ access_token: string; user: AuthUser }>(
+        `${authBase}/token?grant_type=password`,
+        {
+          method: 'POST',
+          headers: commonHeaders,
+          body: { email, password },
+        }
       )
       accessToken.value = data.access_token
       user.value = data.user
       if (user.value) await fetchRole(user.value.id)
     } catch (err: any) {
-      error.value = err.response?.data?.error_description ?? err.message
+      error.value = err.data?.error_description ?? err.message
     } finally {
       loading.value = false
     }
@@ -80,8 +75,9 @@ export const useAuthStore = defineStore('auth', () => {
 
   async function logout() {
     try {
-      await authApi.post('/logout', {}, {
-        headers: { Authorization: `Bearer ${accessToken.value}` },
+      await $fetch(`${authBase}/logout`, {
+        method: 'POST',
+        headers: { ...commonHeaders, Authorization: `Bearer ${accessToken.value}` },
       })
     } finally {
       user.value = null
@@ -100,7 +96,7 @@ export const useAuthStore = defineStore('auth', () => {
     init,
     login,
     logout,
-    accessToken
+    accessToken,
   }
 
 }, {

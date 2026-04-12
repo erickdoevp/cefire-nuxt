@@ -1,38 +1,33 @@
-import adminApi from "~/api/admin-api";
-import type { Profile } from "~/interfaces/profiles";
+import { createAdminApi } from '~/api/admin-api'
+import type { Profile } from '~/interfaces/profiles'
 
 export const useFetchProfiles = () => {
 
-  const users = ref<Profile[]>([]);
-  const isLoading = ref<boolean>(false);
+  const users = ref<Profile[]>([])
+  const isLoading = ref<boolean>(false)
 
   const fetchProfiles = async () => {
-    isLoading.value = true;
+    isLoading.value = true
 
     try {
-      const { data } = await adminApi.get<Profile[]>(
-        `/profiles`,
-        {
-          params: {
-            select: 'id,name',
-          },
-        }
-      );
+      const api = createAdminApi()
+      const data = await api<Profile[]>('/profiles', {
+        query: { select: 'id,name' },
+      })
 
-      users.value = data;
-      
+      users.value = data
+
     } catch (err: any) {
-      console.error('Unexpected error fetching profiles:', err.response?.data?.message ?? err.message);
+      console.error('Unexpected error fetching profiles:', err.data?.message ?? err.message)
     } finally {
-      isLoading.value = false;
+      isLoading.value = false
     }
-  };
+  }
 
   return {
     users,
     isLoading,
     fetchProfiles,
     userList: computed(() => users.value.map(user => ({ value: user.id, label: user.name }))),
-  };
-
-};
+  }
+}

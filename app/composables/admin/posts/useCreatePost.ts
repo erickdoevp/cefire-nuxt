@@ -1,5 +1,5 @@
-import adminApi from '~/api/admin-api';
-import { useAuthStore } from '~/store/admin/auth/authStore';
+import { createAdminApi } from '~/api/admin-api'
+import { useAuthStore } from '~/store/admin/auth/authStore'
 
 export interface Payload {
   title:           string;
@@ -17,20 +17,20 @@ export interface Payload {
 
 export const useCreatePost = () => {
 
-  const auth = useAuthStore();
+  const auth = useAuthStore()
 
-  const err = ref<string>('');
-  const isLoading = ref<boolean>(false);
+  const err = ref<string>('')
+  const isLoading = ref<boolean>(false)
 
   const savePost = async (body: Payload) => {
-    isLoading.value = true;
-    err.value = '';
+    isLoading.value = true
+    err.value = ''
 
     try {
-
-      await adminApi.post(
-        `/posts`,
-        {
+      const api = createAdminApi()
+      await api('/posts', {
+        method: 'POST',
+        body: {
           title:            body.title,
           excerpt:          body.excerpt,
           featured_image:   body.featuredImage,
@@ -44,28 +44,24 @@ export const useCreatePost = () => {
           tags:             body.tags,
           slug:             body.slug,
         },
-        {
-          headers: {
-            Prefer:        'return=minimal',
-          },
-        }
-      );
+        headers: {
+          Prefer: 'return=minimal',
+        },
+      })
 
-      navigateTo('/admin/blogs');
+      navigateTo('/admin/blogs')
 
     } catch (e: any) {
-      
-      err.value = e.response?.data?.message ?? e.message;
-      console.error(err.value);
+      err.value = e.data?.message ?? e.message
+      console.error(err.value)
     } finally {
-      isLoading.value = false;
+      isLoading.value = false
     }
-  };
+  }
 
   return {
     savePost,
     err,
     isLoading,
-  };
-
-};
+  }
+}

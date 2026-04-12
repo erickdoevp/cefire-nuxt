@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { useAuthStore } from '~/store/admin/auth/authStore'
 
 export const useUploadImage = () => {
@@ -34,15 +33,15 @@ export const useUploadImage = () => {
       formData.append('signature', signature)
       formData.append('folder', signedFolder)
 
-      const { data } = await axios.post(
+      const data = await $fetch<{ secure_url: string }>(
         `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-        formData
+        { method: 'POST', body: formData }
       )
 
-      return data.secure_url as string
+      return data.secure_url
 
     } catch (err: any) {
-      uploadError.value = err.response?.data?.error?.message ?? err.message ?? 'Error desconocido'
+      uploadError.value = err.data?.error?.message ?? err.message ?? 'Error desconocido'
       return null
     } finally {
       uploading.value = false

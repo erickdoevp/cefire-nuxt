@@ -1,22 +1,21 @@
-import axios from 'axios';
-import type { Payload } from './useCreatePost';
-import adminApi from '~/api/admin-api';
+import { createAdminApi } from '~/api/admin-api'
+import type { Payload } from './useCreatePost'
 
 export const useUpdatePost = () => {
 
-  const config = useRuntimeConfig();
-
-  const err = ref<string>('');
-  const isLoading = ref<boolean>(false);
+  const err = ref<string>('')
+  const isLoading = ref<boolean>(false)
 
   const updatePost = async (id: number, body: Payload) => {
-    isLoading.value = true;
-    err.value = '';
+    isLoading.value = true
+    err.value = ''
 
     try {
-      await adminApi.patch(
-        `/posts`,
-        {
+      const api = createAdminApi()
+      await api('/posts', {
+        method: 'PATCH',
+        query: { id: `eq.${id}` },
+        body: {
           title:            body.title,
           excerpt:          body.excerpt,
           featured_image:   body.featuredImage,
@@ -29,33 +28,23 @@ export const useUpdatePost = () => {
           tags:             body.tags,
           slug:             body.slug,
         },
-        {
-          params: {
-            id: `eq.${id}`,
-          },
-          headers: {
-            Prefer:        'return=minimal',
-          },
-        }
-      );
+        headers: {
+          Prefer: 'return=minimal',
+        },
+      })
 
-      navigateTo('/admin/blogs');
+      navigateTo('/admin/blogs')
 
     } catch (e: any) {
-      
-      err.value = e.response?.data?.message ?? e.message;
-
+      err.value = e.data?.message ?? e.message
     } finally {
-
-      isLoading.value = false;
-      
+      isLoading.value = false
     }
-  };
+  }
 
   return {
     updatePost,
     err,
     isLoading,
-  };
-
-};
+  }
+}

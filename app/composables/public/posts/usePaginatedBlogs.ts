@@ -17,8 +17,8 @@ export const usePaginatedPublicBlogs = (initialPageSize = 9) => {
       const from = (page.value - 1) * pageSize.value
       const to = from + pageSize.value - 1
 
-      const { data, headers } = await api.get('/posts', {
-        params: {
+      const response = await api.raw('/posts', {
+        query: {
           select: 'slug,title,excerpt,updatedAt:updated_at,status,readingTime:reading_time,featuredImage:featured_image,category:categories!inner(name,chip_color,text_chip_color),user:profiles!inner(name,first_last_name,second_last_name)',
           status: 'eq.Published',
           order: 'created_at.desc',
@@ -29,15 +29,14 @@ export const usePaginatedPublicBlogs = (initialPageSize = 9) => {
         },
       })
 
-      // Content-Range: "0-8/100" → extraer el total
       let total = 0
-      const contentRange = headers['content-range'] as string | undefined
+      const contentRange = response.headers.get('content-range')
       if (contentRange) {
         const match = contentRange.match(/\/(\d+)$/)
         if (match) total = parseInt(match[1])
       }
 
-      return { blogs: data as PublicBlog[], total }
+      return { blogs: response._data as PublicBlog[], total }
     },
     { watch: [page] }
   )
