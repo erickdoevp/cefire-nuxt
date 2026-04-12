@@ -292,7 +292,7 @@ const faqs = [
               <!-- Description -->
               <Reveal :duration="300">
                 <p class="text-gray-200 text-lg mb-8 text-center md:text-start">
-                  Fisioterapia experta que va más allá del tratamiento. <br>
+                  Fisioterapia experta en Tlaxcala que va más allá del tratamiento. <br>
                   Creamos planes de recuperación personalizados que te permiten
                   volver a hacer lo que amas, <br> sin dolor y con más fuerza que antes.
                 </p>
