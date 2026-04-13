@@ -17,6 +17,7 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@pinia/nuxt',
     '@nuxtjs/sitemap',
+    '@nuxtjs/robots',
     'pinia-plugin-persistedstate',
   ],
 
@@ -27,10 +28,22 @@ export default defineNuxtConfig({
 
   sitemap: {
     strictNuxtContentPaths: false,
+    exclude: [
+      '/admin',
+      '/admin/**',
+    ],
+    urls: [
+      { loc: '/', priority: 1.0, changefreq: 'monthly' },
+      { loc: '/about', priority: 0.8, changefreq: 'monthly' },
+      { loc: '/services', priority: 0.8, changefreq: 'monthly' },
+      { loc: '/contact', priority: 0.7, changefreq: 'yearly' },
+      { loc: '/blogs', priority: 0.6, changefreq: 'weekly' },
+    ],
   },
 
   robots: {
-    disallow: [],
+    disallow: ['/admin', '/admin/'],
+    sitemap: 'https://cefiretlx.com/sitemap.xml',
   },
 
   colorMode: {
