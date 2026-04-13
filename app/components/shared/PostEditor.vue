@@ -228,7 +228,7 @@ onBeforeUnmount(() => editor.value?.destroy());
           to="/admin/blogs"
           variant="link"
           />
-        <h1 class="text-xl font-semibold text-gray-900 dark:text-white">{{ props.id ? 'Editar' : 'Crear' }} Post</h1>
+        <h1 class="text-xl font-semibold text-gray-900 dark:text-white">{{ props.id ? 'Editar' : 'Crear' }} Blog</h1>
       </div>
       <div class="flex items-center gap-2">
         <UButton :disabled="isLoading" variant="outline" :icon="isLoading ? 'i-lucide-loader' : 'mdi:eraser'" color="neutral" @click="hadleSubmit('Draft')">
@@ -248,7 +248,7 @@ onBeforeUnmount(() => editor.value?.destroy());
 
         <!-- Post Title -->
         <div class="flex flex-col gap-1">
-          <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Título del post</label>
+          <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Título del blog</label>
           <UInput
             v-model="form.title"
             placeholder="Ingresa el título del post..."
@@ -259,7 +259,7 @@ onBeforeUnmount(() => editor.value?.destroy());
 
         <!-- Extract -->
         <div class="flex flex-col gap-1">
-          <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Extracto del post</label>
+          <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Extracto del blog</label>
           <UInput
             v-model="form.excerpt"
             placeholder="Ingresa un resumen corto del post..."
@@ -383,14 +383,14 @@ onBeforeUnmount(() => editor.value?.destroy());
 
           <!-- Footer: stats -->
           <div class="flex items-center justify-between px-5 py-2 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-xs text-gray-400">
-            <span>{{ wordCount }} words · {{ charCount }} characters</span>
-            <span>{{ readTime }} min read</span>
+            <span>{{ wordCount }} palabras · {{ charCount }} carácteres</span>
+            <span>{{ readTime }} minutos de lectura</span>
           </div>
         </div>
 
         <!-- Conclusión -->
         <div class="flex flex-col gap-1">
-          <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Conclusión del post</label>
+          <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Conclusión del blog</label>
           <textarea
             v-model="form.conclusion"
             placeholder="Ingresa la conclusión del post..."
@@ -430,7 +430,7 @@ onBeforeUnmount(() => editor.value?.destroy());
           <h3 class="sidebar-title">Slug</h3>
           <UInput
             v-model="form.slug"
-            placeholder="Ingresa el slug del post..."
+            placeholder="Ingresa el slug del blog..."
             size="md"
             class="w-full"
           />

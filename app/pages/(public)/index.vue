@@ -7,14 +7,14 @@ useSeoMeta({
   description: 'Fisioterapia experta con planes de recuperación personalizados. Rehabilitación deportiva, posoperatoria y alivio del dolor crónico. Más de 1,000 pacientes recuperados.',
   ogTitle: 'Cefire | Clínica de Fisioterapia en Tlaxcala',
   ogDescription: 'Recupera el movimiento con fisioterapia personalizada. Agenda tu valoración gratuita hoy.',
-  ogImage: 'https://cefiretlx.com/images/comience-hoy.jpg',
+  ogImage: 'https://cefiretlx.com/images/terapia-ocupacional.jpeg',
   ogType: 'website',
   ogUrl: 'https://cefiretlx.com',
   ogLocale: 'es_MX',
   twitterCard: 'summary_large_image',
   twitterTitle: 'Cefire | Clínica de Fisioterapia en Tlaxcala',
   twitterDescription: 'Recupera el movimiento con fisioterapia personalizada. Agenda tu valoración gratuita hoy.',
-  twitterImage: 'https://cefiretlx.com/images/comience-hoy.jpg',
+  twitterImage: 'https://cefiretlx.com/images/terapia-ocupacional.jpeg',
   canonical: 'https://cefiretlx.com',
 })
 
