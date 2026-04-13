@@ -300,13 +300,16 @@ const faqs = [
 
             <!-- Buttons -->
             <Reveal :delay="70" :duration="300">
-              <div class="flex gap-4 mb-10">
-                <UButton>
+              <div class="flex flex-wrap gap-4 mb-10">
+                <UButton
+                  size="xl"
+                  class="w-full md:w-fit rounded-[10px] bg-primary text-white font-semibold text-[17px] py-3 transition-colors justify-center md:justify-start"
+                >
                   <NuxtLink
                     target="_blank"
                     to="https://wa.me/522461370462?text=Hola%20quiero%20más%20información"
                     rel="noopener noreferrer"
-                    size="lg"
+                    size="xl"
                   >
                     Reserva una valoración gratuita
                   </NuxtLink>
@@ -314,12 +317,11 @@ const faqs = [
 
                 <UButton
                   variant="outline"
-                  size="lg"
-                  class="text-white border-white hover:bg-white/10"
+                  size="xl"
+                  class="text-white border-white hover:bg-white/10 w-full md:w-fit font-semibold text-[17px] justify-center md:justify-start"
                 >
                   <NuxtLink
                     to="/services"
-                    size="lg"
                   >
                     Conoce nuestros servicios
                   </NuxtLink>
