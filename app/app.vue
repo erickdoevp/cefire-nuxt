@@ -1,7 +1,10 @@
 <script setup lang="ts">
 useHead({
   htmlAttrs: { lang: 'es-MX' },
-  link: [{ rel: 'icon', type: 'image/png', href: '/images/main-logo.png' }],
+  link: [
+    { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+    { rel: 'apple-touch-icon', href: '/images/main-logo.png' },
+  ],
 })
 </script>
 

@@ -262,7 +262,7 @@ onBeforeUnmount(() => editor.value?.destroy());
           <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Extracto del blog</label>
           <UInput
             v-model="form.excerpt"
-            placeholder="Ingresa un resumen corto del post..."
+            placeholder="Ingresa un resumen corto del blog..."
             size="lg"
             class="w-full"
           />

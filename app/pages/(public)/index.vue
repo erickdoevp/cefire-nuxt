@@ -276,8 +276,8 @@ const faqs = [
             <!-- Badge -->
               <UBadge
                 icon="i-lucide-heart"
-                variant="soft"
-                class="mb-6 rounded-2xl px-3 text-sm"
+                variant="solid"
+                class="mb-6 rounded-2xl px-3 text-sm w-full md:w-fit"
               >
                 Más de 1000 pacientes confían en nosotros
               </UBadge>
@@ -292,7 +292,7 @@ const faqs = [
               <!-- Description -->
               <Reveal :duration="300">
                 <p class="text-gray-200 text-lg mb-8 text-center md:text-start">
-                  Fisioterapia experta en Tlaxcala que va más allá del tratamiento. <br>
+                  Fisioterapia Tlaxcala que va más allá del tratamiento. <br>
                   Creamos planes de recuperación personalizados que te permiten
                   volver a hacer lo que amas, <br> sin dolor y con más fuerza que antes.
                 </p>

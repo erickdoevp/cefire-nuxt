@@ -12,7 +12,7 @@ definePageMeta({
 
 const UButton = resolveComponent('UButton');
 
-const { categories, isLoading, total, page, pageSize, totalPages, fetchCategories } = usePaginatedCategories();
+const { categories, isLoading, total, page, pageSize, fetchCategories } = usePaginatedCategories();
 const { createCategory, isLoading: creating, error: createError } = useCreateCategory();
 const { updateCategory, isLoading: updating, error: updateError } = useUpdateCategory();
 const { category: selectedCategory, fetchCategory } = useFetchCategory();
@@ -46,7 +46,7 @@ const columns: TableColumn<Category>[] = [
   {
     accessorKey: 'id',
     header: '#',
-    cell: ({ row }) => row.index + 1,
+    cell: ({ row }) => (page.value - 1) * pageSize.value + row.index + 1,
   },
   {
     accessorKey: 'name',
@@ -66,7 +66,7 @@ const columns: TableColumn<Category>[] = [
     accessorKey: 'chip_color',
     header: 'Color primario',
     cell: ({ row }) => {
-      const color = row.getValue('text_chip_color') as string | null;
+      const color = row.getValue('chip_color') as string | null;
       if (!color) return h('p', { class: 'text-sm text-gray-400' }, '—');
       return h('div', { class: 'flex items-center gap-2' }, [
         h('span', { class: 'w-5 h-5 rounded-md border border-gray-200 shrink-0', style: `background-color: ${color}` }),
@@ -78,7 +78,7 @@ const columns: TableColumn<Category>[] = [
     accessorKey: 'text_chip_color',
     header: 'Color secundario',
     cell: ({ row }) => {
-      const color = row.getValue('chip_color') as string | null;
+      const color = row.getValue('text_chip_color') as string | null;
       if (!color) return h('p', { class: 'text-sm text-gray-400' }, '—');
       return h('div', { class: 'flex items-center gap-2' }, [
         h('span', { class: 'w-5 h-5 rounded-md border border-gray-200 shrink-0', style: `background-color: ${color}` }),
@@ -147,7 +147,7 @@ onMounted(() => {
         <UPagination
           v-model:page="page"
           :items-per-page="pageSize"
-          :total="totalPages"
+          :total="total"
           :show-edges="false"
           variant="ghost"
           active-variant="ghost"

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { z } from 'zod';
 import { useAuth } from '~/composables/admin/auth/useAuth';
 
 definePageMeta({
@@ -7,22 +8,48 @@ definePageMeta({
 
 const auth = useAuth();
 
-const email = ref('erick.doev@gmail.com');
-const password = ref('P@lom@lun@1234');
+const email = ref('');
+const password = ref('');
 const showPassword = ref(false);
 
-async function handleSubmit() {
+const loginSchema = z.object({
+  email: z
+    .string()
+    .min(1, 'El email es requerido')
+    .email('Ingresa un email válido'),
+  password: z
+    .string()
+    .min(1, 'La contraseña es requerida')
+    .min(6, 'La contraseña debe tener al menos 6 caracteres'),
+});
 
-  await auth.login(email.value, password.value);
-  console.log(auth.error);
-  
-  if(!auth.error) {
-    console.log('paso');
-    
-    navigateTo('/admin/blogs')
+type FormErrors = Partial<Record<keyof z.infer<typeof loginSchema>, string>>;
+
+const errors = ref<FormErrors>({});
+
+async function handleSubmit() {
+  errors.value = {};
+
+  const result = loginSchema.safeParse({
+    email: email.value.trim(),
+    password: password.value.trim(),
+  });
+
+  if (!result.success) {
+    const fieldErrors = result.error.flatten().fieldErrors;
+    errors.value = {
+      email: fieldErrors.email?.[0],
+      password: fieldErrors.password?.[0],
+    };
+    return;
+  }
+
+  await auth.login(result.data.email, result.data.password);
+
+  if (!auth.error) {
+    navigateTo('/admin/blogs');
   }
 }
-
 </script>
 
 <template >
@@ -42,9 +69,14 @@ async function handleSubmit() {
           type="email"
           placeholder="you@example.com"
           autocomplete="email"
-          required
-          class="h-12 w-full rounded-[10px] border border-[#E5E4E1] bg-[#FAFAF9] px-4 text-sm text-[#1A1918] placeholder:text-[#A3A2A0] focus:border-[#2563EB] focus:outline-none focus:ring-1 focus:ring-[#2563EB]"
+          :class="[
+            'h-12 w-full rounded-[10px] border bg-[#FAFAF9] px-4 text-sm text-[#1A1918] placeholder:text-[#A3A2A0] focus:outline-none focus:ring-1',
+            errors.email
+              ? 'border-red-400 focus:border-red-400 focus:ring-red-400'
+              : 'border-[#E5E4E1] focus:border-[#2563EB] focus:ring-[#2563EB]'
+          ]"
         >
+        <p v-if="errors.email" class="text-xs text-red-500">{{ errors.email }}</p>
       </div>
       <!-- Password field -->
       <div class="flex flex-col gap-1.5">
@@ -55,8 +87,12 @@ async function handleSubmit() {
             :type="showPassword ? 'text' : 'password'"
             placeholder="••••••••"
             autocomplete="current-password"
-            required
-            class="h-12 w-full rounded-[10px] border border-[#E5E4E1] bg-[#FAFAF9] px-4 pr-11 text-sm text-[#1A1918] placeholder:text-[#A3A2A0] focus:border-[#2563EB] focus:outline-none focus:ring-1 focus:ring-[#2563EB]"
+            :class="[
+              'h-12 w-full rounded-[10px] border bg-[#FAFAF9] px-4 pr-11 text-sm text-[#1A1918] placeholder:text-[#A3A2A0] focus:outline-none focus:ring-1',
+              errors.password
+                ? 'border-red-400 focus:border-red-400 focus:ring-red-400'
+                : 'border-[#E5E4E1] focus:border-[#2563EB] focus:ring-[#2563EB]'
+            ]"
           >
           <button
             type="button"
@@ -66,6 +102,7 @@ async function handleSubmit() {
             <Icon :name="showPassword ? 'lucide:eye-off' : 'lucide:eye'" class="h-4 w-4" />
           </button>
         </div>
+        <p v-if="errors.password" class="text-xs text-red-500">{{ errors.password }}</p>
       </div>
       <!-- Remember me + Forgot password -->
       <div class="flex items-center justify-between">
@@ -85,6 +122,10 @@ async function handleSubmit() {
           Forgot password?
         </NuxtLink> -->
       </div>
+      <!-- Server error -->
+      <p v-if="auth.error" class="rounded-[8px] bg-red-50 px-4 py-2.5 text-sm text-red-600">
+        {{ auth.error }}
+      </p>
       <!-- Submit button -->
       <button
         type="submit"
