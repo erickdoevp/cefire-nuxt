@@ -60,7 +60,7 @@ useHead({
         telephone: '+522461370462',
         address: {
           '@type': 'PostalAddress',
-          addressLocality: 'San Esteban Tizatlan',
+          addressLocality: 'Tlaxcala',
           addressRegion: 'Tlaxcala',
           addressCountry: 'MX',
         },
@@ -292,7 +292,7 @@ const faqs = [
               <!-- Description -->
               <Reveal :duration="300">
                 <p class="text-gray-200 text-lg mb-8 text-center md:text-start">
-                  Fisioterapia Tlaxcala que va más allá del tratamiento. <br>
+                  Fisioterapia en Tlaxcala que va más allá del tratamiento. <br>
                   Creamos planes de recuperación personalizados que te permiten
                   volver a hacer lo que amas, <br> sin dolor y con más fuerza que antes.
                 </p>

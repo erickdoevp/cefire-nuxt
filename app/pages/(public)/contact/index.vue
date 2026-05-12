@@ -4,16 +4,16 @@ import Reveal from '~/components/shared/Reveal.vue'
 
 useSeoMeta({
   title: 'Contacto | Agenda tu Valoración Gratuita — Cefire Fisioterapia',
-  description: 'Contáctanos para agendar tu valoración gratuita de fisioterapia en Tlaxcala. Atención San Esteban Tizatlan. Tel: (246) 137 0462.',
+  description: 'Contáctanos para agendar tu valoración gratuita de fisioterapia en Tlaxcala. Atención Tlaxcala. Tel: (246) 137 0462.',
   ogTitle: 'Contacto — Cefire Fisioterapia',
-  ogDescription: 'Agenda tu valoración gratuita. Estamos en San Esteban Tizatlan, Tlaxcala.',
+  ogDescription: 'Agenda tu valoración gratuita. Estamos en Tlaxcala.',
   ogImage: 'https://cefiretlx.com/images/instalaciones-1.jpeg',
   ogType: 'website',
   ogUrl: 'https://cefiretlx.com/contact',
   ogLocale: 'es_MX',
   twitterCard: 'summary_large_image',
   twitterTitle: 'Contacto — Cefire Fisioterapia',
-  twitterDescription: 'Agenda tu valoración gratuita. Estamos en San Esteban Tizatlan, Tlaxcala.',
+  twitterDescription: 'Agenda tu valoración gratuita. Estamos en Tlaxcala.',
   twitterImage: 'https://cefiretlx.com/images/instalaciones-1.jpeg',
   canonical: 'https://cefiretlx.com/contact',
 })
@@ -34,7 +34,7 @@ useHead({
           email: 'eliot_77@live.com.mx',
           address: {
             '@type': 'PostalAddress',
-            addressLocality: 'San Esteban Tizatlan',
+            addressLocality: 'Tlaxcala',
             addressRegion: 'Tlaxcala',
             addressCountry: 'MX',
           },
@@ -99,14 +99,7 @@ const contactCards = [
     to:      "https://wa.me/522461370462?text=Gracias%20por%20comunicarte%20con%20CEFIRE%20(Centro%20Especializado%20en%20Fisioterapia%20y%20Rehabilitación).%20¿Cómo%20podemos%20ayudarte?",
     sub:     'Respondemos dentro de las 24 horas en días hábiles.',
     dark:    false,
-  },
-  {
-    icon:    'i-lucide-map-pin',
-    title:   'Visítanos',
-    value:   'San Esteban Tizatlan Tlaxcala.',
-    sub:     'Estacionamiento gratuito disponible en el lugar. \nEntrada accesible para sillas de ruedas.',
-    dark:    false,
-  },
+  }
 ]
 </script>
 
