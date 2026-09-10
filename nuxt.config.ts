@@ -1,7 +1,38 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+
+// Slugs publicados en Supabase, leidos en build time para prerenderizar el blog.
+// Si Supabase no responde, el build continua y esas rutas caen a SSR en el worker.
+async function fetchPublishedSlugs(): Promise<string[]> {
+  const baseUrl = process.env.NUXT_PUBLIC_SUPABASE_URL
+  const apikey = process.env.NUXT_PUBLIC_SUPABASE_ANON_KEY
+
+  if (!baseUrl || !apikey) {
+    console.warn('[prerender] Faltan las variables de Supabase: el blog no se prerenderiza.')
+    return []
+  }
+
+  try {
+    const res = await fetch(`${baseUrl}/rest/v1/posts?select=slug&status=eq.Published`, {
+      headers: { apikey, Authorization: `Bearer ${apikey}` },
+    })
+    if (!res.ok) throw new Error(`${res.status} ${res.statusText}`)
+
+    const posts = await res.json() as { slug: string }[]
+    return posts.map(post => post.slug).filter(Boolean)
+  }
+  catch (error) {
+    console.warn(`[prerender] No se pudieron leer los posts de Supabase (${error}): el blog cae a SSR.`)
+    return []
+  }
+}
+
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
+
+  // El proyecto vive en un volumen no-APFS: macOS siembra archivos AppleDouble
+  // (._*) que rompen la copia de assets y ensucian _routes.json.
+  ignore: ['**/._*'],
 
   app: {
     head: {
@@ -55,20 +86,36 @@ export default defineNuxtConfig({
 
   nitro: {
     preset: 'cloudflare-pages',
+    cloudflare: {
+      pages: {
+        // _routes.json admite 100 reglas como maximo y el preset lista un archivo
+        // por regla: sin estos comodines los 81 frames y cada post agotan el limite.
+        routes: {
+          exclude: ['/frames/*', '/images/*', '/blog/*'],
+        },
+      },
+    },
     prerender: {
       crawlLinks: true,
-      ignore: ['/admin/**', '/blogs', '/blog/**'],
+    },
+    hooks: {
+      async 'prerender:routes'(routes) {
+        for (const slug of await fetchPublishedSlugs()) {
+          routes.add(`/blog/${slug}`)
+        }
+      },
     },
   },
 
   routeRules: {
 
-    '/': { static: true },
-    '/about': { static: true },
-    '/services': { static: true },
-    '/contact': { static: true },
-    '/blogs': { isr: 60 * 60 },
-    '/blog/**': { isr: 60 * 60 }, // revalida cada hora
+    '/': { prerender: true },
+    '/about': { prerender: true },
+    '/services': { prerender: true },
+    '/contact': { prerender: true },
+    // El blog se genera en build time; se refresca con un deploy hook al publicar.
+    '/blogs': { prerender: true },
+    '/blog/**': { prerender: true },
     '/admin': { redirect: '/admin/login' },
     '/admin/**': { ssr: false },
   },
@@ -76,6 +123,9 @@ export default defineNuxtConfig({
   runtimeConfig: {
 
     supabaseServiceKey: process.env.NUXT_SUPABASE_SERVICE_KEY,
+
+    // Deploy hook de Cloudflare Pages: regenera el sitio al publicar un post.
+    cloudflareDeployHook: process.env.CLOUDFLARE_DEPLOY_HOOK,
 
     cloudinaryApiSecret: process.env.CLOUDINARY_API_SECRET,
     cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,

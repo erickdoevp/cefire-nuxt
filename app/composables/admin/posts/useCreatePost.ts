@@ -1,5 +1,6 @@
 import { createAdminApi } from '~/api/admin-api'
 import { useAuthStore } from '~/store/admin/auth/authStore'
+import { useTriggerDeploy } from './useTriggerDeploy'
 
 export interface Payload {
   title:           string;
@@ -18,6 +19,7 @@ export interface Payload {
 export const useCreatePost = () => {
 
   const auth = useAuthStore()
+  const { triggerDeploy } = useTriggerDeploy()
 
   const err = ref<string>('')
   const isLoading = ref<boolean>(false)
@@ -48,6 +50,9 @@ export const useCreatePost = () => {
           Prefer: 'return=minimal',
         },
       })
+
+      // Solo un post publicado cambia el sitio estatico.
+      if (body.status === 'Published') await triggerDeploy()
 
       navigateTo('/admin/blogs')
 

@@ -1,7 +1,10 @@
 import { createAdminApi } from '~/api/admin-api'
 import type { Payload } from './useCreatePost'
+import { useTriggerDeploy } from './useTriggerDeploy'
 
 export const useUpdatePost = () => {
+
+  const { triggerDeploy } = useTriggerDeploy()
 
   const err = ref<string>('')
   const isLoading = ref<boolean>(false)
@@ -32,6 +35,9 @@ export const useUpdatePost = () => {
           Prefer: 'return=minimal',
         },
       })
+
+      // Se dispara siempre: editar o despublicar tambien cambia el sitio estatico.
+      await triggerDeploy()
 
       navigateTo('/admin/blogs')
 
