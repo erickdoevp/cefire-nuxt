@@ -22,3 +22,6 @@ logs
 .env
 .env.*
 !.env.example
+
+# macOS AppleDouble (volumenes no-APFS)
+._*
