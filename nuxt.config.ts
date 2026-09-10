@@ -97,6 +97,9 @@ export default defineNuxtConfig({
     },
     prerender: {
       crawlLinks: true,
+      // Escribe about.html en vez de about/index.html: sin esto Cloudflare
+      // redirige 308 de /about a /about/ y las URLs canonicas no coinciden.
+      autoSubfolderIndex: false,
     },
     hooks: {
       async 'prerender:routes'(routes) {
